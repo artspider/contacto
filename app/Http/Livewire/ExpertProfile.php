@@ -89,7 +89,7 @@ class ExpertProfile extends Component
       $this->profesion = "sin datos";
       $this->especialidad = "sin datos";
       $this->cedula = "sin datos";
-      $this->educacion = "sin datos";
+      $this->educacion = [];
       $this->ciudad = "sin datos";
       $this->estado = "npi";
       $this->facebook = "sin datos";
