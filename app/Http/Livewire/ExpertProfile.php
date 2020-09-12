@@ -146,7 +146,9 @@ class ExpertProfile extends Component
     $expert->profesion = $this->profesion;
     $expert->especialidad = $this->especialidad;
     $expert->habilidades = $this->about;
-    $expert->url_image = '/img/' . $this->foto;
+    /* $expert->url_image = '/img/' . $this->foto; */
+    logger('El archivo es: ');
+    logger($this->foto);
     $expert->save();
 
     logger('Saliendo del aboutUpdate');
