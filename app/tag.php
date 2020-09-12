@@ -14,7 +14,7 @@ class tag extends Model
 
     public function experts()
     {
-      return $this->belongsToMany('App\Expert');
+      return $this->belongsToMany('App\expert');
     }
 
     public function scopeName($query, $name)

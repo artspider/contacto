@@ -13,17 +13,17 @@ class expert extends Model
 
   public function orders()
     {
-        return $this->hasMany('App\Order');
+        return $this->hasMany('App\order');
     }
 
     public function tags()
     {
-        return $this->belongsToMany('App\Tag', 'expert_tag')->withTimestamps();
+        return $this->belongsToMany('App\tag', 'expert_tag')->withTimestamps();
     }
 
     public function membersihps()
     {
-        return $this->hasOne('App\Membership');
+        return $this->hasOne('App\membership');
     }
 
     public function titulos()

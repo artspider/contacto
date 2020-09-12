@@ -10,11 +10,11 @@ class order extends Model
 
     public function expert()
     {
-        return $this->belongsTo('App\Expert');
+        return $this->belongsTo('App\expert');
     }
 
     public function employer()
     {
-        return $this->belongsTo('App\Employer');
+        return $this->belongsTo('App\employer');
     }
 }
