@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 use App\expert;
 use App\tag;
@@ -29,6 +30,7 @@ class ExpertProfile extends Component
   public $habilidades; //tags
   public $email;
   public $foto;
+  public $foto_perfil;
   public $expert_id;
 
   public $tags;
@@ -81,7 +83,10 @@ class ExpertProfile extends Component
       $this->twitter = $expert->twitter;
       $this->habilidades = $habilidades;
       $this->about = $expert->habilidades;
-      $this->foto = $expert->url_image;
+
+      $this->foto_perfil = str_replace("public", "storage", $expert->url_image);
+      logger('quero sacar la foto de:::: ');
+      logger( $this->foto_perfil);
 
       $this->educacion = $estudios;
       $this->experiencia = $trabajos;
@@ -104,7 +109,7 @@ class ExpertProfile extends Component
       $this->habilidades = null;
       $this->aterminacion = "0000";
       $this->sigue_estdiando = "0";
-      $this->foto = "/img/avatar1.png";
+      $this->$foto_perfil = "img/avatar1.png";
 
       session()->flash('message', 'No has actualizado tus datos. Hacerlo te ayudará a ser contratado');
       logger($user);
@@ -146,9 +151,13 @@ class ExpertProfile extends Component
     $expert->profesion = $this->profesion;
     $expert->especialidad = $this->especialidad;
     $expert->habilidades = $this->about;
-    /* $expert->url_image = '/img/' . $this->foto; */
+
+
+    $foto_subida = $this->foto->store('public/fotos');
     logger('El archivo es: ');
-    logger($this->foto);
+    logger( $foto_subida);
+    $expert->url_image = $foto_subida;
+
     $expert->save();
 
     logger('Saliendo del aboutUpdate');

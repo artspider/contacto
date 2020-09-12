@@ -1,17 +1,15 @@
 <div>
   <div class="profile--personalData mt-16 mb-8">
     <div class="profile--picture flex justify-center relative h-16 bg-black">
+        <img class="profile--avatar rounded-full absolute mt-6 w-20 h-20 lg:w-40 lg:h-40" src= " /{{ $foto_perfil }} ">
 
-        <img
-          class="profile--avatar absolute mt-6 w-20 h-20 lg:w-40 lg:h-40"
-          src= {{ $foto }}
-          alt="avatar"
-        />
+
 
     </div>
     <p
       class="profile--name text-black text-center font-bold text-2xl mt-12 lg:mt-36"
     >
+
       {{ $nombre }}
     </p>
     <p
