@@ -4,8 +4,8 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
-use App\Expert;
-use App\Tag;
+use App\expert;
+use App\tag;
 use App\expert_tag;
 use App\titulo;
 use App\trabajo;
