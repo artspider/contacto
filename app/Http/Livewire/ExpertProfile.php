@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Livewire\WithFileUploads;
+
 use App\expert;
 use App\tag;
 use App\expert_tag;
@@ -12,6 +14,8 @@ use App\trabajo;
 
 class ExpertProfile extends Component
 {
+
+  use WithFileUploads;
   public $nombre;
   public $telefono;
   public $profesion;
@@ -24,6 +28,7 @@ class ExpertProfile extends Component
   public $twitter;
   public $habilidades; //tags
   public $email;
+  public $foto;
   public $expert_id;
 
   public $tags;
@@ -76,6 +81,7 @@ class ExpertProfile extends Component
       $this->twitter = $expert->twitter;
       $this->habilidades = $habilidades;
       $this->about = $expert->habilidades;
+      $this->foto = $expert->url_image;
 
       $this->educacion = $estudios;
       $this->experiencia = $trabajos;
@@ -98,6 +104,8 @@ class ExpertProfile extends Component
       $this->habilidades = null;
       $this->aterminacion = "0000";
       $this->sigue_estdiando = "0";
+      $this->foto = "/img/avatar1.png";
+
       session()->flash('message', 'No has actualizado tus datos. Hacerlo te ayudará a ser contratado');
       logger($user);
     }
@@ -128,6 +136,7 @@ class ExpertProfile extends Component
       'profesion' => 'required|min:7',
       'especialidad' => 'required|min:7',
       'about' => 'required|min:10',
+      'foto' => 'image|max:1024',
     ]);
 
     $user->name = $this->nombre;
@@ -137,6 +146,7 @@ class ExpertProfile extends Component
     $expert->profesion = $this->profesion;
     $expert->especialidad = $this->especialidad;
     $expert->habilidades = $this->about;
+    $expert->url_image = '/img/' . $this->foto;
     $expert->save();
 
     logger('Saliendo del aboutUpdate');

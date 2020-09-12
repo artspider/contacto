@@ -1,11 +1,13 @@
 <div>
   <div class="profile--personalData mt-16 mb-8">
     <div class="profile--picture flex justify-center relative h-16 bg-black">
-      <img
-        class="profile--avatar absolute mt-6 w-20 h-20 lg:w-40 lg:h-40"
-        src="/img/avatar1.png"
-        alt="avatar"
-      />
+
+        <img
+          class="profile--avatar absolute mt-6 w-20 h-20 lg:w-40 lg:h-40"
+          src= {{ $foto }}
+          alt="avatar"
+        />
+
     </div>
     <p
       class="profile--name text-black text-center font-bold text-2xl mt-12 lg:mt-36"
@@ -123,6 +125,24 @@
                 placeholder="¿Cúal es tu especialidad?">
             </input>
               @error('especialidad')
+                <p class="text-red-500 text-sm italic mt-4">
+                {{ $message }}
+                </p>
+              @enderror
+          </div>
+
+          <div class="especialidad flex flex-col ml-4 mb-4">
+            <p class="text-sm font-thin mb-1">Foto de perfil</p>
+            <input
+                class=" inputfile  "
+                wire:model.debounce.500ms="foto"
+                type="file"
+                name="foto"
+                class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
+                placeholder="Ingresa una imagen">
+            </input>
+
+              @error('foto')
                 <p class="text-red-500 text-sm italic mt-4">
                 {{ $message }}
                 </p>
