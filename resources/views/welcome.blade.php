@@ -373,7 +373,7 @@
           </p>
         </div>
 
-        <div class="expertos-cards flex justify-evenly ">
+        <div class="expertos-cards flex justify-evenly flex-wrap md:flex-no-wrap ">
           <div class="card1 bg-white mx-4 my-4 rounded-lg shadow-lg xl:w-2/5 ">
             <div class="header--card1 flex items-center mt-6 mb-2 ">
               <img
