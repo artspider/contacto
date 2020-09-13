@@ -153,7 +153,7 @@ class ExpertProfile extends Component
     $expert->habilidades = $this->about;
 
 
-    $foto_subida = $this->foto->store('public/photo');
+    $foto_subida = $this->foto->store('fotos','public');
     logger(asset($foto_subida));
 
     logger('El archivo es 1: ');
@@ -162,6 +162,7 @@ class ExpertProfile extends Component
     logger('El archivo es 2: ');
     logger( $foto_subida);
     $expert->url_image = $foto_subida;
+    $this->foto_perfil = $foto_subida;
 
     $expert->save();
 
