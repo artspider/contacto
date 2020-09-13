@@ -108,7 +108,7 @@ class ExpertProfile extends Component
       $this->habilidades = null;
       $this->aterminacion = "0000";
       $this->sigue_estdiando = "0";
-      $this->$foto_perfil = "img/avatar1.png";
+      $this->foto_perfil = "img/avatar1.png";
 
       session()->flash('message', 'No has actualizado tus datos. Hacerlo te ayudará a ser contratado');
       logger($user);
