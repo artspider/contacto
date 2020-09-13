@@ -8,7 +8,7 @@
         >
           <img
             class="profile--avatar  top-0 left-0 w-36 h-36 rounded-full  border-8 border-gray-200"
-            src="/{{ $this->expert->url_image }}"
+            src=  "{{asset('storage/' . $this->expert->url_image) }}"
             alt="avatar"
           />
         </div>

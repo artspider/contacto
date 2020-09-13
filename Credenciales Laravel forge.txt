@@ -1,0 +1,8 @@
+BD0EVFpp7BsfN21zVfjx: sudo
+
+
+VxLXcLp1Q2ckfAoHwsvh:  DBpassword
+
+dtabase name   forge
+
+;
