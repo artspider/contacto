@@ -66,7 +66,7 @@
 
       @foreach ($experts as $item)
 
-        <div wire:click="showExpert( {{ $item->id }})" class="expert--card bg-orange-100 border-l-4 border-orange-500 flex flex-col rounded-lg shadow-lg mx-4 my-4 py-2">
+        <div wire:click="showExpert( {{ $item->id }})" class="expert--card bg-white border-l-4 border-orange-500 flex flex-col rounded-lg shadow-lg mx-4 my-4 py-2">
           <div class="expert--card__top flex ml-6 relative">
             <img class="expert__avatar w-20 h-20 2xl:w-32 2xl:h-36 rounded-full mt-6 " src="img/avatar1.png" alt="">
             <div class="expert--card__top-info ml-6 mr-6 mt-3 mb-2">

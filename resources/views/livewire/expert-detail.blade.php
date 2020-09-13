@@ -8,16 +8,16 @@
         >
           <img
             class="profile--avatar  top-0 left-0 w-36 h-36 rounded-full  border-8 border-gray-200"
-            src="/img/avatar2.jpg"
+            src="/{{ $this->expert->url_image }}"
             alt="avatar"
           />
         </div>
         <div
           class="card__card--header__bio flex flex-col justify-center  text-white ml-52 w-2/5"
         >
-          <p class="text-3xl font-bold leading-8">Arturo Rodriguez</p>
+        <p class="text-3xl font-bold leading-8"> {{ $this->expert->nombre }} </p>
           <p class=" text-base font-semibold">
-            Ingeniero en sistemas computacionales
+            {{ $this->expert->profesion}}
           </p>
           <div class="contactar flex justify-center w-1/2 text-sm mt-4 ">
             <p class="mr-4 ">
@@ -94,7 +94,7 @@
                     d="M12.042 23.648C4.229 23.648 0 18.772 0 12.477 0 5.75 4.762.352 13.276.352 19.49.352 24 4.39 24 9.953c0 8.712-10.33 11.012-9.812 6.042-.71 1.108-1.854 2.354-4.053 2.354-2.516 0-4.08-1.842-4.08-4.807 0-4.444 2.921-8.199 6.379-8.199 1.659 0 2.8.876 3.277 2.221l.464-1.632h2.338c-.244.832-2.321 8.527-2.321 8.527-.648 2.666 1.35 2.713 3.122 1.297 3.329-2.58 3.501-9.327-.998-12.141C13.495.724 2.521 2.513 2.521 12.308c0 5.611 3.95 9.381 9.829 9.381 3.436 0 5.542-.93 7.295-1.948l1.177 1.698c-1.711.966-4.461 2.209-8.78 2.209zM9.698 9.343c-.715 1.34-1.177 3.076-1.177 4.424 0 3.61 3.522 3.633 5.252.239.712-1.394 1.171-3.171 1.171-4.529 0-2.917-3.495-3.434-5.246-.134z"
                   />
                 </svg>
-                <p>micorreo@email.com</p>
+                <p>{{ $this->expert->email }}</p>
               </div>
               <div class="contacto__body__telefono flex items-center mt-4">
                 <svg
@@ -106,7 +106,7 @@
                     d="M18.48 22.926l-1.193.658C10.308 27.205-1.795 6.09 5.008 2.1l1.145-.637L9.867 7.93l-1.139.632c-2.067 1.245 2.76 9.707 4.879 8.545l1.162-.642 3.711 6.461zM8.672 0l-1.68.975 3.714 6.466 1.681-.975L8.672 0zm8.613 14.997l-1.68.975 3.714 6.467L21 21.464l-3.715-6.467z"
                   />
                 </svg>
-                <p>777-123-2343</p>
+                <p>{{ $this->expert->telefono }}</p>
               </div>
               <div class="contacto__body__telefono flex items-center mt-4">
                 <svg
@@ -118,7 +118,7 @@
                     d="M21 13v10h-6v-6H9v6H3V13H0L12 1l12 12h-3zm-1-5.907V2h-3v2.093l3 3z"
                   />
                 </svg>
-                <p>Cuernavaca, Mor.</p>
+                <p> {{ $this->expert->ciudad }} , {{ $this->expert->estado }}.</p>
               </div>
             </div>
           </div>
@@ -134,13 +134,18 @@
 
             <div class="skills__body mt-6">
               <ul class=" list-disc list-inside text-gray-700 tracking-wider leading-loose ">
-                <li>Redes</li>
-                <li>Ruteadores cisco</li>
-                <li>Cableado estructurado</li>
-                <li>Fibra ótica</li>
-                <li>Photoshop</li>
-                <li>Servidores Linux</li>
-                <li>Servidores Windows</li>
+
+                @empty($habilidades)
+                    <p>No has añadido ninguna habilidad</p>
+                @endempty
+                @if(!empty($habilidades))
+                    @foreach ($habilidades as $habilidad)
+
+                        <li> {{ $habilidad->name }} </li>
+
+                    @endforeach
+                @endif
+
               </ul>
             </div>
           </div>
@@ -155,17 +160,21 @@
             </div>
 
             <div class="educacion__body mt-6 ml-6">
-              <div class="mb-4">
-                <p class="font-semibold text-gray-800 ">Instituto de Educación Universitaria</p>
-                <p class="text-sm text-gray-600">Maestria en Tecnologías de la Información</p>
-                <p class="text-sm text-gray-600">2013</p>
-              </div>
 
-              <div>
-                <p class="font-semibold text-gray-800 ">Instituto Tecnológico de Zacatepec</p>
-                <p class="text-sm text-gray-600">Ingenieria en Sistemas Computacionales</p>
-                <p class="text-sm text-gray-600">1997</p>
-              </div>
+                @empty($educacion)
+                    <p>No has añadido ninguna escuela</p>
+                @endempty
+                @if(!empty($educacion))
+                    @foreach ($educacion as $item)
+                        <div class="mb-4">
+                            <p class="font-semibold text-gray-800 "> {{ $item->escuela }}</p>
+                            <p class="text-sm text-gray-600"> {{ $item->carrera }} </p>
+                            <p class="text-sm text-gray-600">{{ $item->fecha_terminacion }}</p>
+                        </div>
+                    @endforeach
+                @endif
+
+
             </div>
           </div>
 
@@ -191,14 +200,7 @@
             <div class="about__body mt-6">
               <div class="about__body__habilidades text-gray-700">
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Corrupti, id ab aperiam et suscipit ad iure amet nemo,
-                  eligendi earum ratione minima ipsam praesentium reprehenderit
-                  numquam tempora commodi nulla illum?
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae,
-                  rerum.
+                  {{ $this->expert->habilidades }}
                 </p>
                 <div class="about__body__fechanac flex items-center mt-4">
                   <p class="text-gray-700">
@@ -247,21 +249,21 @@
                 <svg class=" fill-current h-6 w-6 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10S2 17.514 2 12 6.486 2 12 2zm0-2C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-2 10H8v2h2v6h3v-6h1.82l.18-2h-2v-.833c0-.478.096-.667.558-.667H15V6h-2.404C10.798 6 10 6.792 10 8.308V10z"/>
                 </svg>
-                <p class="text-gray-700">Facebook.com/artrod123</p>
+                <p class="text-gray-700">{{ $this->expert->facebook }}</p>
               </div>
 
               <div class="flex mb-4">
                 <svg class=" fill-current h-6 w-6 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162S8.597 18.163 12 18.163s6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zM12 16c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                 </svg>
-                <p class="text-gray-700">instagram.com/artrod123</p>
+                <p class="text-gray-700"> {{ $this->expert->instagram }} </p>
               </div>
 
               <div class="flex mb-4">
                 <svg class=" fill-current h-6 w-6 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                   <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10S2 17.514 2 12 6.486 2 12 2zm0-2C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.5 8.778c-.441.196-.916.328-1.414.388.509-.305.898-.787 1.083-1.362-.476.282-1.003.487-1.564.597-.448-.479-1.089-.778-1.796-.778-1.59 0-2.758 1.483-2.399 3.023-2.045-.103-3.86-1.083-5.074-2.572-.645 1.106-.334 2.554.762 3.287-.403-.013-.782-.124-1.114-.308-.027 1.14.791 2.207 1.975 2.445-.346.094-.726.116-1.112.042.313.978 1.224 1.689 2.3 1.709-1.037.812-2.34 1.175-3.647 1.021 1.09.699 2.383 1.106 3.773 1.106 4.572 0 7.154-3.861 6.998-7.324.482-.346.899-.78 1.229-1.274z"/>
                 </svg>
-                <p class="text-gray-700">Twitter.com/artrod123</p>
+                <p class="text-gray-700">{{ $this->expert->twitter }} </p>
               </div>
 
 
