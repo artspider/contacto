@@ -41,7 +41,7 @@
           type="text"
           name="aterminacion"
           class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
-          placeholder="Instituto o escuela de la que egresaste">
+          placeholder="El año en que egresaste">
         </input>
         @error('aterminacion')
           <p class="text-red-500 text-sm italic mt-4">

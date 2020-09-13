@@ -154,8 +154,10 @@ class ExpertProfile extends Component
 
 
     $foto_subida = $this->foto->store('public/fotos');
+    logger('El archivo es 1: ');
+    logger( $foto_subida);
     $foto_subida = str_replace("public", "storage", $foto_subida);
-    logger('El archivo es: ');
+    logger('El archivo es 2: ');
     logger( $foto_subida);
     $expert->url_image = $foto_subida;
 
