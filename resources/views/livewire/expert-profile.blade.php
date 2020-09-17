@@ -25,15 +25,12 @@
   </div>
 
 
-    @if (session()->has('message'))
-      <div
-      class=" container mx-auto bg-red-500 text-lg text-red-100 font-semibold p-6 "
-      >
-        <div class="alert alert-success">
-          {{ session("message") }}
+   {{-- @if (session()->has('success_message'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">¡Atencion!</strong>
+            <span class="block sm:inline">{{ session("success_message") }}.</span>
         </div>
-      </div>
-    @endif
+   @endif --}}
 
 
 
@@ -45,8 +42,14 @@
 
 
   <!-- Personales About -->
-  <div class="pfwrapper " x-data="{ about: true }" @click.away="about = true">
+  <div class="pfwrapper " x-data="{ about: true }" >
       <!-- Datos personales-->
+      @if (session()->has('success_message'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">¡Atencion!</strong>
+            <span class="block sm:inline">{{ session("success_message") }}.</span>
+        </div>
+      @endif
       <div class="profile--about--show bg-white rounded-lg shadow-lg " x-show="about" >
         <p class=" text-lg font-semibold py-4 pl-4">Quien soy y que aporto a un proyecto:</p>
         <p class="pl-4"> {{ $this->about }}</p>
@@ -70,15 +73,32 @@
 
       <!-- Edicion de Datos personales-->
       <div class="profile--about--edit bg-white rounded-lg shadow-lg " x-show="!about" >
+
+
         @if (session()->has('message-aboutUpdate'))
-          <div
-            class=" container mx-auto bg-green-500 text-lg text-green-100 font-semibold p-6 "
-          >
-            <div class="alert alert-success">
-              {{ session("message-aboutUpdate") }}
+
+            <div class=" success--alert bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-4 shadow-md" role="alert">
+                <div class="flex">
+                    <div class="py-1">
+                        <svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg>
+                    </div>
+                    <div>
+                        <p class="font-bold">{{ session("message-aboutUpdate") }}</p>
+                        <p class="text-sm">puedes cerrar la ventana.</p>
+                    </div>
+                </div>
             </div>
-          </div>
+
         @endif
+
+        @if ($errors->any())
+        <p class="text-red-500 text-xs italic mt-4">
+            Errores
+            {{ session()->get('error') }}
+          </p>
+        @endif
+
+
         <p class=" text-lg font-semibold py-4 pl-4">Datos personales:</p>
         <form wire:submit.prevent="aboutUpdate">
           <div class="Nombre flex flex-col ml-4 mb-4">
@@ -133,14 +153,14 @@
             <p class="text-sm font-thin mb-1">Foto de perfil</p>
             <input
                 class=" inputfile  "
-                wire:model.debounce.500ms="foto"
+                wire:model.debounce.500ms="foto_perfil"
                 type="file"
-                name="foto"
+                name= "{{asset('storage/' . $foto_perfil) }}"
                 class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
                 placeholder="Ingresa una imagen">
             </input>
 
-              @error('foto')
+              @error('foto_perfil')
                 <p class="text-red-500 text-sm italic mt-4">
                 {{ $message }}
                 </p>
@@ -168,6 +188,7 @@
               Guardar
           </button>
             <a
+                wire:click="closeWindow"
               class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
               x-on:click="about = true"
             >
@@ -180,8 +201,9 @@
   </div>
 
   <!-- Contacto -->
-  <div class="pfwrapper " x-data="{ profile: true }" @click.away="profile = true">
+  <div class="pfwrapper " x-data="{ profile: true }" >
     <!-- Datos del contacto-->
+
     <div class="profile--contact--show bg-white rounded-lg shadow-lg " x-show="profile" >
       <p class=" text-lg font-semibold py-4 pl-4">Datos de contacto</p>
 
@@ -257,13 +279,19 @@
     <div class="profile--contact--edit bg-white rounded-lg shadow-lg" x-show="!profile" >
 
       @if (session()->has('message-contactUpdate'))
-        <div
-        class=" container mx-auto bg-green-500 text-lg text-green-100 font-semibold p-6 "
-        >
-          <div class="alert alert-success">
-            {{ session("message-contactUpdate") }}
-          </div>
+
+      <div class=" success--alert bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-4 shadow-md" role="alert">
+        <div class="flex">
+            <div class="py-1">
+              <svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg>
+            </div>
+        <div>
+            <p class="font-bold">{{ session("message-contactUpdate") }}</p>
+            <p class="text-sm">puedes cerrar la ventana.</p>
         </div>
+        </div>
+      </div>
+
       @endif
 
       <p class=" text-lg font-semibold py-4 pl-4">Datos de contacto</p>
@@ -307,7 +335,7 @@
             class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4"
             type="text"
             name="estado"
-            wire:model.debounce.500ms="estado"
+            wire:model.lazy="estado"
             placeholder="Tu estado a 3 letras, p.e. Gro, Mor"
           />
         </div>
@@ -457,6 +485,41 @@
       </div>
   </div>
 
+  <!-- Experiencia -->
+  <div class="pfwrapper " x-data="{ experiencia: true }" >
+    <div class="profile--experiencia--show bg-white rounded-lg shadow-lg" x-show="experiencia">
+      <div class="top--line flex justify-between items-center mx-4">
+        <p class=" text-lg font-semibold py-4">Experiencia</p>
+        <button class="btn" href="" x-on:click="experiencia = false">
+          <svg class="fill-current w-6 h-6" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm7 14h-5v5h-4v-5H5v-4h5V5h4v5h5v4z"/></svg>
+        </button>
+      </div>
+
+      <div class="Experiencia--group ml-4">
+        @empty($experiencia)
+          <p>No has añadido ninguna trabajo</p>
+        @endempty
+        @if(!empty($experiencia))
+          @foreach ($experiencia as $item)
+            <div class="experiencia--institucion px-4 pb-1">
+              {{ $item->empresa }}
+            </div>
+            <div class="educacion--nivel px-4 pb-1">
+              {{ $item->puesto }}
+            </div>
+            <div class="educacion--fecha pl-4 pb-4">{{ $item->fecha }}</div>
+          @endforeach
+        @endif
+      </div>
+
+    </div>
+
+
+    <div class="profile--experiencia--edit bg-white rounded-lg shadow-lg " x-show=" !experiencia">
+      <p class=" text-lg font-semibold my-4 ml-4">Experiencia</p>
+      <livewire:experiencia-component />
+    </div>
+</div>
 
   <!-- Redes Sociales -->
   <div class="pfwrapper" x-data="{ redes: true }" @click.away="redes = true">

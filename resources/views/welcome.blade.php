@@ -485,7 +485,7 @@
         </div>
       </footer>
     </div>
-
+    @include('sweetalert::alert')
     @livewireScripts
     <script type="text/javascript">
       window.addEventListener("scroll", function() {
@@ -495,5 +495,6 @@
         logo.classList.toggle("hidden", window.scrollY > 0);
       });
     </script>
+
   </body>
 </html>

@@ -6,6 +6,9 @@ use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\Notifications\newMsjToExpert;
+
 use App\expert;
 use App\tag;
 use App\expert_tag;
@@ -37,19 +40,25 @@ class ExpertProfile extends Component
   public $educacion;
   public $experiencia;
 
+  public $showProfile = 0;
+
   protected $listeners = ['refreshComponent' => 'actualizaCarreras'];
 
   public function render()
   {
+      logger('Show Prifile');
+      logger($this->showProfile);
     return view('livewire.expert-profile');
   }
 
   public function mount()
   {
+    $this->showProfile = 0;
     logger('En el mount del expert');
     $user = Auth::user();
     logger("usuario");
     logger($user);
+    $user->notify(new newMsjToExpert($user));
 
     $expert = $user->usable;
     logger('Experto');
@@ -83,9 +92,11 @@ class ExpertProfile extends Component
       $this->habilidades = $habilidades;
       $this->about = $expert->habilidades;
 
-      $this->foto_perfil =  $expert->url_image;
+      $this->foto_perfil = $expert->url_image;
+
       logger('quero sacar la foto de:::: ');
       logger( $this->foto_perfil);
+      logger(Storage::url($this->foto_perfil));
 
       $this->educacion = $estudios;
       $this->experiencia = $trabajos;
@@ -110,7 +121,8 @@ class ExpertProfile extends Component
       $this->sigue_estdiando = "0";
       $this->foto_perfil = "img/avatar1.png";
 
-      session()->flash('message', 'No has actualizado tus datos. Hacerlo te ayudará a ser contratado');
+      //session()->flash('toast_success', 'No has actualizado tus datos. Hacerlo te ayudará a ser contratado');
+      toast('No has actualizado tus datos. Hacerlo te ayudará a ser contratado','error');
       logger($user);
     }
 
@@ -125,6 +137,7 @@ class ExpertProfile extends Component
     $user = Auth::user();
     $expert = $user->usable;
     $this->educacion = $expert->titulos;
+    $this->experiencia = $expert->trabajos;
     return view('livewire.expert-profile');
   }
 
@@ -140,7 +153,7 @@ class ExpertProfile extends Component
       'profesion' => 'required|min:7',
       'especialidad' => 'required|min:7',
       'about' => 'required|min:10',
-      'foto' => 'image|max:1024',
+      'foto_perfil' => 'image|max:1024',
     ]);
 
     $user->name = $this->nombre;
@@ -152,7 +165,7 @@ class ExpertProfile extends Component
     $expert->habilidades = $this->about;
 
 
-    $foto_subida = $this->foto->store('fotos','public');
+    $foto_subida = $this->foto_perfil->store('fotos','public');
     logger(asset($foto_subida));
 
     logger('El archivo es 1: ');
@@ -162,6 +175,8 @@ class ExpertProfile extends Component
     logger( $foto_subida);
     $expert->url_image = $foto_subida;
     $this->foto_perfil = $foto_subida;
+
+
 
     $expert->save();
 
@@ -193,6 +208,7 @@ class ExpertProfile extends Component
     logger($expert);
     logger('Saliendo el contactUpdate');
     session()->flash('message-contactUpdate', 'Se actualizaron tus datos');
+    $this->showProfile = false;
   }
 
   public function addTags()
@@ -270,6 +286,30 @@ class ExpertProfile extends Component
     session()->flash('message-contactUpdate', 'Se actualizaron tus datos');
   }
 
+  public function experienciaUpdate()
+  {
+    logger('en el experincia Update');
+    $user = Auth::user();
+    $expert = $user->usable;
+
+    $data = $this->validate([
+      'profesion' => 'required|min:7',
+      'especialidad' => 'required|min:7',
+      'educacion' => 'required|min:7',
+      'aterminacion' => 'required|digits:4',
+    ]);
+
+    $expert->profesion = $this->profesion;
+    $expert->especialidad = $this->especialidad;
+    $expert->educacion = $this->educacion;
+    $expert->terminacion_estudios = $this->aterminacion;
+    $expert->sigue_estudiando = $this->sigue_estdiando;
+
+    $expert->save();
+
+    session()->flash('message-contactUpdate', 'Se actualizaron tus datos');
+  }
+
   public function redesUpdate()
   {
     logger('En rdes update');
@@ -289,6 +329,14 @@ class ExpertProfile extends Component
     $expert->save();
 
     session()->flash('message-redesUpdate', 'Se actualizaron tus datos');
+  }
+
+  public function closeWindow()
+  {
+
+    session()->forget('message-aboutUpdate');
+
+    return view('livewire.expert-profile');
   }
 
 }

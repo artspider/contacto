@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\newMsjToExpert;
 
 use App\expert;
 use App\tag;
@@ -34,6 +35,8 @@ class ExpertDetail extends Component
   public $experiencia;
 
   public $expertId;
+
+  public $mensaje;
 
   public function getExpertProperty()
   {
@@ -77,5 +80,19 @@ class ExpertDetail extends Component
   public function render()
   {
     return view('livewire.expert-detail');
+  }
+
+  public function sendMsgToExpert()
+  {
+    logger('Entraando a SenMsgToExpert.');
+    $user = Auth::user();
+    $expert = Expert::find($this->expertId);
+
+    $msj = collect(["id" => $user->id, "name" => $user->name, "message" => $this->mensaje]);
+
+    logger($msj);
+
+    $expert->notify(new newMsjToExpert($msj));
+    logger('saliendo de SenMsgToExpert');
   }
 }

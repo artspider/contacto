@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\Notifications\newMsjToExpert;
+use Illuminate\Support\Facades\Auth;
+use App\User;
+use App\employer;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,3 +27,8 @@ Route::livewire('/employer/expert-detail/{id}', 'expert-detail')
 
 /* Route::view('login', 'auth.login'); */
 Route::view('prueba', 'prueba');
+
+Route::get( '/x', function() {
+    $user = Auth::user();
+    $user->notify(new newMsjToExpert(Employer::findOrfail(1)));
+});
