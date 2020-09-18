@@ -431,19 +431,18 @@ select:focus {
 .tooltip {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted black;
+    border-bottom: 1px dotted rgb(51, 50, 50);
 }
 .tooltip .tiptext {
     visibility: hidden;
     width: 120px;
-    background-color: black;
-    color: #fff;
+    background-color: whitesmoke;
     text-align: center;
     border-radius: 3px;
     padding: 6px 0;
     position: absolute;
     z-index: 1;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(206, 202, 202, 0.2);
 }
 .tooltip .tiptext::after {
     content: "";
@@ -464,5 +463,5 @@ select:focus {
     margin-left: -5px;
     top: 100%;
     left: 50%;
-    border-color: #2e2e2e transparent transparent transparent;
+    border-color: #fbfbfb transparent transparent transparent;
 }

@@ -72,7 +72,7 @@
               </svg>
             </a>
           </div>
-          <div class="icono">
+          <div class="icono flex">
             <a href="{{ Route('experts-alerts') }}">
               <svg
                 class="h-8 w-8 text-main-yellow"
@@ -89,6 +89,7 @@
                 />
               </svg>
             </a>
+            <livewire:expert-indexalert />
           </div>
           <div class="icono">
             <a href="{{ Route('experts-profile') }}">

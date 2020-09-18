@@ -13,6 +13,9 @@ class ExpertNotification extends Component
     {
         $user = Auth::user();
         $this->expert = $user->usable;
+        foreach ( $this->expert->unreadNotifications as $notification) {
+            $notification->markAsRead();
+        }
     }
 
     public function render()

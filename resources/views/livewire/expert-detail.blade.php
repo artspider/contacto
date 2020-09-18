@@ -5,15 +5,15 @@
             <!-- Header del perfil-->
             <div x-data="{ smodal: false }" class="card__card--header  relative flex align-middle">
 
-                <div x-show="smodal" @click.away="smodal = false" class=" w-1/3 top-60 left-1/3 z-50 border-solid border-4 border-blue-400 fixed">
-                    <div class="modal--header bg-blue-400 pl-4 py-3">
-                        <p class="text-white font-bold text-lg">Envíame un mensaje</p>
+                <div x-show="smodal" @click.away="smodal = false" class=" w-1/3 top-60 left-1/3 z-50 border-solid border-4 border-main-yellow fixed">
+                    <div class="modal--header bg-main-yellow pl-4 py-3">
+                        <p class="text-gray-700 font-bold text-lg">Envíame un mensaje</p>
                     </div>
                     <div class="modal--body bg-white w-full">
                         <textarea wire:model="mensaje" class="modal--msj w-full p-4" placeholder="Escribe aqui tu mensaje..." id="modal--msj" name="modal--msj" rows="4" cols="50"></textarea>
                     </div>
                     <div class="modal--footer bg-gray-50 flex justify-end pr-4">
-                        <a wire:click="sendMsgToExpert" class="btn  text-white bg-blue-400 hover:bg-blue-600 rounded-lg px-4 py-2 my-3 "  href="">Enviar</a>
+                        <a wire:click="sendMsgToExpert" class="btn  text-white bg-gray-900 hover:bg-gray-700 rounded-lg px-4 py-2 my-3 "  href="">Enviar</a>
                     </div>
                 </div>
 
@@ -27,9 +27,9 @@
                     />
                 </div>
                 <div
-                    class="card__card--header__bio z-10 flex flex-col justify-center  text-white ml-52 w-2/5"
+                    class="card__card--header__bio z-10 flex flex-col justify-center  text-white ml-52 w-2/5 xl:w-1/2"
                 >
-                    <p class="text-3xl font-bold leading-8">
+                    <p class="text-2xl  2xl:text-3xl font-bold leading-8">
                         {{ $this->expert->nombre }}
                     </p>
                     <p class=" text-base font-semibold">
@@ -39,7 +39,8 @@
                         class="contactar flex justify-center w-1/2 text-sm mt-4 "
                     >
 
-                        <a x-on:click="smodal=true"   class="btn mr-4">
+                        <a x-on:click="smodal=true"   class="btn mr-4 tooltip top">
+                            <span class="tiptext text-red-500 font-semibold">¡Envíame un mensaje!</span>
                             <svg
                                 class=" fill-current text-white w-6 h-6 "
                                 xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +51,10 @@
                                 />
                             </svg>
                         </a>
-                        <a href="" class="btn mr-4 ">
+
+
+
+                        <a href="tel:7471197393" class="btn mr-4 ">
                             <svg
                                 class=" fill-current text-white w-6 h-6 "
                                 xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +79,7 @@
                     </div>
                 </div>
                 <div
-                    class="card__card--hireme w-2/5 flex justify-end items-center xl:mr-10 2xl:mr-8"
+                    class="card__card--hireme w-2/5 xl:w-2/6 flex justify-end items-center xl:mr-10 2xl:mr-8"
                 >
                     <a href="#"
                         class="btn text-black font-semibold rounded-lg bg-main-yellow p-4"
