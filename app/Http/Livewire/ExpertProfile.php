@@ -58,7 +58,6 @@ class ExpertProfile extends Component
     $user = Auth::user();
     logger("usuario");
     logger($user);
-    $user->notify(new newMsjToExpert($user));
 
     $expert = $user->usable;
     logger('Experto');

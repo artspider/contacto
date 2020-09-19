@@ -20,6 +20,7 @@ Route::view('expert/messages', 'experts.alerts')->name('experts-alerts');
 
 
 Route::view('/employer', 'employers.index');
+Route::view('employer/profile', 'employers.profile')->name('employers-profile');
 Route::view('employer/messages', 'employers.alerts')->name('employers-alerts');
 Route::livewire('/employer/expert-detail/{id}', 'expert-detail')
   ->name('expert-detail')
