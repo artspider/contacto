@@ -91,9 +91,10 @@ class ExpertDetail extends Component
     ]);
 
     $user = Auth::user();
+    $employer = $user->usable;
     $expert = Expert::find($this->expertId);
 
-    $msj = collect(["id" => $user->id, "name" => $user->name, "message" => $this->mensaje]);
+    $msj = collect(["id" => $employer->id, "name" => $employer->nombre, "message" => $this->mensaje]);
 
     logger($msj);
 

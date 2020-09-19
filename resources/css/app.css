@@ -81,7 +81,7 @@
 
         --width-search-box: 60%;
 
-        --width-dbody: 60%;
+        --width-dbody: 90%;
 
         --font-title: 2.5rem;
         --font-sub: 1.65rem;
@@ -140,13 +140,15 @@ html {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        margin: auto;
     }
 
     .ordenes--notification,
     .alerts--notification {
         flex-grow: 0;
         flex-shrink: 0;
-        flex-basis: 42%;
+        flex-basis: 45%;
+        height: 9rem;
     }
 }
 
@@ -435,7 +437,7 @@ select:focus {
 }
 .tooltip .tiptext {
     visibility: hidden;
-    width: 120px;
+    width: 6rem;
     background-color: whitesmoke;
     text-align: center;
     border-radius: 3px;

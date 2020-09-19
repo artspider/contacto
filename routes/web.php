@@ -20,15 +20,7 @@ Route::view('expert/messages', 'experts.alerts')->name('experts-alerts');
 
 
 Route::view('/employer', 'employers.index');
-//Route::view('/employer/expert-detail', 'employers.expert-detail');
+Route::view('employer/messages', 'employers.alerts')->name('employers-alerts');
 Route::livewire('/employer/expert-detail/{id}', 'expert-detail')
   ->name('expert-detail')
   ->layout('employers.layouts.empleador');
-
-/* Route::view('login', 'auth.login'); */
-Route::view('prueba', 'prueba');
-
-Route::get( '/x', function() {
-    $user = Auth::user();
-    $user->notify(new newMsjToExpert(Employer::findOrfail(1)));
-});
