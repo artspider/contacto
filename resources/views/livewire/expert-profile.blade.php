@@ -188,7 +188,7 @@
               Guardar
           </button>
             <a
-                wire:click="closeWindow"
+              wire:click="closeWindow"
               class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
               x-on:click="about = true"
             >

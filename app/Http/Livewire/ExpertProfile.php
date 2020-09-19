@@ -193,9 +193,9 @@ class ExpertProfile extends Component
     $expert = $user->usable;
 
     $data = $this->validate([
-      'telefono' => 'required|min:10',
-      'ciudad' => 'required',
-      'estado' => 'required|max:3',
+      'telefono' => 'required|min:10|max:10|numeric',
+      'ciudad' => 'required|min:3',
+      'estado' => 'required|min:3|max:3',
     ]);
 
     $expert->telefono = $this->telefono;

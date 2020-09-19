@@ -105,4 +105,10 @@ class EmployerProfile extends Component
     session()->flash('message-contactUpdate', 'Se actualizaron tus datos');
 
   }
+
+  public function closeWindow()
+  {
+    session()->forget('message-contactUpdate');
+    return view('livewire.expert-profile');
+  }
 }

@@ -1,4 +1,5 @@
 <div>
+  <!-- Header - Logo y Nombre -->
   <div class="profile--personalData mt-16 mb-8">
     <div class="profile--picture flex justify-center relative h-16 bg-black">
       <img class="profile--avatar rounded-full absolute mt-6 w-20 h-20 lg:w-40 lg:h-40" src=  "{{asset('storage/' . $foto_perfil) }}" >
@@ -18,6 +19,7 @@
     {{ session()->get('error') }}
   </p>
 
+  <!-- Perfil -->
   <div class="profile__body block xl:w-3/5 2xl:w-1/2 lg:mx-auto">
     <!-- Contacto -->
     <div class="pfwrapper " x-data="{ profile: true }" >
@@ -214,6 +216,7 @@
               Guardar
             </button>
             <a
+              wire:click="closeWindow"
               class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
               x-on:click="profile = true"
             >
@@ -224,6 +227,6 @@
         </form>
       </div>
 
-  </div>
+    </div>
   </div>
 </div>

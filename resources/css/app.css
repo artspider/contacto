@@ -91,12 +91,12 @@
     --width-dbody: 90%;
     --width-profile__body: 60%;
 
-    --font-title: 2.5rem;
+    --font-title: 2rem;
     --font-sub: 1.65rem;
   }
 
   @media screen and (min-width: 1366px) {
-    --font-title: 3rem;
+    --font-title: 2.125rem;
     --font-sub: 1.75rem;
 
     --padding-profile-top: 2rem;
@@ -134,7 +134,7 @@
     --expert--card__top-fb: 65%;
     --expert--card__bottom-fb: 35%;
 
-    --font-title: 3.125rem;
+    --font-title: 2.5rem;
     --font-sub: 1.8rem;
   }
 }
