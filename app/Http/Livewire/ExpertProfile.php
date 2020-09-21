@@ -37,10 +37,22 @@ class ExpertProfile extends Component
 
   public $tags;
   public $about; //descripcion personal y de lo que ofrece al empleador o empresa
+
   public $educacion;
+  public $escuela_id;
+  public $escuela;
+  public $carrera;
+  public $fecha_terminacion;
+  public $sigue_estudiando;
+
   public $experiencia;
+  public $trabajo_id;
+  public $empresa;
+  public $puesto;
+  public $periodo;
 
   public $showProfile = 0;
+  public $data_updated;
 
   protected $listeners = ['refreshComponent' => 'actualizaCarreras'];
 
@@ -72,6 +84,8 @@ class ExpertProfile extends Component
     $trabajos = $expert->trabajos;
 
     $this->email = $expert->email;
+
+    $this->escuela_id=0;
     $wasUpdated =  $expert->updated_at->gt($expert->created_at);
 
     if($wasUpdated){
@@ -125,7 +139,7 @@ class ExpertProfile extends Component
       logger($user);
     }
 
-    logger($this->educacion);
+    $this->data_updated = 0;
     logger('Saliendo del mount');
 
   }
@@ -137,6 +151,7 @@ class ExpertProfile extends Component
     $expert = $user->usable;
     $this->educacion = $expert->titulos;
     $this->experiencia = $expert->trabajos;
+    session()->flash('message-educacion', 'Se actualizaron tus datos');
     return view('livewire.expert-profile');
   }
 
@@ -147,13 +162,36 @@ class ExpertProfile extends Component
     $user = Auth::user();
     $expert = $user->usable;
 
-    $data = $this->validate([
-      'nombre' => 'required|min:7',
-      'profesion' => 'required|min:7',
-      'especialidad' => 'required|min:7',
-      'about' => 'required|min:10',
-      'foto_perfil' => 'image|max:1024',
-    ]);
+    if( $this->foto_perfil == $expert->url_image)
+    {
+      logger( "Es la misma foto" );
+      $data = $this->validate([
+        'nombre' => 'required|min:7',
+        'profesion' => 'required|min:7',
+        'especialidad' => 'required|min:7',
+        'about' => 'required|min:10',
+      ]);
+    }else
+    {
+      $data = $this->validate([
+        'nombre' => 'required|min:7',
+        'profesion' => 'required|min:7',
+        'especialidad' => 'required|min:7',
+        'about' => 'required|min:10',
+        'foto_perfil' => 'image|max:1024',
+      ]);
+
+      $foto_subida = $this->foto_perfil->store('fotos','public');
+      logger(asset($foto_subida));
+
+      logger('El archivo es 1: ');
+      logger( $foto_subida);
+      $foto_subida = str_replace("public", "storage", $foto_subida);
+      logger('El archivo es 2: ');
+      logger( $foto_subida);
+      $expert->url_image = $foto_subida;
+      $this->foto_perfil = $foto_subida;
+    }
 
     $user->name = $this->nombre;
     $user->save();
@@ -163,25 +201,11 @@ class ExpertProfile extends Component
     $expert->especialidad = $this->especialidad;
     $expert->habilidades = $this->about;
 
-
-    $foto_subida = $this->foto_perfil->store('fotos','public');
-    logger(asset($foto_subida));
-
-    logger('El archivo es 1: ');
-    logger( $foto_subida);
-    $foto_subida = str_replace("public", "storage", $foto_subida);
-    logger('El archivo es 2: ');
-    logger( $foto_subida);
-    $expert->url_image = $foto_subida;
-    $this->foto_perfil = $foto_subida;
-
-
-
     $expert->save();
+    $this->data_updated = 1;
 
     logger('Saliendo del aboutUpdate');
     session()->flash('message-aboutUpdate', 'Se actualizaron tus datos');
-
   }
 
   public function contactUpdate()
@@ -193,7 +217,7 @@ class ExpertProfile extends Component
     $expert = $user->usable;
 
     $data = $this->validate([
-      'telefono' => 'required|min:10|max:10|numeric',
+      'telefono' => 'required|digits:10',
       'ciudad' => 'required|min:3',
       'estado' => 'required|min:3|max:3',
     ]);
@@ -255,58 +279,84 @@ class ExpertProfile extends Component
     session()->flash('message-addTags', 'Se actualizaron tus datos');
   }
 
-  public function educacionUpdate()
+  public function educacionUpdate($escuela_id)
   {
     logger('en el educacion Update');
-    $user = Auth::user();
-    $expert = $user->usable;
-
-    if($this->sigue_estdiando){
-      logger('Sigue estudiando');
-    }else{
-      logger('No sigue estudiando');
-    }
+    $this->escuela_id = $escuela_id;
+    $escuela = Titulo::find($escuela_id);
 
     $data = $this->validate([
-      'profesion' => 'required|min:7',
-      'especialidad' => 'required|min:7',
-      'educacion' => 'required|min:7',
-      'aterminacion' => 'required|digits:4',
+      'escuela' => 'required|min:7',
+      'carrera' => 'required|min:7',
+      'fecha_terminacion' => 'required|min:4|max:4',
     ]);
 
-    $expert->profesion = $this->profesion;
-    $expert->especialidad = $this->especialidad;
-    $expert->educacion = $this->educacion;
-    $expert->terminacion_estudios = $this->aterminacion;
-    $expert->sigue_estudiando = $this->sigue_estdiando;
+    $escuela->escuela = $data['escuela'];
+    $escuela->carrera = $data['carrera'];
+    $escuela->fecha_terminacion = $data['fecha_terminacion'];
+    $escuela->sigue_estudiando = $this->sigue_estudiando;
+    $escuela->save();
 
-    $expert->save();
-
-    session()->flash('message-contactUpdate', 'Se actualizaron tus datos');
+    session()->flash('message-educacionUpdate', 'Se actualizaron tus datos');
   }
 
-  public function experienciaUpdate()
+  public function educacionDelete($escuela_id)
+  {
+    logger('La escuela a eliminar es: ' . $escuela_id);
+    $escuela = Titulo::find($escuela_id);
+    $escuela->delete();
+    session()->flash('message-educacionUpdate', 'Se actualizaron tus datos');
+    $this->emit('refreshComponent');
+  }
+
+  public function toEditForm($escuela_id)
+  {
+    $this->escuela_id = $escuela_id;
+    $escuela = Titulo::find($escuela_id);
+    $this->escuela = $escuela->escuela;
+    $this->carrera = $escuela->carrera;
+    $this->fecha_terminacion = $escuela->fecha_terminacion;
+    $this->sigue_estudiando = $escuela->sigue_estudiando;
+
+  }
+
+  public function experienciaUpdate($experiencia_id)
   {
     logger('en el experincia Update');
-    $user = Auth::user();
-    $expert = $user->usable;
+    $this->trabajo_id = $experiencia_id;
+    $trabajo = Trabajo::find($experiencia_id);
 
     $data = $this->validate([
-      'profesion' => 'required|min:7',
-      'especialidad' => 'required|min:7',
-      'educacion' => 'required|min:7',
-      'aterminacion' => 'required|digits:4',
+      'empresa' => 'required|min:3',
+      'puesto' => 'required|min:7',
+      'periodo' => 'required|min:10'
     ]);
 
-    $expert->profesion = $this->profesion;
-    $expert->especialidad = $this->especialidad;
-    $expert->educacion = $this->educacion;
-    $expert->terminacion_estudios = $this->aterminacion;
-    $expert->sigue_estudiando = $this->sigue_estdiando;
+    $trabajo->puesto = $this->puesto;
+    $trabajo->empresa = $this->empresa;
+    $trabajo->fecha = $this->periodo;
 
-    $expert->save();
+    $trabajo->save();
 
-    session()->flash('message-contactUpdate', 'Se actualizaron tus datos');
+    session()->flash('message-experiencia', 'Se actualizaron tus datos');
+  }
+
+  public function toEditExperienciaForm($experiencia_id)
+  {
+    $this->trabajo_id = $experiencia_id;
+    $trabajo = Trabajo::find($experiencia_id);
+    $this->empresa = $trabajo->empresa;
+    $this->puesto = $trabajo->puesto;
+    $this->periodo = $trabajo->fecha;
+  }
+
+  public function experienciaDelete($experience_id)
+  {
+    logger('El trabajo a eliminar es: ' . $experience_id);
+    $trabajo = Trabajo::find($experience_id);
+    $trabajo->delete();
+    session()->flash('message-experiencia', 'Se actualizaron tus datos');
+    $this->emit('refreshComponent');
   }
 
   public function redesUpdate()
@@ -330,11 +380,46 @@ class ExpertProfile extends Component
     session()->flash('message-redesUpdate', 'Se actualizaron tus datos');
   }
 
-  public function closeWindow()
+  public function closeWindow($window)
   {
 
-    session()->forget('message-aboutUpdate');
+    logger('En el close window. El valos de window es:' . $window);
+    logger('El valor de data_updated: ' . $this->data_updated);
 
+    if($this->data_updated == 0)
+    {
+      $user = Auth::user();
+      $expert = $user->usable;
+      switch ($window) {
+        case 1:
+          $this->nombre = $expert->nombre;
+          $this->profesion = $expert->profesion;
+          $this->especialidad = $expert->especialidad;
+          $this->about = $expert->habilidades ;
+          break;
+        case 2:
+          $this->telefono = $expert->telefono;
+          $this->ciudad = $expert->ciudad;
+          $this->estado = $expert->estado;
+          break;
+        case 3:
+          break;
+        case 4:
+          break;
+        case 5:
+          break;
+        case 6:
+          $this->facebook = $expert->facebook;
+          $this->twitter = $expert->twitter;
+          $this->instagram = $expert->instagram;
+          break;
+      }
+
+    }
+
+    $this->updated = 0;
+    $this->resetValidation();
+    session()->forget('message-aboutUpdate');
     return view('livewire.expert-profile');
   }
 

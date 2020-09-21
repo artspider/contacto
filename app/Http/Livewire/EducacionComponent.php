@@ -58,6 +58,7 @@ class EducacionComponent extends Component
     ]);
 
     logger($estudios);
+    session()->flash('message-educacion', 'Se actualizaron tus datos');
     $this->emit('refreshComponent');
   }
 }

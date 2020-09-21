@@ -22,6 +22,7 @@ class ExperienciaComponent extends Component
         $user = Auth::user();
         $expert = $user->usable;
         $this->expert_id = $expert->id;
+        $this->empresa="";
         logger('El experto es: ');
         logger($this->expert_id);
 
@@ -51,6 +52,7 @@ class ExperienciaComponent extends Component
     ]);
 
     logger($trabajo);
+    session()->flash('message-experiencia', 'Se actualizaron tus datos');
     $this->emit('refreshComponent');
   }
 }

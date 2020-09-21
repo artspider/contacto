@@ -2,9 +2,6 @@
   <div class="profile--personalData mt-16 mb-8">
     <div class="profile--picture flex justify-center relative h-16 bg-black">
         <img class="profile--avatar rounded-full absolute mt-6 w-20 h-20 lg:w-40 lg:h-40" src=  "{{asset('storage/' . $foto_perfil) }}" >
-
-
-
     </div>
     <p
       class="profile--name text-black text-center font-bold text-2xl mt-12 lg:mt-36"
@@ -24,7 +21,6 @@
     </p>
   </div>
 
-
    {{-- @if (session()->has('success_message'))
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
             <strong class="font-bold">¡Atencion!</strong>
@@ -32,14 +28,11 @@
         </div>
    @endif --}}
 
-
-
   <p class="text-red-500 text-xs italic mt-4">
     {{ session()->get('error') }}
   </p>
 
-  <div class="profile__body dbody block xl:w-3/5 2xl:w-1/2 xl:mx-auto">
-
+  <div class="profile__body block xl:w-3/5 2xl:w-1/2  lg:mx-auto">
 
   <!-- Personales About -->
   <div class="pfwrapper " x-data="{ about: true }" >
@@ -188,7 +181,7 @@
               Guardar
           </button>
             <a
-              wire:click="closeWindow"
+              wire:click="closeWindow( {{ 1 }})"
               class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
               x-on:click="about = true"
             >
@@ -354,6 +347,7 @@
             Guardar
           </button>
           <a
+            wire:click="closeWindow( {{ 2  }}  )"
             class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
             x-on:click="profile = true"
           >
@@ -450,43 +444,188 @@
   </div>
 
   <!-- Educacion -->
-  <div class="pfwrapper " x-data="{ educacion: true }" @click.away="educacion = true">
-      <div class="profile--educacion--show bg-white rounded-lg shadow-lg" x-show="educacion">
+  <div class="pfwrapper " x-data="{ isAddEducation: false, isEditing: false  }">
+
+    <!-- Educacion Show -->
+      <div class="profile--educacion--show bg-white rounded-lg shadow-lg" x-show="!isAddEducation">
+
         <div class="top--line flex justify-between items-center mx-4">
           <p class=" text-lg font-semibold py-4">Educación</p>
-          <button class="btn" href="" x-on:click="educacion = false">
+
+          <!-- boton para agregar Escuela - Education -->
+          <button class="btn" href="" x-on:click="isAddEducation = true">
             <svg class="fill-current w-6 h-6" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm7 14h-5v5h-4v-5H5v-4h5V5h4v5h5v4z"/></svg>
           </button>
         </div>
 
-        <div class="habilidades--group ml-4">
+        <div class="educacion--group ml-4 ">
           @empty($educacion)
             <p>No has añadido ninguna escuela</p>
           @endempty
           @if(!empty($educacion))
             @foreach ($educacion as $item)
-              <div class="educacion--institucion px-4 pb-1">
-                {{ $item->escuela }}
+              <!-- Show Escuelas -->
+              <div x-show="!isEditing" class="show" >
+                <div class="educacion--institucion font-semibold pb-1 ">
+                  {{ $item->escuela }}
+                </div>
+                <div class="educacion--nivel pb-1">
+                  {{ $item->carrera }}
+                </div>
+                <div class="educacion--fecha flex justify-between pb-4">
+                  <p>{{ $item->fecha_terminacion }}</p>
+                  <div class="botonera ">
+                    <!-- Boton Eliminar carrera -->
+                    <button  wire:click="educacionDelete({{ $item->id }})"  class="btn mr-2"  >
+                      <svg class="w-4 h-5 fill-current hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M3 6v18h18V6H3zm5 14c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2H2V2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2H22z"/>
+                      </svg>
+                    </button>
+
+                    <!-- Boton Editar carrera -->
+                    <button wire:click="toEditForm( {{ $item->id }} )"  class="btn" x-on:click="isEditing = true" >
+                      <svg
+                        class=" w-4 h-5 fill-current hover:text-gray-500 "
+                        height="512"
+                        viewBox="0 0 488.471 488.471"
+                        width="512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M288.674 62.363L351.035.002l137.362 137.361-62.361 62.361zM245.547 105.541L0 351.088V488.47h137.382L382.93 242.923z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div class="educacion--nivel px-4 pb-1">
-                {{ $item->carrera }}
-              </div>
-              <div class="educacion--fecha pl-4 pb-4">{{ $item->fecha_terminacion }}</div>
+
             @endforeach
+            <!-- Editar carrera seleccionada -->
+            <div x-show="isEditing">
+              @if (session()->has('message-educacionUpdate'))
+
+                <div class=" success--alert bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-4 shadow-md" role="alert">
+                  <div class="flex">
+                    <div class="py-1">
+                      <svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg>
+                    </div>
+                    <div>
+                      <p class="font-bold">{{ session("message-educacionUpdate") }}</p>
+                      <p class="text-sm">puedes cerrar la ventana.</p>
+                    </div>
+                  </div>
+                </div>
+
+              @endif
+              <div class="educacion-item">
+
+                <!-- edit Escuela -->
+                <form wire:submit.prevent="educacionUpdate({{ $escuela_id }})">
+                  <!-- Institucion -->
+                  <div class="educacion--institucion mx-4 mb-4">
+                    <p class="text-sm font-thin mb-1">Institución</p>
+                    <input
+                      wire:model.debounce.500ms="escuela"
+                      type="text"
+                      name="universidad"
+                      class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
+                      placeholder="Instituto o escuela de la que egresaste">
+                    </input>
+                    @error('universidad')
+                      <p class="text-red-500 text-sm italic mt-4">
+                        {{ $message }}
+                      </p>
+                    @enderror
+                  </div>
+
+                  <!-- Carrera -->
+                  <div class="educacion--nivel mx-4 mb-4">
+                    <p class="text-sm font-thin mb-1">Título o carrera</p>
+                    <input
+                      wire:model.debounce.500ms="carrera"
+                        type="text"
+                        name="profesion"
+                        class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
+                        placeholder="Título o  profesión">
+                    </input>
+                    @error('profesion')
+                      <p class="text-red-500 text-sm italic mt-4">
+                        {{ $message }}
+                      </p>
+                    @enderror
+                  </div>
+
+                  <!-- Año de Terminacion -->
+                  <div class=" flex justify-start ">
+                    <div class="educacion--fecha mx-4  mb-4 w-1/2">
+                      <p class="text-sm font-thin mb-1">Año de terminación</p>
+                      <input
+                        wire:model.debounce.500ms="fecha_terminacion"
+                        type="text"
+                        name="aterminacion"
+                        class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
+                        placeholder="El año en que egresaste, deben ser 4 dígitos">
+                      </input>
+                      @error('aterminacion')
+                        <p class="text-red-500 text-sm italic mt-4">
+                          {{ $message }}
+                        </p>
+                      @enderror
+                    </div>
+
+                    <div class = " flex justify-start items-center w-1/2 ">
+                      <input wire:model.debounce.500ms="sigue_estudiando" class="check w-auto" type="checkbox" name="sigue_estudiando" value="1">
+                      <label for="sigue_estudiando" class="text-sm font-thin ml-2 mb-1">Aún sigo estudiando</label>
+                    </div>
+                    @error('sigue_estudiando')
+                      <p class="text-red-500 text-sm italic mt-4">
+                        {{ $message }}
+                      </p>
+                    @enderror
+                  </div>
+
+                  <!-- Botonera -->
+                  <div class="ml-4 mt-4">
+                    <!-- Guardar -->
+                    <button
+
+                      type="submit"
+                      class="btn text-sm text-white font-medium bg-green-500 shadow-lg rounded-lg px-4 py-3  mr-4"
+                      x-on:click="isEditing = true"
+                    >
+                      Guardar
+                    </button>
+
+                    <!-- Cancelar -->
+                    <a
+                      wire:click="$refresh"
+                      class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
+                      x-on:click="isEditing = false"
+                    >
+                      Cerrar
+                    </a>
+                  </div>
+                </form>
+
+              </div>
+            </div>
           @endif
         </div>
 
       </div>
 
-
-      <div class="profile--educacion--edit bg-white rounded-lg shadow-lg " x-show=" !educacion">
+      <!-- Educacion Add -->
+      <div class="profile--educacion--edit bg-white rounded-lg shadow-lg " x-show="isAddEducation">
         <p class=" text-lg font-semibold my-4 ml-4">Educación</p>
         <livewire:educacion-component />
       </div>
   </div>
 
   <!-- Experiencia -->
-  <div class="pfwrapper " x-data="{ experiencia: true }" >
+  <div class="pfwrapper " x-data="{ experiencia: true, isEditing: false }" >
+
+    <!-- Show Experiencia -->
     <div class="profile--experiencia--show bg-white rounded-lg shadow-lg" x-show="experiencia">
       <div class="top--line flex justify-between items-center mx-4">
         <p class=" text-lg font-semibold py-4">Experiencia</p>
@@ -501,28 +640,150 @@
         @endempty
         @if(!empty($experiencia))
           @foreach ($experiencia as $item)
-            <div class="experiencia--institucion px-4 pb-1">
-              {{ $item->empresa }}
+            <div x-show="!isEditing" class="show" >
+              <div class="experiencia--institucion font-semibold pb-1">
+                {{ $item->empresa }}
+              </div>
+              <div class="educacion--nivel pb-1">
+                {{ $item->puesto }}
+              </div>
+              <div class="educacion--fecha flex justify-between pb-4">
+                <p>{{ $item->fecha }}</p>
+                <div class="botonera ">
+                  <!-- Boton Eliminar carrera -->
+                  <button  wire:click="experienciaDelete({{ $item->id }})"  class="btn mr-2"  >
+                    <svg class="w-4 h-5 fill-current hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                      <path d="M3 6v18h18V6H3zm5 14c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2H2V2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2H22z"/>
+                    </svg>
+                  </button>
+
+                  <!-- Boton Editar carrera -->
+                  <button wire:click="toEditExperienciaForm({{ $item->id }})"  class="btn" x-on:click="isEditing = true" >
+                    <svg
+                      class=" w-4 h-5 fill-current hover:text-gray-500 "
+                      height="512"
+                      viewBox="0 0 488.471 488.471"
+                      width="512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M288.674 62.363L351.035.002l137.362 137.361-62.361 62.361zM245.547 105.541L0 351.088V488.47h137.382L382.93 242.923z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <hr class="mb-4 border-gray-400 border-t-2">
             </div>
-            <div class="educacion--nivel px-4 pb-1">
-              {{ $item->puesto }}
-            </div>
-            <div class="educacion--fecha pl-4 pb-4">{{ $item->fecha }}</div>
           @endforeach
+          <div x-show="isEditing">
+            @if (session()->has('message-experiencia'))
+
+              <div class=" success--alert bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-4 shadow-md" role="alert">
+                <div class="flex">
+                  <div class="py-1">
+                    <svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg>
+                  </div>
+                  <div>
+                    <p class="font-bold">{{ session("message-experiencia") }}</p>
+                    <p class="text-sm">puedes cerrar la ventana.</p>
+                  </div>
+                </div>
+              </div>
+
+            @endif
+
+            <form wire:submit.prevent="experienciaUpdate({{ $trabajo_id }})">
+              <!-- Empresa -->
+              <div class="trabajo--empresa mx-4 mb-4">
+                <p class="text-sm font-thin mb-1">Empresa</p>
+                <input
+                  wire:model.debounce.500ms="empresa"
+                  type="text"
+                  name="empresa"
+                  class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
+                  placeholder="La empresa para la que prestaste tus servicios">
+                </input>
+                @error('empresa')
+                  <p class="text-red-500 text-sm italic mt-4">
+                    {{ $message }}
+                  </p>
+                @enderror
+              </div>
+
+              <!-- Puesto o Actividad -->
+              <div class="trabajo--puesto mx-4 mb-4">
+                <p class="text-sm font-thin mb-1">Puesto o actividad</p>
+                <input
+                  wire:model.debounce.500ms="puesto"
+                  type="text"
+                  name="puesto"
+                  class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
+                  placeholder="Puesto o atividad principal">
+                </input>
+                @error('puesto')
+                  <p class="text-red-500 text-sm italic mt-4">
+                    {{ $message }}
+                  </p>
+                @enderror
+              </div>
+
+              <!-- Periodo -->
+              <div class=" flex justify-start ">
+                <div class="trabajo--periodo mx-4  mb-4 w-1/2">
+                  <p class="text-sm font-thin mb-1">Periodo</p>
+                  <input
+                    wire:model.debounce.500ms="periodo"
+                    type="text"
+                    name="periodo"
+                    class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
+                    placeholder="El perdiodo en el que estviste en la empresa">
+                  </input>
+                  @error('periodo')
+                    <p class="text-red-500 text-sm italic mt-4">
+                      {{ $message }}
+                    </p>
+                  @enderror
+                </div>
+
+                <!-- Botonera -->
+                <div class="ml-4 mt-4">
+                  <!-- Boton Guardar -->
+                  <button
+                    type="submit"
+                    class="btn text-sm text-white font-medium bg-green-500 shadow-lg rounded-lg px-4 py-3  mr-4"
+                    x-on:click="isEditing = true"
+                  >
+                    Guardar
+                  </button>
+
+                  <!-- Boton cancelar -->
+                  <a
+                    wire:click="$refresh"
+                    class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
+                    x-on:click="isEditing = false"
+                  >
+                    Cerrar
+                  </a>
+                </div>
+              </div>
+            </form>
+          </div>
         @endif
       </div>
 
     </div>
 
-
+    <!-- Agregar Trabajo -->
     <div class="profile--experiencia--edit bg-white rounded-lg shadow-lg " x-show=" !experiencia">
       <p class=" text-lg font-semibold my-4 ml-4">Experiencia</p>
       <livewire:experiencia-component />
     </div>
-</div>
+
+  </div>
 
   <!-- Redes Sociales -->
-  <div class="pfwrapper" x-data="{ redes: true }" @click.away="redes = true">
+  <div class="pfwrapper" x-data="{ redes: true }" >
     <div class="profile--redessociales--show bg-white rounded-lg shadow-lg mb-20" x-show="redes">
       <p class=" text-lg font-semibold py-4 pl-4">Redes sociales</p>
 
@@ -574,13 +835,19 @@
     <div class="profile--redessociales-edit bg-white rounded-lg shadow-lg mb-20" x-show="!redes">
 
       @if (session()->has('message-redesUpdate'))
-        <div
-        class=" container mx-auto bg-green-500 text-lg text-green-100 font-semibold p-6 "
-        >
-          <div class="alert alert-success">
-            {{ session("message-redesUpdate") }}
-          </div>
-        </div>
+
+            <div class=" success--alert bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-4 shadow-md" role="alert">
+                <div class="flex">
+                    <div class="py-1">
+                        <svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg>
+                    </div>
+                    <div>
+                        <p class="font-bold">{{ session("message-redesUpdate") }}</p>
+                        <p class="text-sm">puedes cerrar la ventana.</p>
+                    </div>
+                </div>
+            </div>
+
       @endif
 
       <p class=" text-lg font-semibold py-4 pl-4">Redes sociales</p>
@@ -642,6 +909,7 @@
           Guardar
         </button>
         <a
+        wire:click="closeWindow( {{ 6 }})"
           class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
           x-on:click="redes = true"
         >

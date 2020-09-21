@@ -411,7 +411,8 @@ p.subtitulo {
 .error--alert {
   position: fixed;
   top: 7rem;
-  left: 2rem;
+  right: 2rem;
+  width: 23%;
 }
 
 [x-cloak] {
@@ -484,4 +485,8 @@ select:focus {
   top: 100%;
   left: 50%;
   border-color: #fbfbfb transparent transparent transparent;
+}
+
+hr:last-child {
+  visibility: hidden;
 }

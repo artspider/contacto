@@ -1,4 +1,21 @@
 <div>
+
+  @if (session()->has('message-educacion'))
+
+    <div class=" success--alert bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-4 shadow-md" role="alert">
+      <div class="flex">
+        <div class="py-1">
+          <svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg>
+        </div>
+        <div>
+          <p class="font-bold">{{ session("message-educacion") }}</p>
+          <p class="text-sm">puedes cerrar la ventana.</p>
+        </div>
+      </div>
+    </div>
+
+  @endif
+
   <form wire:submit.prevent="createCarrera">
 
     <div class="educacion--institucion mx-4 mb-4">
@@ -41,7 +58,7 @@
           type="text"
           name="aterminacion"
           class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
-          placeholder="El año en que egresaste">
+          placeholder="El año en que egresaste, deben ser 4 dígitos">
         </input>
         @error('aterminacion')
           <p class="text-red-500 text-sm italic mt-4">
@@ -62,17 +79,20 @@
     </div>
 
     <div class="ml-4 mt-4">
+      <!-- Guardar -->
       <button
         type="submit"
         class="btn text-sm text-white font-medium bg-green-500 shadow-lg rounded-lg px-4 py-3  mr-4"
-        x-on:click="educacion = false"
+        x-on:click="isAddEducation = true"
       >
         Guardar
       </button>
+
+      <!-- Cancelar -->
       <a
         wire:click="$refresh"
         class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
-        x-on:click="educacion = true"
+        x-on:click="isAddEducation = false"
       >
         Cerrar
       </a>
