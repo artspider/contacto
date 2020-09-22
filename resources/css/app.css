@@ -93,6 +93,32 @@
 
     --font-title: 2rem;
     --font-sub: 1.65rem;
+
+    .expert--card {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      grid-template-rows: 1fr 1fr 1fr 1fr;
+      grid-template-areas:
+        "profile-pic name-tags"
+        "profile-pic name-tags"
+        "about about"
+        "btn-contactar btn-contactar";
+    }
+
+    .profile-pic {
+      grid-area: profile-pic;
+      justify-self: center;
+      align-self: center;
+    }
+    .name-tags {
+      grid-area: name-tags;
+    }
+    .about {
+      grid-area: about;
+    }
+    .btn-contactar {
+      grid-area: btn-contactar;
+    }
   }
 
   @media screen and (min-width: 1366px) {
@@ -119,33 +145,6 @@
 
     .expert--card {
       flex: 0 0 47%;
-    }
-
-    .expert--card {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      grid-template-rows: 1fr 1fr 1fr 1fr;
-      grid-template-areas:
-        "profile-pic name-tags"
-        "profile-pic name-tags"
-        "about about"
-        "btn-contactar btn-contactar";
-    }
-
-    .profile-pic {
-      grid-area: profile-pic;
-      justify-self: center;
-      align-self: center;
-    }
-    .name-tags {
-      grid-area: name-tags;
-    }
-    .about {
-      grid-area: about;
-    }
-    .btn-contactar {
-      grid-area: btn-contactar;
     }
   }
 

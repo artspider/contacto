@@ -72,7 +72,7 @@
             <p class="nombre text-lg font-bold"> {{ $item->users->name }} </p>
             <p class="especialidad font-semibold text-base"> {{ $item->profesion }}</p>
             <p class="cedula font-semibold text-sm"> {{ $item->cedula }}</p>
-            <div class="tags flex flex-wrap my-4 ">
+            <div class="tags flex flex-wrap justify-center lg:justify-start my-4 ">
               @foreach ($item->tags as $tag)
                 <div class=" text-white text-sm text-center bg-gray-700 rounded-full shadow-sm px-5 py-1 mr-1 mb-1">
                   {{$tag->name}}
