@@ -95,21 +95,6 @@ class EmployerIndex extends Component
     logger("Se busca: ");
     logger($this->search_tag);
     $tags = Tag::with('experts')->name($this->search_tag)->get();
-    logger("Se encontraron estos tags: ");
-    //logger($tags);
-
-    logger("Se encontraron estos expertos: ");
-    //$r = $tags->pluck('experts')->collapse();
-    //$this->all_experts = $r->all();
-    //logger($this->all_experts);
-
-
-
-    logger('Saliendo del searchExpert en el index--exployer');
-   /*  return view('livewire.employer-index', [
-      'experts' => $this->all_experts
-    ]); */
-
   }
 
   public function showExpert($id)
