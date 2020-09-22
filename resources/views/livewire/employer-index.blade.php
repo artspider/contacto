@@ -66,10 +66,10 @@
       @foreach ($experts as $item)
         <div wire:click="showExpert( {{ $item->id }})" class="expert--card bg-white border-l-4 border-orange-500 rounded-lg shadow-lg mx-4 my-4 py-2">
           <div class="profile-pic py-2">
-            <img class="expert__avatar w-20 h-20 2xl:w-32 2xl:h-36 rounded-full m-auto lg:m-0" src="img/avatar1.png" alt="">
+            <img class="expert__avatar w-20 h-20 xl:w-24 xl:h-24 2xl:w-36 2xl:h-36 rounded-full m-auto lg:m-0" src="{{asset('storage/' . $item->url_image) }}" alt="">
           </div>
           <div class="name-tags flex flex-col lg:block justify-center items-center py-2">
-            <p class="nombre text-lg font-bold"> {{ $item->users->name }} </p>
+            <p class="nombre text-lg font-bold"> {{ $item->nombre }} </p>
             <p class="especialidad font-semibold text-base"> {{ $item->profesion }}</p>
             <p class="cedula font-semibold text-sm"> {{ $item->cedula }}</p>
             <div class="tags flex flex-wrap justify-center lg:justify-start my-4 ">
@@ -81,7 +81,7 @@
             </div>
           </div>
           <div class="about mx-4 my-2">
-            <p class="habilidades text-justify "> {{ \Illuminate\Support\Str::limit($item->habilidades, 265, '...')  }}</p>
+            <p class="habilidades text-justify leading-tight "> {{ \Illuminate\Support\Str::limit($item->habilidades, 265, '...')  }}</p>
           </div>
           <div class="btn-contactar mx-4 my-2">
             <button class="btn btn--secondary w-full font-bold rounded-lg px-4 py-6 ">Contactar</button>

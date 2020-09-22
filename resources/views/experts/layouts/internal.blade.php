@@ -8,7 +8,7 @@
     />
     <meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Subcontrata</title>
+    <title>{{ config('app.name', 'Subcontrata') }}</title>
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
     <link
