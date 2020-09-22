@@ -1,6 +1,6 @@
 <div>
 
-    <div class="body--container dbody mt-36 mx-auto ">
+    <div class="profile__body block mt-36 mx-auto ">
         <div class="card mt-10 ">
             <!-- Header del perfil-->
             <div x-data="{ smodal: false }" class="card__card--header  relative flex align-middle">
