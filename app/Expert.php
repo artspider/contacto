@@ -43,6 +43,13 @@ class expert extends Model
       return $this->morphOne('App\User', 'usable');
     }
 
+    public function scopeProfesion($query, $profesion)
+    {
+      if($profesion)
+        return $query->where('profesion', 'LIKE', "%$profesion%")
+                   ->orWhere('especialidad', 'LIKE', "%$profesion%");
+    }
+
     public function scopeCiudad($query, $ciudad)
     {
       if($ciudad)

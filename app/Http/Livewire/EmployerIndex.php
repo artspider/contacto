@@ -73,6 +73,10 @@ class EmployerIndex extends Component
         logger($this->search_ciudad);
         logger($this->search_ciudad);
         $r = $r->where('ciudad',  $this->search_ciudad);
+        $ex_profesion = Expert::profesion($this->search_tag)->get();
+        logger('Experto por profesion' . $ex_profesion);
+
+
       }
       logger($r);
     }

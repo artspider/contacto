@@ -204,6 +204,8 @@ class ExpertProfile extends Component
     $expert->save();
     $this->data_updated = 1;
 
+    sleep(1);
+
     logger('Saliendo del aboutUpdate');
     session()->flash('message-aboutUpdate', 'Se actualizaron tus datos');
   }
