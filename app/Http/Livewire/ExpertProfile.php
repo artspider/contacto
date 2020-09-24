@@ -4,10 +4,12 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Collection;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Notifications\newMsjToExpert;
+use Illuminate\Support\Facades\Http;
 
 use App\expert;
 use App\tag;
@@ -54,17 +56,121 @@ class ExpertProfile extends Component
   public $showProfile = 0;
   public $data_updated;
 
+  public $estados;
+  public $ciudades;
+
+  private $coll_estados;
+
   protected $listeners = ['refreshComponent' => 'actualizaCarreras'];
+
+  public function load()
+  {
+    $this->coll_estados = collect([
+      ['estado' => 'Aguascalientes', 'corto' => 'ags'],
+      ['estado' => 'Baja California', 'corto' => 'bcn'],
+      ['estado' => 'Baja California Sur', 'corto' => 'bcs'],
+      ['estado' => 'Campeche', 'corto' => 'cam'],
+      ['estado' => 'Coahuila', 'corto' => 'coa'],
+      ['estado' => 'Colima', 'corto' => 'col'],
+      ['estado' => 'Chiapas', 'corto' => 'chp'],
+      ['estado' => 'Chihuahua', 'corto' => 'chh'],
+      ['estado' => 'Ciudad de Mexico', 'corto' => 'cmx'],
+      ['estado' => 'Durango', 'corto' => 'dur'],
+      ['estado' => 'Guanajuato', 'corto' => 'gua'],
+      ['estado' => 'Guerrero', 'corto' => 'gro'],
+      ['estado' => 'Hidalgo', 'corto' => 'hid'],
+      ['estado' => 'Jalisco', 'corto' => 'jal'],
+      ['estado' => 'México', 'corto' => 'mex'],
+      ['estado' => 'Michoacán', 'corto' => 'mic'],
+      ['estado' => 'Morelos', 'corto' => 'mor'],
+      ['estado' => 'Nayarit', 'corto' => 'nay'],
+      ['estado' => 'Nuevo León', 'corto' => 'nle'],
+      ['estado' => 'Oaxaca', 'corto' => 'oax'],
+      ['estado' => 'Puebla', 'corto' => 'pue'],
+      ['estado' => 'Querétaro', 'corto' => 'qro'],
+      ['estado' => 'Quintana Roo', 'corto' => 'roo'],
+      ['estado' => 'San Luis Potosi', 'corto' => 'slp'],
+      ['estado' => 'Sinaloa', 'corto' => 'sin'],
+      ['estado' => 'Sonora', 'corto' => 'son'],
+      ['estado' => 'Tabasco', 'corto' => 'tab'],
+      ['estado' => 'Tamaulipas', 'corto' => 'tam'],
+      ['estado' => 'Tlaxcala', 'corto' => 'tla'],
+      ['estado' => 'Veracruz', 'corto' => 'ver'],
+      ['estado' => 'Yucatán', 'corto' => 'yuc'],
+      ['estado' => 'Zacatecas', 'corto' => 'zac'],
+    ]);
+  }
 
   public function render()
   {
-      logger('Show Prifile');
-      logger($this->showProfile);
+    $this->load();
+    logger('En el render ... ');
+
+    $estado_buscado = $this->estado;
+    $estado_buscado = ltrim($estado_buscado);
+    $estado_buscado = rtrim($estado_buscado);
+    logger(ltrim($this->estado));
+    if (strlen($this->estado) > 3)
+    {
+      logger('entro al if');
+      $estado_actual = $this->coll_estados->firstWhere('estado', $estado_buscado);
+    }
+    else
+    {
+      logger('entro al else');
+      $estado_actual = $this->coll_estados->firstWhere('corto', strtolower($estado_buscado));
+    }
+    logger($estado_actual);
+    if($estado_actual != "")
+    {
+      $this->ciudades = Http::get('https://api-sepomex.hckdrk.mx/query/get_municipio_por_estado/' . $estado_actual['estado'] )['response']['municipios'];
+    }
+
+    logger('Show Prifile');
+    logger($this->showProfile);
     return view('livewire.expert-profile');
   }
 
   public function mount()
   {
+
+    $this->coll_estados = collect([
+      ['estado' => 'Aguascalientes', 'corto' => 'ags'],
+      ['estado' => 'Baja California', 'corto' => 'bcn'],
+      ['estado' => 'Baja California Sur', 'corto' => 'bcs'],
+      ['estado' => 'Campeche', 'corto' => 'cam'],
+      ['estado' => 'Coahuila', 'corto' => 'coa'],
+      ['estado' => 'Colima', 'corto' => 'col'],
+      ['estado' => 'Chiapas', 'corto' => 'chp'],
+      ['estado' => 'Chihuahua', 'corto' => 'chh'],
+      ['estado' => 'Ciudad de Mexico', 'corto' => 'cmx'],
+      ['estado' => 'Durango', 'corto' => 'dur'],
+      ['estado' => 'Guanajuato', 'corto' => 'gua'],
+      ['estado' => 'Guerrero', 'corto' => 'gro'],
+      ['estado' => 'Hidalgo', 'corto' => 'hid'],
+      ['estado' => 'Jalisco', 'corto' => 'jal'],
+      ['estado' => 'México', 'corto' => 'mex'],
+      ['estado' => 'Michoacán', 'corto' => 'mic'],
+      ['estado' => 'Morelos', 'corto' => 'mor'],
+      ['estado' => 'Nayarit', 'corto' => 'nay'],
+      ['estado' => 'Nuevo León', 'corto' => 'nle'],
+      ['estado' => 'Oaxaca', 'corto' => 'oax'],
+      ['estado' => 'Puebla', 'corto' => 'pue'],
+      ['estado' => 'Querétaro', 'corto' => 'qro'],
+      ['estado' => 'Quintana Roo', 'corto' => 'roo'],
+      ['estado' => 'San Luis Potosi', 'corto' => 'slp'],
+      ['estado' => 'Sinaloa', 'corto' => 'sin'],
+      ['estado' => 'Sonora', 'corto' => 'son'],
+      ['estado' => 'Tabasco', 'corto' => 'tab'],
+      ['estado' => 'Tamaulipas', 'corto' => 'tam'],
+      ['estado' => 'Tlaxcala', 'corto' => 'tla'],
+      ['estado' => 'Veracruz', 'corto' => 'ver'],
+      ['estado' => 'Yucatán', 'corto' => 'yuc'],
+      ['estado' => 'Zacatecas', 'corto' => 'zac'],
+    ]);
+
+    $this->estados = $this->coll_estados->pluck('estado')->all();
+
     $this->showProfile = 0;
     logger('En el mount del expert');
     $user = Auth::user();
@@ -124,8 +230,8 @@ class ExpertProfile extends Component
       $this->especialidad = "sin datos";
       $this->cedula = "sin datos";
       $this->educacion = [];
-      $this->ciudad = "sin datos";
-      $this->estado = "npi";
+      $this->ciudad = "";
+      $this->estado = "";
       $this->facebook = "sin datos";
       $this->instagram = "sin datos";
       $this->twitter = "sin datos";
@@ -212,8 +318,8 @@ class ExpertProfile extends Component
 
   public function contactUpdate()
   {
-
     logger('En el contactUpdate');
+    $this->load();
 
     $user = Auth::user();
     $expert = $user->usable;
@@ -221,12 +327,14 @@ class ExpertProfile extends Component
     $data = $this->validate([
       'telefono' => 'required|digits:10',
       'ciudad' => 'required|min:3',
-      'estado' => 'required|min:3|max:3',
+      'estado' => 'required|min:3|max:50',
     ]);
 
     $expert->telefono = $this->telefono;
     $expert->ciudad = $this->ciudad;
-    $expert->estado = $this->estado;
+
+    $estado_actual = $this->coll_estados->firstWhere('estado', trim($this->estado));
+    $expert->estado = ucfirst($estado_actual['corto']);
     $expert->save();
 
     logger('Datos del experto: ');

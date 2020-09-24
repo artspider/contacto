@@ -316,34 +316,41 @@
             @enderror
           </div>
 
-          <!-- Ciudad -->
-          <div class="profile--ciudad Nombre flex flex-col ml-4 mb-4">
-            <p class="text-sm font-thin mb-1">Ciudad</p>
-            <input
-              class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4"
-              type="text"
-              name="ciudad"
-              wire:model.debounce.500ms="ciudad"
-            />
-            @error('ciudad')
-              <p class="text-red-500 text-sm italic ml-14 mb-1">
+          <!-- Estado -->
+          <div class="profile--estado Nombre flex flex-col ml-4 mb-4">
+            <p class="text-sm font-thin mb-1">Estado</p>
+            <select class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4" name="estados" id="estados" wire:model.lazy="estado" placeholder="Selecciona tu estado">
+              <option value=""></option>
+                @foreach ($estados as $estado_sel)
+                  <option value=" {{ $estado_sel}} "> {{ $estado_sel }} </option>
+                @endforeach
+            </select>
+            @error('estado')
+              <p class="text-red-500 text-sm italic mt-4">
                 {{ $message }}
               </p>
             @enderror
           </div>
 
-          <!-- Estado -->
-          <div class="profile--estado Nombre flex flex-col ml-4 mb-4">
-            <p class="text-sm font-thin mb-1">Estado</p>
-            <input
+          <!-- Ciudad -->
+          <div class="profile--ciudad Nombre flex flex-col ml-4 mb-4">
+            <p class="text-sm font-thin mb-1">Ciudad</p>
+            <select class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4" name="ciudades" id="ciudades" wire:model.lazy="ciudad" placeholder="Selecciona tu ciudad">
+              <option value=""></option>
+              @isset($ciudades)
+                @foreach ($ciudades as $cuidad_sel)
+                  <option value=" {{ $cuidad_sel}} "> {{ $cuidad_sel }} </option>
+                @endforeach
+              @endisset
+            </select>
+            {{-- <input
               class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4"
               type="text"
-              name="estado"
-              wire:model.lazy="estado"
-              placeholder="Tu estado a 3 letras, p.e. Gro, Mor"
-            />
-            @error('estado')
-              <p class="text-red-500 text-sm italic mt-4">
+              name="ciudad"
+              wire:model.debounce.500ms="ciudad"
+            /> --}}
+            @error('ciudad')
+              <p class="text-red-500 text-sm italic ml-14 mb-1">
                 {{ $message }}
               </p>
             @enderror

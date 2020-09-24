@@ -380,6 +380,10 @@ p.subtitulo {
   width: 95%;
 }
 
+.pfwrapper select {
+  width: 95%;
+}
+
 .about-edit {
   width: 95%;
 }
