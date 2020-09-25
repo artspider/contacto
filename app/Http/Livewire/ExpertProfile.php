@@ -331,6 +331,8 @@ class ExpertProfile extends Component
     ]);
 
     $expert->telefono = $this->telefono;
+    $this->ciudad = ltrim($this->ciudad);
+    $this->ciudad = rtrim($this->ciudad);
     $expert->ciudad = $this->ciudad;
 
     $estado_actual = $this->coll_estados->firstWhere('estado', trim($this->estado));
