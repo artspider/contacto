@@ -53,6 +53,6 @@ class expert extends Model
     public function scopeCiudad($query, $ciudad)
     {
       if($ciudad)
-        return $query->where('ciudad', 'LIKE', "%$ciudad%");
+        return $query->Where('ciudad', 'LIKE', "%$ciudad%");
     }
 }

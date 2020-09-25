@@ -71,12 +71,11 @@ class EmployerIndex extends Component
       $r = $tags->pluck('experts')->collapse();
       if($this->search_ciudad != ""){
         logger($this->search_ciudad);
-        logger($this->search_ciudad);
-        $r = $r->where('ciudad',  $this->search_ciudad);
-        $ex_profesion = Expert::profesion($this->search_tag)->get();
-        logger('Experto por profesion' . $ex_profesion);
-
-
+        $r = $r->where('ciudad','=',$this->search_ciudad);
+        $ex_profesion_ciudad = Expert::profesion($this->search_tag)->ciudad($this->search_ciudad)->get();
+        logger('Experto por profesion' . $ex_profesion_ciudad);
+        $r = $r->merge($ex_profesion_ciudad);
+        $r = collect($r)->unique('id');
       }
       logger($r);
     }
