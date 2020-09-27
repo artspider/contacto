@@ -59,6 +59,14 @@ class EducacionComponent extends Component
 
     logger($estudios);
     session()->flash('message-educacion', 'Se actualizaron tus datos');
-    $this->emit('refreshComponent');
+    $this->resets_();
+    $this->emit('refreshCarrera');
+  }
+
+  public function resets_()
+  {
+    $this->escuela = null;
+    $this->carrera = null;
+    $this->fecha_terminacion = null;
   }
 }

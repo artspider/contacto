@@ -61,7 +61,7 @@ class ExpertProfile extends Component
 
   private $coll_estados;
 
-  protected $listeners = ['refreshComponent' => 'actualizaCarreras'];
+  protected $listeners = ['refreshCarrera' => 'actualizaCarreras', 'refreshExperiencia' => 'actualizaExperiencia'];
 
   public function load()
   {
@@ -103,30 +103,8 @@ class ExpertProfile extends Component
 
   public function render()
   {
-    $this->load();
-    logger('En el render ... ');
-
-    $estado_buscado = $this->estado;
-    $estado_buscado = ltrim($estado_buscado);
-    $estado_buscado = rtrim($estado_buscado);
-    logger(ltrim($this->estado));
-    if (strlen($this->estado) > 3)
-    {
-      logger('entro al if');
-      $estado_actual = $this->coll_estados->firstWhere('estado', $estado_buscado);
-    }
-    else
-    {
-      logger('entro al else');
-      $estado_actual = $this->coll_estados->firstWhere('corto', strtolower($estado_buscado));
-    }
-    logger($estado_actual);
-    if($estado_actual != "")
-    {
-      $this->ciudades = Http::get('https://api-sepomex.hckdrk.mx/query/get_municipio_por_estado/' . $estado_actual['estado'] )['response']['municipios'];
-    }
-
-    logger('Show Prifile');
+    logger('En el render');
+    logger('Show Profile');
     logger($this->showProfile);
     return view('livewire.expert-profile');
   }
@@ -250,15 +228,24 @@ class ExpertProfile extends Component
 
   }
 
+  public function actualizaExperiencia()
+  {
+    logger('En actualiza Experiencia');
+    $user = Auth::user();
+    $expert = $user->usable;
+    $this->experiencia = $expert->trabajos;
+    session()->flash('message-experiencia', 'Se actualizaron tus datos');
+    return view('livewire.expert-profile');
+  }
+
   public function actualizaCarreras()
   {
     logger('En actualizaCarreras');
     $user = Auth::user();
     $expert = $user->usable;
     $this->educacion = $expert->titulos;
-    $this->experiencia = $expert->trabajos;
-    session()->flash('message-educacion', 'Se actualizaron tus datos');
-    return view('livewire.expert-profile');
+    //session()->flash('message-educacion', 'Se actualizaron tus datos');
+    //return view('livewire.expert-profile');
   }
 
   public function aboutUpdate()
@@ -309,8 +296,6 @@ class ExpertProfile extends Component
 
     $expert->save();
     $this->data_updated = 1;
-
-    sleep(1);
 
     logger('Saliendo del aboutUpdate');
     session()->flash('message-aboutUpdate', 'Se actualizaron tus datos');
@@ -418,7 +403,8 @@ class ExpertProfile extends Component
     $escuela = Titulo::find($escuela_id);
     $escuela->delete();
     session()->flash('message-educacionUpdate', 'Se actualizaron tus datos');
-    $this->emit('refreshComponent');
+    $this->resets_();
+    $this->emit('refreshCarrera');
   }
 
   public function toEditForm($escuela_id)
@@ -468,7 +454,7 @@ class ExpertProfile extends Component
     $trabajo = Trabajo::find($experience_id);
     $trabajo->delete();
     session()->flash('message-experiencia', 'Se actualizaron tus datos');
-    $this->emit('refreshComponent');
+    $this->emit('refreshExperiencia');
   }
 
   public function redesUpdate()
@@ -533,6 +519,60 @@ class ExpertProfile extends Component
     $this->resetValidation();
     session()->forget('message-aboutUpdate');
     return view('livewire.expert-profile');
+  }
+
+  public function loadCities()
+  {
+    $this->load();
+    logger('En el loadCities ... ');
+
+    $estado_buscado = $this->estado;
+    $estado_buscado = ltrim($estado_buscado);
+    $estado_buscado = rtrim($estado_buscado);
+    logger(ltrim($this->estado));
+    if (strlen($this->estado) > 3)
+    {
+      logger('entro al if');
+      $estado_actual = $this->coll_estados->firstWhere('estado', $estado_buscado);
+    }
+    else
+    {
+      logger('entro al else');
+      $estado_actual = $this->coll_estados->firstWhere('corto', strtolower($estado_buscado));
+    }
+    logger($estado_actual);
+    if($estado_actual != "")
+    {
+      $this->ciudades = Http::get('https://api-sepomex.hckdrk.mx/query/get_municipio_por_estado/' . $estado_actual['estado'] )['response']['municipios'];
+    }
+  }
+
+  public function hydrate()
+  {
+    logger('En el hydrate');
+  }
+
+  public function dehydrate()
+    {
+        logger('En el dehidrate');
+    }
+
+  public function updatedestado()
+  {
+    $this->load();
+    logger('Se actualizo estado');
+    $estado_buscado = $this->estado;
+    $estado_buscado = ltrim($estado_buscado);
+    $estado_buscado = rtrim($estado_buscado);
+    $estado_actual = $this->coll_estados->firstWhere('estado', $estado_buscado);
+    $this->ciudades = Http::get('https://api-sepomex.hckdrk.mx/query/get_municipio_por_estado/' . $estado_actual['estado'] )['response']['municipios'];
+  }
+
+  public function resets_()
+  {
+    $this->escuela = null;
+    $this->carrera = null;
+    $this->fecha_terminacion = null;
   }
 
 }

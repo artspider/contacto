@@ -16,6 +16,7 @@
 
   @endif
 
+
   <form wire:submit.prevent="createCarrera">
 
     <div class="educacion--institucion mx-4 mb-4">
@@ -27,7 +28,7 @@
         class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
         placeholder="Instituto o escuela de la que egresaste">
       </input>
-      @error('universidad')
+      @error('escuela')
         <p class="text-red-500 text-sm italic mt-4">
           {{ $message }}
         </p>
@@ -43,7 +44,7 @@
           class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
           placeholder="Título o  profesión">
       </input>
-      @error('profesion')
+      @error('carrera')
         <p class="text-red-500 text-sm italic mt-4">
           {{ $message }}
         </p>
@@ -60,7 +61,7 @@
           class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
           placeholder="El año en que egresaste, deben ser 4 dígitos">
         </input>
-        @error('aterminacion')
+        @error('fecha_terminacion')
           <p class="text-red-500 text-sm italic mt-4">
             {{ $message }}
           </p>
@@ -82,8 +83,10 @@
       <!-- Guardar -->
       <button
         type="submit"
-        class="btn text-sm text-white font-medium bg-green-500 shadow-lg rounded-lg px-4 py-3  mr-4"
-        x-on:click="isAddEducation = true"
+        class="btn text-sm text-white bg-green-500 font-medium shadow-lg rounded-lg px-4 py-3  mr-4"
+        x-on:click="isAddEducation = true, btnactive = true"
+        x-bind:disabled="btnactive"
+        x-bind:class="{ ' bg-gray-300 cursor-default ' : btnactive, 'bg-green-500': !btnactive }"
         wire:target="createCarrera"
         wire:loading.attr="disabled"
         wire:loading.class="bg-green-400"
@@ -97,7 +100,7 @@
       <a
         wire:click="$refresh"
         class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
-        x-on:click="isAddEducation = false"
+        x-on:click="isAddEducation = false, btnactive = false"
       >
         Cerrar
       </a>
