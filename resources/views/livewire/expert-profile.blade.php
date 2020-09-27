@@ -700,12 +700,6 @@
                 <div class="educacion--fecha flex justify-between pb-4">
                   <p>{{ $item->fecha }}</p>
                   <div class="botonera ">
-                    <!-- Boton Eliminar carrera -->
-                    <button  wire:click="experienciaDelete({{ $item->id }})"  class="btn mr-2"  >
-                      <svg class="w-4 h-5 fill-current hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M3 6v18h18V6H3zm5 14c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2H2V2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2H22z"/>
-                      </svg>
-                    </button>
 
                     <!-- Boton Editar carrera -->
                     <button wire:click="toEditExperienciaForm({{ $item->id }})"  class="btn" x-on:click="isEditing = true" >
@@ -742,6 +736,13 @@
                 </div>
 
               @endif
+
+              <!-- Boton Eliminar carrera -->
+              <button  wire:click="experienciaDelete({{ $trabajo_id }})"  class="btn mr-2"  >
+                <svg class="w-4 h-5 fill-current hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M3 6v18h18V6H3zm5 14c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2H2V2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2H22z"/>
+                </svg>
+              </button>
 
               <form wire:submit.prevent="experienciaUpdate({{ $trabajo_id }})">
                 <!-- Empresa -->

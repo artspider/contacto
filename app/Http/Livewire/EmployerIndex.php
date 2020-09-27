@@ -63,16 +63,39 @@ class EmployerIndex extends Component
   {
     $r=[];
     logger('En el render');
+
     if(($this->search_tag != "") and ($this->search_tag != " "))
     {
       logger($this->all_experts);
       logger($this->search_tag);
       $tags = Tag::with('experts')->name($this->search_tag)->get();
       $r = $tags->pluck('experts')->collapse();
-      if($this->search_ciudad != ""){
+      if($this->search_ciudad != "")
+      {
         logger($this->search_ciudad);
         $r = $r->where('ciudad','=',$this->search_ciudad);
-        $ex_profesion_ciudad = Expert::profesion($this->search_tag)->ciudad($this->search_ciudad)->get();
+        logger('Experto por tag-ciudad');
+        logger($r);
+        //$ex_profesion_ciudad = Expert::profesion($this->search_tag)->ciudad($this->search_ciudad)->get();
+        $ex_profesion_ciudad = Expert::with('tags')
+                                ->where('ciudad', 'LIKE', "$this->search_ciudad%")
+                                ->where(function($query) {
+                                  $query->where('profesion','like',"%$this->search_tag%")
+                                        ->orwhere('especialidad','like', "%$this->search_tag%");})
+                                        ->get();
+        logger('Experto por profesion' . $ex_profesion_ciudad);
+        $r = $r->merge($ex_profesion_ciudad);
+        $r = collect($r)->unique('id');
+      }else{
+        logger('expertos de todo el pais');
+        logger($r);
+        //$ex_profesion_ciudad = Expert::profesion($this->search_tag)->ciudad($this->search_ciudad)->get();
+        $ex_profesion_ciudad = Expert::with('tags')
+                                ->where(function($query) {
+                                  $query->where('profesion','like',"%$this->search_tag%")
+                                        ->orwhere('especialidad','like', "%$this->search_tag%");
+                                      })
+                                ->get();
         logger('Experto por profesion' . $ex_profesion_ciudad);
         $r = $r->merge($ex_profesion_ciudad);
         $r = collect($r)->unique('id');

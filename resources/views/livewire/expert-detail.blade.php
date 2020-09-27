@@ -1,11 +1,17 @@
 <div>
 
-    <div class="profile__body block mt-36 mx-auto ">
-        <div class="card mt-10 ">
-            <!-- Header del perfil-->
-            <div x-data="{ smodal: false }" class="card__card--header  relative flex align-middle">
+  <buton class="backArrow btn fixed hidden xl:flex top-36 left-8 z-40" onclick="history.back()">
+    <svg class=" fill-current h-6 w-6 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0 0 5.373 0 12zm7.58 0l5.988-5.995 1.414 1.416L10.408 12l4.574 4.59-1.414 1.416L7.58 12z"/>
+    </svg>
+    <p class="hidden 2xl:flex ml-2 text-sm font-semibold" >Regresa a la busqueda</p>
+  </buton>
 
-                <div x-show="smodal" @click.away="smodal = false" class=" w-1/3 top-60 left-1/3 z-50 border-solid border-4 border-main-yellow fixed">
+  <div class="profile__body block mt-0 md:mt-16 lg:mt-36 mx-auto ">
+    <div class="card mt-0 lg:mt-10 ">
+            <!-- Header del perfil-->
+            <div x-data="{ smodal: false }" class="card__card--header relative block lg:flex align-middle">
+
+                <div x-show="smodal" @click.away="smodal = false" class=" w-full md:w-1/3 top-60 left-0 md:left-1/3 z-50 border-solid border-4 border-main-yellow fixed">
                     <div class="modal--header bg-main-yellow pl-4 py-3">
                         <p class="text-gray-700 font-bold text-lg">Envíame un mensaje</p>
                     </div>
@@ -18,25 +24,25 @@
                 </div>
 
                 <div
-                    class="card__card--header__avatar absolute  h-36 ml-8 mt-16 w-1/3 "
+                    class="card__card--header__avatar relative lg:absolute h-24 md:h-36 lg:ml-8 mt-16 w-auto lg:w-1/3 pt-4 lg:pt-0"
                 >
                     <img
-                        class="profile--avatar  top-0 left-0 w-36 h-36 rounded-full  border-8 border-gray-200"
+                        class="profile--avatar top-0 left-0 w-24 md:w-36 h-24 md:h-36 rounded-full border-8 border-gray-200 mx-auto lg:mx-0"
                         src="{{asset('storage/' . $this->expert->url_image) }}"
                         alt="avatar"
                     />
                 </div>
                 <div
-                    class="card__card--header__bio z-10 flex flex-col justify-center  text-white ml-52 w-2/5 xl:w-1/2"
+                    class="card__card--header__bio z-10 flex flex-col justify-center text-white mt-6 mx-auto lg:mt-0 ml-0 lg:ml-52 lg:mr-0 w-full lg:w-2/5 xl:w-1/2"
                 >
-                    <p class="text-2xl  2xl:text-3xl font-bold leading-8">
+                    <p class="text-2xl  2xl:text-3xl font-bold leading-8 text-center lg:text-left">
                         {{ $this->expert->nombre }}
                     </p>
-                    <p class=" text-base font-semibold">
+                    <p class=" text-base font-semibold text-center lg:text-left">
                         {{ $this->expert->profesion}}
                     </p>
                     <div
-                        class="contactar flex justify-center w-1/2 text-sm mt-4 "
+                        class="contactar flex justify-center lg:justify-start w-full lg:w-1/2 text-sm mt-4 mb-4 lg:mb-0 "
                     >
 
                         <a x-on:click="smodal=true"   class="btn mr-4 tooltip top">
@@ -54,7 +60,7 @@
 
 
 
-                        <a href="tel:7471197393" class="btn mr-4 ">
+                        <a href="tel:{{ $this->expert->telefono  }}" class="btn mr-4 ">
                             <svg
                                 class=" fill-current text-white w-6 h-6 "
                                 xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +71,7 @@
                                 />
                             </svg>
                         </a>
-                        <a href="" class="btn mr-4 ">
+                        <a href="mailto:{{ $this->expert->email  }}" class="btn mr-4 ">
                             <svg
                                 class=" fill-current text-white w-6 h-6 "
                                 xmlns="http://www.w3.org/2000/svg"
@@ -79,10 +85,10 @@
                     </div>
                 </div>
                 <div
-                    class="card__card--hireme w-2/5 xl:w-2/6 flex justify-end items-center xl:mr-10 2xl:mr-8"
+                    class="card__card--hireme w-full lg:w-1/4 xl:w-2/6 flex justify-center lg:justify-end items-center xl:mr-10 2xl:mr-8"
                 >
                     <a href="#"
-                        class="btn text-black font-semibold rounded-lg bg-main-yellow p-4"
+                        class="btn text-black font-semibold rounded-lg bg-main-yellow p-4 mb-4 lg:mb-0"
                     >
                         Contratame
                     </a>
@@ -90,10 +96,10 @@
             </div>
 
             <!-- Body del perfil -->
-            <div class="card__card--body flex flex-wrap justify-between items-start">
+            <div class="card__card--body flex flex-wrap justify-center lg:justify-between items-start">
 
                 <!-- Lado izquierdo -->
-                <div class="card__card--body__col1 bg-white mt-14 mr-2">
+                <div class="card__card--body__col1 bg-white mt-14 ml-2 lg:ml-0 mr-2">
                     <!-- Contacto -->
                     <div class="contacto rounded-md shadow-lg p-6">
                         <div
@@ -214,7 +220,7 @@
                             </p>
                         </div>
 
-                        <div class="educacion__body mt-6 ml-6">
+                        <div class="educacion__body mt-6 ">
                             @empty($educacion)
                                 <p>No has añadido ninguna escuela</p>
                             @endempty
@@ -239,7 +245,7 @@
                 </div>
 
                 <!-- Lado derecho -->
-                <div class="card__card--body__col2 bg-white mt-14 ml-2">
+                <div class="card__card--body__col2 bg-white mt-14 mr-2 lg:mr-0 ml-2">
                     <!-- About -->
                     <div class="about rounded-md shadow-lg p-6">
                         <div
@@ -290,7 +296,7 @@
                             </p>
                         </div>
 
-                        <div class="educacion__body mt-6 ml-6">
+                        <div class="educacion__body mt-6 ">
                             @empty($experiencia)
                                 <p>No has añadido ninguna escuela</p>
                             @endempty
@@ -331,7 +337,7 @@
                             </p>
                         </div>
 
-                        <div class="redes__body mt-6 ml-6">
+                        <div class="redes__body mt-6">
                             <div class="flex mb-4">
                                 <svg
                                     class=" fill-current h-6 w-6 mr-4"
@@ -343,7 +349,8 @@
                                     />
                                 </svg>
                                 <p class="text-gray-700">
-                                    {{ $this->expert->facebook }}
+                                  <a href="{{ $this->expert->facebook }}"  target="_blank">{{ $this->expert->facebook }}</a>
+
                                 </p>
                             </div>
 
@@ -358,7 +365,7 @@
                                     />
                                 </svg>
                                 <p class="text-gray-700">
-                                    {{ $this->expert->instagram }}
+                                    <a href="{{ $this->expert->instagram }}" target="_blank">{{ $this->expert->instagram }}</a>
                                 </p>
                             </div>
 
@@ -373,14 +380,15 @@
                                     />
                                 </svg>
                                 <p class="text-gray-700">
-                                    {{ $this->expert->twitter }}
+                                    <a href="{{ $this->expert->twitter }}"  target="_blank">{{ $this->expert->twitter }}</a>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
+  </div>
+
 
 </div>

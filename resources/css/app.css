@@ -48,6 +48,9 @@
   --width-search-box: auto;
   --width-dbody: auto;
   --width-profile__body: auto;
+  --width-card__card--body: 100%;
+
+  --height-card__card--header: auto;
 
   --expert-card-height: auto;
 
@@ -61,6 +64,10 @@
 
   --font-title: 1.5rem;
   --font-sub: 1.125rem;
+
+  @media screen and (min-width: 768px) {
+    --width-card__card--body: 70%;
+  }
 
   @media screen and (min-width: 1024px) {
     --margen-saludo-top: 8rem;
@@ -87,9 +94,11 @@
     --margen-searchbox-right: auto;
 
     --width-search-box: 60%;
-
     --width-dbody: 90%;
-    --width-profile__body: 60%;
+    --width-profile__body: 90%;
+    --width-card__card--body: 49%;
+
+    --height-card__card--header: 10rem;
 
     --font-title: 2rem;
     --font-sub: 1.65rem;
@@ -130,7 +139,7 @@
     --padding-profile-right: 1.5rem;
     --padding-profile-bottom: 2rem;
 
-    --width-profile__body: 50%;
+    --width-profile__body: 80%;
 
     --expert-card-height: 24rem;
 
@@ -426,7 +435,7 @@ p.subtitulo {
   background-color: #cccccc; /* Used if the image is unavailable */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */
-  height: 10rem;
+  height: var(--height-card__card--header);
 }
 
 .profile--avatar {
@@ -436,7 +445,7 @@ p.subtitulo {
 
 .card__card--body__col1,
 .card__card--body__col2 {
-  width: 49%;
+  width: var(--width-card__card--body);
 }
 
 .success--alert,
