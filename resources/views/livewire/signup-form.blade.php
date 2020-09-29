@@ -18,7 +18,7 @@
           <div wire:model="type" class="mt-6 w-11/12 flex justify-evenly mx-auto">
             <a
               @click="type = 1;$dispatch('input', '1')"
-              class="btn--registro btn   w-1/2 rounded-md text-sm tracking-tight text-center font-bold py-6 mr-1"
+              class="btn--registro btn   w-1/2 rounded-md text-xs md:text-sm tracking-tight text-center font-bold py-6 mr-1"
               :class="{ 'bg-black text-white': type==1, 'bg-main-yellow text-black': type==2 }"
             >
               Busco profesionista
@@ -74,7 +74,7 @@
 
         </div>
         <span class="flex flex-col justify-center items-center w-11/12 mx-auto my-2">
-          <p class=" w-3/5 text-sm leading-5 font-semibold mb-2">
+          <p class=" lg:w-3/5 md:w-1/2 text-sm ml-4 leading-5 font-semibold mb-2">
             Al hacer clic, indicas que estas de acuerdo con nuestros <a class=" text-gray-400 " href="#">terminos y condiciones</a>.
           </p>
           {{-- <a href="#" class="btn btn--primary rounded-md w-full text-sm lg:text-base text-center font-bold px-10 py-4 ">Registrar</a> --}}
