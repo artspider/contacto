@@ -65,6 +65,8 @@
   --font-title: 1.5rem;
   --font-sub: 1.125rem;
 
+  --url-image: url("/img/bg-main-1.png");
+
   @media screen and (min-width: 768px) {
     --width-card__card--body: 70%;
   }
@@ -102,6 +104,8 @@
 
     --font-title: 2rem;
     --font-sub: 1.65rem;
+
+    --url-image: url("/img/bg-main-white.png");
 
     .expert--card {
       display: grid;
@@ -219,6 +223,7 @@ html {
   background-color: #cccccc; /* Used if the image is unavailable */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */
+  background-image: var(--url-image);
 }
 
 /* header.sticky {

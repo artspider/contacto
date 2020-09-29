@@ -29,6 +29,8 @@ class SignupForm extends Component
 
     public function submit()
     {
+      logger('En el submit');
+      logger('el valor de type es: ' . $this->type);
       $data = $this->validate([
         'name' => 'required|min:6',
         'email' => 'required|email|unique:users',

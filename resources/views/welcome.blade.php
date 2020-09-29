@@ -12,7 +12,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    <title>{{ config("app.name", "Laravel") }}</title>
+    <title>{{ config("app.name", "Contacto-Amarillo") }}</title>
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
@@ -21,11 +21,9 @@
       rel="stylesheet"
     />
 
-    <script
-      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v1.9.8/dist/alpine.js"
-      defer
-    ></script>
     @livewireStyles
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
   </head>
   <body class="bg-light-back h-screen antialiased leading-none">
     <!-- <div class=" w-3/4 fixed ml-20 mt-20 " id="turn">
@@ -137,16 +135,13 @@
         </div>
       </header>
 
-      <main
-        class="main__body h-screen mt-10 md:mt-10 lg:mt-20 md:pb-52 "
-        style=" background-image: url('img/bg-main-subcon.jpg') "
-      >
+      <main class="main__body h-screen mt-10 md:mt-10 lg:mt-20 md:pb-52 ">
         <div class="container mx-auto flex flex-col justify-center ">
           <div
-            class="main__title w-1/2 ml-4 xl:ml-0 mr-10  text-black text-5xl font-bold "
+            class="main__title w-3/5 lg:w-5/12 xl:w-1/2 ml-4 xl:ml-0 mr-10  text-black text-5xl font-bold "
           >
             <p
-              class="main__title--text mt-14 md:mt-40 lg:mt-32 xl:mt-32 2xl:mt-52 text-5xl md:text-6xl leading-tight"
+              class="main__title--text mt-28 md:mt-40 lg:mt-32 xl:mt-36 2xl:mt-64 text-4xl md:text-6xl leading-tight"
             >
               Haz realidad todos tus proyectos.
             </p>
@@ -154,14 +149,14 @@
           <div
             class="flex flex-col flex-shrink lg:ml-0 md:justify-start lg:pb-20"
           >
-            <p
-              class="main__info leading-5 xl:leading-8 2xl:leading-10 pl-4 py-2 md:w-1/2 lg:text-xl xl:mx-0 lg:text-gray-800 font-medium  mt-8 xl:mt-10 mb-6 xl:mb-10 mx-4 bg-white xl:bg-transparent bg-opacity-25"
+            {{-- <p
+              class="main__info md:w-1/2 2xl:w-2/5 leading-5 xl:leading-8 2xl:leading-10 py-2  lg:text-xl xl:mx-0 lg:text-gray-800 font-medium  mt-8 xl:mt-10 mb-6 xl:mb-10 bg-white xl:bg-transparent bg-opacity-25"
             >
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro
               quaerat quibusdam modi delectus vero itaque?
-            </p>
+            </p> --}}
             <a
-              class="btn btn--primary md:w-1/2  lg:py-8 lg:text-xl xl:mx-0 text-center font-bold rounded-md mx-4 px-4 py-6 text-sm"
+              class="btn btn--primary w-3/5 md:w-1/2 lg:w-2/5 mx-4 xl:mx-0 mt-8 xl:mt-14 px-4 py-6 lg:py-8 lg:text-xl text-center font-bold rounded-md text-sm"
               href="#"
               >Contrata a uno de nuestros expertos</a
             >
@@ -181,7 +176,7 @@
         </p>
 
         <div
-          class="como--seleccion flex justify-between mx-4 xl:mx-0 mb-8 xl:mb-16"
+          class="como--seleccion flex justify-between mx-4 xl:mx-0 mb-8 xl:mb-12"
         >
           <a
             class="btn--registro btn w-1/2 rounded-md text-xs lg:text-base tracking-tight lg:tracking-wide text-center font-bold py-4 lg:py-8 mr-1 lg:mr-8"
@@ -216,11 +211,11 @@
           --}}
         </div>
 
-        <p class="leading-7 mb-8 mx-4 xl:mx-0 text-justify">
+        {{-- <p class="leading-7 mb-8 mx-4 xl:mx-0 text-justify">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi ipsa
           molestias qui adipisci ex id! Lorem ipsum dolor sit amet consectetur
           adipisicing elit. Nulla quaerat quam atque, vel voluptatum molestias.
-        </p>
+        </p> --}}
 
         <div
           class="pasos__profesionista flex flex-wrap justify-center mx-auto lg:ml-28 2xl:ml-0 font-semibold"
@@ -353,7 +348,7 @@
         class="expertos container bg-light-back mb-16 mx-auto"
         id="nuestros__expertos"
       >
-        <div class="expertos--header flex justify-start mx-4 xl:mx-0 mb-6">
+        <div class="expertos--header flex justify-start mt-20 mx-4 xl:mx-0 mb-6">
           <svg
             class=" w-8 h-12 lg:w-12 lg:h-16 "
             xmlns="http://www.w3.org/2000/svg"
@@ -391,23 +386,23 @@
             <div class="pills-cards flex-wrap ml-6 mb-6">
               <span
                 class="inline-block bg-black rounded-full px-3 py-3 text-xs font-semibold text-gray-100 mr-1 mb-1"
-                >#photography</span
+                >#edición</span
               >
               <span
                 class="inline-block bg-black rounded-full px-3 py-3 text-xs font-semibold text-gray-100 mr-1 mb-1"
-                >#travel</span
+                >#diseño</span
               >
               <span
                 class="inline-block bg-black rounded-full px-3 py-3 text-xs font-semibold text-gray-100 mr-1 mb-1"
-                >#editing</span
+                >#programación</span
               >
             </div>
 
             <p
               class="descripcion--expertos-cards leading-6 text-justify  font-semibold mx-6 mb-6"
             >
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde qui
-              dicta ipsum, quo inventore cum maxime dolores non quia nihil.
+              Full stack developer, experto en desarrollo de aplicaciones móviles en lenguajes nativos
+              o frameworks cross plataform. Egresado de la carrera de sistemas en la BUAP.
             </p>
             <div class="mx-6">
               <button
@@ -422,12 +417,12 @@
             <div class="header--card1 flex items-center mt-6 mb-2 ">
               <img
                 class="h-24 w-24 ml-6"
-                src="./img/avatar1.png"
+                src="./img/avatar2.png"
                 alt="avatar1"
               />
               <div class="info--header-card1 text-sm ml-6">
-                <p class="nombre font-semibold mb-2">Luis Fernando Flores</p>
-                <p class="carrera font-semibold mb-2">Ingeniero en Sistemas</p>
+                <p class="nombre font-semibold mb-2">Carla Sannit Gómez</p>
+                <p class="carrera font-semibold mb-2">Licenciada en Administración</p>
                 <p class="cedula font-semibold">Cédula Prof. 09825772</p>
               </div>
             </div>
@@ -435,23 +430,23 @@
             <div class="pills-cards flex-wrap ml-6 mb-6">
               <span
                 class="inline-block bg-black rounded-full px-3 py-3 text-xs font-semibold text-gray-100 mr-1 mb-1"
-                >#photography</span
+                >#RH</span
               >
               <span
                 class="inline-block bg-black rounded-full px-3 py-3 text-xs font-semibold text-gray-100 mr-1 mb-1"
-                >#travel</span
+                >#Hoteleria</span
               >
               <span
                 class="inline-block bg-black rounded-full px-3 py-3 text-xs font-semibold text-gray-100 mr-1 mb-1"
-                >#editing</span
+                >#RP</span
               >
             </div>
 
             <p
               class="descripcion--expertos-cards leading-6 text-justify  font-semibold mx-6 mb-6"
             >
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde qui
-              dicta ipsum, quo inventore cum maxime dolores non quia nihil.
+              Egresada de la Universidad de Guadalupe, en Monterrey. Especialista es administración de personal y
+              Relaciones Públicas. Experiencia mayormente en hoteleria.
             </p>
             <div class="mx-6">
               <button
@@ -473,7 +468,7 @@
         class=" w-full h-32 flex flex-col justify-center text-center"
         style="background-image: url('img/bg-footer-sm.png')"
       >
-        <p class="footer--brand text-sm font-bold">Subcontrata - 2020</p>
+        <p class="footer--brand text-sm font-bold">Contacto-Amarillo - 2020</p>
         <p class="footer--tm text-xs tracking-tight font-semi-bold">
           Todos los derechos reservados
         </p>
@@ -481,7 +476,7 @@
         <div
           class="footer--back2top absolute bottom-0 right-0 mr-4 mb-4 text-xs tracking-tight font-semi-bold"
         >
-          <a href="#">Back to top</a>
+
         </div>
       </footer>
     </div>
