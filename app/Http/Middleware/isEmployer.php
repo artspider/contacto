@@ -18,13 +18,16 @@ class isEmployer
     {
       $user=Auth::user();
       logger('Checando si es employer...');
-      logger($user->usable_type);
-      $reallyEmployer = strcmp($user->usable_type, "App\Employer");
-      logger($reallyEmployer );
-      if ( $reallyEmployer !== 0) {
-        logger('no es un employer');
-        return redirect('/');
 
+      if(isset($user)){
+        $reallyEmployer = strcmp($user->usable_type, "App\Employer");
+        logger($reallyEmployer );
+        if ( $reallyEmployer !== 0) {
+          logger('no es un employer');
+          return redirect('/');
+        }
+      }else{
+        return redirect('login');
       }
 
       logger('si es un experto');

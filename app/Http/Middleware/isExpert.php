@@ -18,14 +18,18 @@ class isExpert
     {
       $user=Auth::user();
       logger('Checando si es experto...');
-      logger($user->usable_type);
-      $reallyExpert = strcmp($user->usable_type, "App\Expert");
-      logger($reallyExpert );
-      if ( $reallyExpert !== 0) {
-        logger('no es un experto');
-        return redirect('/');
 
+      if(isset($user)){
+        $reallyExpert = strcmp($user->usable_type, "App\Expert");
+        logger($reallyExpert );
+        if ( $reallyExpert !== 0) {
+          logger('no es un experto');
+          return redirect('/');
+        }
+      }else{
+        return redirect('login');
       }
+
 
       logger('si es un experto');
       return $next($request);
