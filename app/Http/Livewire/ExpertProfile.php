@@ -321,7 +321,7 @@ class ExpertProfile extends Component
     $expert->ciudad = $this->ciudad;
 
     $estado_actual = $this->coll_estados->firstWhere('estado', trim($this->estado));
-    $expert->estado = ucfirst($estado_actual['corto']);
+    $expert->estado = ucfirst($estado_actual['estado']);
     $expert->save();
 
     logger('Datos del experto: ');

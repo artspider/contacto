@@ -84,7 +84,7 @@ class ExpertDetail extends Component
 
   public function sendMsgToExpert()
   {
-    logger('Entraando a SenMsgToExpert.');
+    logger('Entrando a SenMsgToExpert.');
 
     $validatedData = $this->validate([
         'mensaje' => 'required|min:5',

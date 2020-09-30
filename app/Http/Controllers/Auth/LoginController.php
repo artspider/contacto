@@ -40,15 +40,15 @@ class LoginController extends Controller
       // User role
       $role = Auth::user()->type;
       logger("en login controller");
-     if($role == '1')
-     {
-      return redirect('employer');
-     }
-     elseif($role == '1')
-     {
-      return redirect('expert');
-     }
-     logger($role);
+      if($role == '1')
+      {
+        return redirect('employer');
+      }
+      elseif($role == '1')
+      {
+        return redirect('expert');
+      }
+      logger($role);
     }
 
     public function __construct()
