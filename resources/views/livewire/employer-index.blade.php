@@ -57,63 +57,53 @@
 
   <div class="body--container flex-grow dbody block xl:flex xl:flex-col xl:w-4/5 2xl:w-3/5 mx-auto ">
 
-    <div class="resultados mt-8 ml-4">
-      <p class="resultados__texto text-black font-semibold text-lg">Los mejores prospectos en cada busqueda...</p>
-    </div>
 
-    <div class="card--container " >
 
-      @foreach ($experts as $item)
-        <div wire:click="showExpert( {{ $item->id }})" class="expert--card bg-white border-l-4 border-orange-500 rounded-lg shadow-lg mx-4 my-4 py-2">
-          <div class="profile-pic py-2">
-            <img class="expert__avatar w-20 h-20 xl:w-24 xl:h-24 2xl:w-36 2xl:h-36 rounded-full m-auto lg:m-0" src="{{asset('storage/' . $item->url_image) }}" alt="">
-          </div>
-          <div class="name-tags flex flex-col lg:block justify-center items-center py-2">
-            <p class="nombre text-lg font-bold"> {{ $item->nombre }} </p>
-            <p class="especialidad font-semibold text-base"> {{ $item->profesion }}</p>
-            <p class="cedula font-semibold text-sm"> {{ $item->cedula }}</p>
-            <div class="tags flex flex-wrap justify-center lg:justify-start my-4 ">
-              @foreach ($item->tags as $tag)
-                <div class=" text-white text-sm text-center bg-gray-700 rounded-full shadow-sm px-5 py-1 mr-1 mb-1">
-                  {{$tag->name}}
+    @if ($show)
+      @empty($experts)
+        <h2 class="text-lg xl:text-2xl  text-black font-semibold ml-4 lg:ml-0 mt-8 mb-0">No se encontraron coincidencias</h2>
+        <img class="w-1/2 mx-auto mt-4" src="./img/confused-cartoon-man-1.png"></img>
+      @endempty
+
+      @isset($experts)
+        <div class="card--container " >
+
+          @foreach ($experts as $item)
+            <div wire:click="showExpert( {{ $item->id }})" class="expert--card bg-white border-l-4 border-orange-500 rounded-lg shadow-lg mx-4 my-4 py-2">
+              <div class="profile-pic py-2">
+                <img class="expert__avatar w-20 h-20 xl:w-24 xl:h-24 2xl:w-36 2xl:h-36 rounded-full m-auto lg:m-0" src="{{asset('storage/' . $item->url_image) }}" alt="">
+              </div>
+              <div class="name-tags flex flex-col lg:block justify-center items-center py-2">
+                <p class="nombre text-lg font-bold"> {{ $item->nombre }} </p>
+                <p class="especialidad font-semibold text-base"> {{ $item->profesion }}</p>
+                <p class="cedula font-semibold text-sm"> {{ $item->cedula }}</p>
+                <div class="tags flex flex-wrap justify-center lg:justify-start my-4 ">
+                  @foreach ($item->tags as $tag)
+                    <div class=" text-white text-sm text-center bg-gray-700 rounded-full shadow-sm px-5 py-1 mr-1 mb-1">
+                      {{$tag->name}}
+                    </div>
+                  @endforeach
                 </div>
-              @endforeach
-            </div>
-          </div>
-          <div class="about mx-4 my-2">
-            <p class="habilidades text-justify leading-tight "> {{ \Illuminate\Support\Str::limit($item->habilidades, 265, '...')  }}</p>
-          </div>
-          <div class="btn-contactar mx-4 my-2">
-            <button class="btn btn--secondary w-full font-bold rounded-lg px-4 py-6 ">Contactar</button>
-          </div>
-          {{-- <div class="expert--card__top flex ml-6 relative">
-            <img class="expert__avatar w-20 h-20 2xl:w-32 2xl:h-36 rounded-full mt-6 " src="img/avatar1.png" alt="">
-            <div class="expert--card__top-info ml-6 mr-6 mt-3 mb-2">
-              <div class="stars flex items-center absolute top-0 right-0 mt-4 mr-6">
-                <svg class="fill-current text-main-yellow w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.002 512.002"><path d="M511.267 197.258a14.995 14.995 0 00-12.107-10.209l-158.723-23.065-70.985-143.827a14.998 14.998 0 00-26.901 0l-70.988 143.827-158.72 23.065a14.998 14.998 0 00-8.312 25.585l114.848 111.954-27.108 158.083a14.999 14.999 0 0021.763 15.812l141.967-74.638 141.961 74.637a15 15 0 0021.766-15.813l-27.117-158.081 114.861-111.955a14.994 14.994 0 003.795-15.375z"/></svg>
-                <span class="text-sm font-semibold">4.7</span>
               </div>
-              <p class="nombre text-lg font-bold"> {{ $item->users->name }} </p>
-              <p class="especialidad font-semibold text-base"> {{ $item->profesion }}</p>
-              <p class="cedula font-semibold text-sm"> {{ $item->cedula }}</p>
+              <div class="about mx-4 my-2">
+                <p class="habilidades text-justify leading-tight "> {{ \Illuminate\Support\Str::limit($item->habilidades, 265, '...')  }}</p>
+              </div>
+              <div class="btn-contactar mx-4 my-2">
+                <button class="btn btn--secondary w-full font-bold rounded-lg px-4 py-6 ">Contactar</button>
+              </div>
 
-              <div class="tags flex flex-wrap mt-4 ">
-                @foreach ($item->tags as $tag)
-                  <div class=" text-white text-sm text-center bg-gray-700 rounded-full px-6 py-1 ml-1 mb-1">
-                    {{$tag->name}}
-                  </div>
-                @endforeach
-              </div>
             </div>
-          </div>
-          <div class="expert--card__bottom mx-6 ">
-            <p class="habilidades text-justify "> {{ \Illuminate\Support\Str::limit($item->habilidades, 265, '...')  }}</p>
-            <button class="btn btn--secondary w-full font-bold rounded-lg px-4 py-4 my-2">Contactar</button>
-          </div> --}}
+          @endforeach
+
         </div>
-      @endforeach
 
-    </div>
+      @endisset
+    @else
+      <div class="resultados mt-8">
+        <p class="resultados__texto ml-4 lg:ml-0 text-lg lg:text-xl xl:text-2xl text-black font-semibold">Los mejores prospectos en cada busqueda...</p>
+      </div>
+
+    @endif
 
   </div>
 

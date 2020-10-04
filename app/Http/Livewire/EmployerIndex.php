@@ -100,7 +100,12 @@ class EmployerIndex extends Component
         $r = $r->merge($ex_profesion_ciudad);
         $r = collect($r)->unique('id');
       }
-      logger($r);
+      logger('Lo que encontro en la busqueda' . $r);
+      if(count($r) == 0)
+      {
+        logger('Vaacioooooooo');
+        $r=null;
+      }
     }
 
     return view('livewire.employer-index', [
@@ -121,6 +126,8 @@ class EmployerIndex extends Component
     logger("Se busca: ");
     logger($this->search_tag);
     $tags = Tag::with('experts')->name($this->search_tag)->get();
+
+    $this->show = true;
   }
 
   public function showExpert($id)

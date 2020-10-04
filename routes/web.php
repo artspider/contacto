@@ -30,7 +30,11 @@ Route::group([ 'middleware' => ['isEmployer']], function() {
   Route::livewire('/employer/expert-detail/{id}', 'expert-detail')
     ->name('expert-detail')
     ->layout('employers.layouts.empleador');
+  //Route::view('employer/contract', 'employers.contract')->name('employers-contract');
 });
+
+
+Route::view('/contract', 'contract');
 
 
 
