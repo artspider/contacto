@@ -53,6 +53,14 @@ class ExperienciaComponent extends Component
 
     logger($trabajo);
     session()->flash('message-experiencia', 'Se actualizaron tus datos');
+    $this->resets_();
     $this->emit('refreshExperiencia');
+  }
+
+  public function resets_()
+  {
+    $this->empresa = null;
+    $this->puesto = null;
+    $this->periodo = null;
   }
 }

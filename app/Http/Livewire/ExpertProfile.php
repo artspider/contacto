@@ -58,8 +58,17 @@ class ExpertProfile extends Component
 
   public $estados;
   public $ciudades;
+  public $clasificacion;
+  public $clasificacion_nivel2;
+  public $clasificacion_nivel3;
+  public $clasificacion_nivel4;
+  public $Cid;
+  public $Cid2;
+  public $Cid3;
+  public $Cid4;
 
   private $coll_estados;
+  private $top_terms;
 
   protected $listeners = ['refreshCarrera' => 'actualizaCarreras', 'refreshExperiencia' => 'actualizaExperiencia'];
 
@@ -101,6 +110,21 @@ class ExpertProfile extends Component
     ]);
   }
 
+  public function loadTopTerms()
+  {
+    $this->top_terms = collect([
+      ['term_id' => '2', 'string' => 'Directores y gerentes'],
+      ['term_id' => '3', 'string' => 'Profesionales científicos e intelectuales'],
+      ['term_id' => '4', 'string' => 'Técnicos y profesionales de nivel medio'],
+      ['term_id' => '5', 'string' => 'Personal de apoyo administrativo'],
+      ['term_id' => '6', 'string' => 'Trabajadores de los servicios y vendedores de comercios y mercados'],
+      ['term_id' => '7', 'string' => 'Agricultores y trabajadores calificados agropecuarios, forestales y pesqueros'],
+      ['term_id' => '8', 'string' => 'Oficiales, operarios y artesanos de artes mecánicas y de otros oficios'],
+      ['term_id' => '9', 'string' => 'Operadores de instalaciones y máquinas y ensambladores'],
+      ['term_id' => '10', 'string' => 'Ocupaciones elementales'],
+    ]);
+  }
+
   public function render()
   {
     logger('En el render');
@@ -112,7 +136,7 @@ class ExpertProfile extends Component
   public function mount()
   {
 
-    $this->coll_estados = collect([
+    /* $this->coll_estados = collect([
       ['estado' => 'Aguascalientes', 'corto' => 'ags'],
       ['estado' => 'Baja California', 'corto' => 'bcn'],
       ['estado' => 'Baja California Sur', 'corto' => 'bcs'],
@@ -145,9 +169,14 @@ class ExpertProfile extends Component
       ['estado' => 'Veracruz', 'corto' => 'ver'],
       ['estado' => 'Yucatán', 'corto' => 'yuc'],
       ['estado' => 'Zacatecas', 'corto' => 'zac'],
-    ]);
+    ]); */
 
+    $this->load();
     $this->estados = $this->coll_estados->pluck('estado')->all();
+
+    $this->loadTopTerms();
+    $this->clasificacion = $this->top_terms->all();
+    $this->Cid ='2';
 
     $this->showProfile = 0;
     logger('En el mount del expert');
@@ -454,6 +483,7 @@ class ExpertProfile extends Component
     $trabajo = Trabajo::find($experience_id);
     $trabajo->delete();
     session()->flash('message-experiencia', 'Se actualizaron tus datos');
+    $this->resets_experiencia();
     $this->emit('refreshExperiencia');
   }
 
@@ -547,15 +577,52 @@ class ExpertProfile extends Component
     }
   }
 
+  public function loadClasificacion()
+  {
+    $this->loadTopTerms();
+    logger('En el loadClasificacion ... ');
+  }
+
   public function hydrate()
   {
     logger('En el hydrate');
   }
 
+
+
   public function dehydrate()
-    {
-        logger('En el dehidrate');
-    }
+  {
+   logger('En el dehidrate');
+  }
+
+   public function updatedCid()
+  {
+    logger('Vamos a buscar: ');
+    $nivel2 = collect(Http::get('https://www.qualificalia.com/terms/ciuo/services.php?output=json&task=fetchDown&arg=' . $this->Cid )['result']);
+    $this->clasificacion_nivel2 = $nivel2->pluck('string', 'term_id')->all();
+  }
+
+  public function updatedCid2()
+  {
+    logger('Vamos a buscar: ');
+    $nivel3 = collect(Http::get('https://www.qualificalia.com/terms/ciuo/services.php?output=json&task=fetchDown&arg=' . $this->Cid2 )['result']);
+    $this->clasificacion_nivel3 = $nivel3->pluck('string', 'term_id')->all();
+  }
+
+  public function updatedCid3()
+  {
+    logger('Vamos a buscar: ');
+    $nivel4 = collect(Http::get('https://www.qualificalia.com/terms/ciuo/services.php?output=json&task=fetchDown&arg=' . $this->Cid3 )['result']);
+    $this->clasificacion_nivel4 = $nivel4->pluck('string', 'term_id')->all();
+  }
+
+  public function updatedCid4()
+  {
+    logger('Has seleccionado tu profesion');
+    $profesion = collect(Http::get('https://www.qualificalia.com/terms/ciuo/services.php?output=json&task=fetchTerm&arg=' . $this->Cid4 )['result']['term']);
+    logger($profesion['string']);
+    $this->profesion=$profesion['string'];
+  }
 
   public function updatedestado()
   {
@@ -568,11 +635,20 @@ class ExpertProfile extends Component
     $this->ciudades = Http::get('https://api-sepomex.hckdrk.mx/query/get_municipio_por_estado/' . $estado_actual['estado'] )['response']['municipios'];
   }
 
+
+
   public function resets_()
   {
     $this->escuela = null;
     $this->carrera = null;
     $this->fecha_terminacion = null;
+  }
+
+  public function resets_experiencia()
+  {
+    $this->empresa = null;
+    $this->puesto = null;
+    $this->periodo = null;
   }
 
 }

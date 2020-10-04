@@ -47,7 +47,7 @@
         <p class=" text-lg font-semibold py-4 pl-4">Quien soy y que aporto a un proyecto:</p>
         <p class="pl-4"> {{ $this->about }}</p>
         <div class="flex justify-end">
-          <button class="btn" x-on:click="about = false" >
+          <button wire:click="loadClasificacion" class="btn" x-on:click="about = false" >
             <svg
               class=" w-4 h-5 "
               height="512"
@@ -111,8 +111,50 @@
           </div>
 
           <div class="profesion flex flex-col ml-4 mb-4">
-            <p class="text-sm font-thin mb-1">Profesion</p>
-            <input
+            <div>
+              <p class="text-sm font-thin inline mb-1 mr-2">Profesion</p>
+              <svg wire:target="Cid, Cid2, Cid3, Cid4" wire:loading  class="h-6 w-6 mr-2 z-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" display="block"><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(30 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(60 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(90 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(120 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(150 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(180 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(210 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(240 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(270 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(300 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(330 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"/></rect></svg>
+            </div>
+            <div class="seleccion-profesion">
+              <select wire:model="Cid" class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mb-1" name="clasificacion" id="clasificacion" placeholder="Clasificación">
+                  <option value=" "> Selecciona una opcion  </option>
+                  @foreach ($clasificacion as $item)
+                    <option value=" {{ $item['term_id'] }}  "> {{ $item['string'] }}  </option>
+                  @endforeach
+              </select>
+
+              @isset($clasificacion_nivel2)
+                  <select wire:model="Cid2" class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mb-1" name="clasificacion_nivel2" id="clasificacion_nivel2" placeholder="Clasificación">
+                  <option value=" "> Selecciona una opcion  </option>
+                  @foreach ($clasificacion_nivel2 as $term_id => $string)
+                    <option value=" {{ $term_id }}  "> {{ $string }}  </option>
+                  @endforeach
+                </select>
+              @endisset
+              @isset($clasificacion_nivel3)
+                <select wire:model="Cid3" class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mb-1" name="clasificacion_nivel3" id="clasificacion_nivel3" placeholder="Clasificación">
+                  <option value=" "> Selecciona una opcion  </option>
+                  @foreach ($clasificacion_nivel3 as $term_id => $string)
+                    <option value=" {{ $term_id }}  "> {{ $string }}  </option>
+                  @endforeach
+                </select>
+              @endisset
+              @isset($clasificacion_nivel4)
+                <select wire:model="Cid4" class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mb-1" name="clasificacion_nivel4" id="clasificacion_nivel4" placeholder="Clasificación">
+                  <option value=" "> Selecciona tú profesión  </option>
+                  @foreach ($clasificacion_nivel4 as $term_id => $string)
+                    <option value=" {{ $term_id }}  "> {{ $string }}  </option>
+                  @endforeach
+                </select>
+                @error('profesion')
+                  <p class="text-red-500 text-sm italic mt-4">
+                    {{ $message }}
+                  </p>
+                @enderror
+              @endisset
+
+            </div>
+            {{-- <input
                 wire:model.debounce.500ms="profesion"
                 type="text"
                 name="profesion"
@@ -123,7 +165,7 @@
                 <p class="text-red-500 text-sm italic mt-4">
                 {{ $message }}
                 </p>
-              @enderror
+              @enderror--}}
           </div>
 
           <div class="especialidad flex flex-col ml-4 mb-4">
@@ -164,7 +206,7 @@
             <p class="text-sm font-thin mb-1">Cuentanos de ti y de lo que puedes aportar a un proyecto</p>
 
             <textarea wire:model="about" class=" about-edit resize-none border rounded focus:outline-none focus:shadow-outline "  id="about" name="about" rows="5" cols="40" maxlength="200">
-            At w3schools.com you will learn how to make a website. They offer free tutorials in all web development technologies.
+
             </textarea>
               @error('about')
                 <p class="text-red-500 text-sm italic mt-4">
@@ -319,8 +361,9 @@
           <!-- Estado -->
           <div class="profile--estado Nombre flex flex-col ml-4 mb-4">
             <p class="text-sm font-thin mb-1">Estado</p>
+
             <select class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4" name="estados" id="estados" wire:model.lazy="estado" placeholder="Selecciona tu estado">
-              <option value=""></option>
+              <option value="">Selecciona tu estado</option>
                 @foreach ($estados as $estado_sel)
                   <option value=" {{ $estado_sel}} "> {{ $estado_sel }} </option>
                 @endforeach
@@ -334,9 +377,12 @@
 
           <!-- Ciudad -->
           <div class="profile--ciudad Nombre flex flex-col ml-4 mb-4">
-            <p class="text-sm font-thin mb-1">Ciudad</p>
+            <div>
+              <p class="text-sm inline mr-2 font-thin mb-1">Ciudad</p>
+              <svg wire:target="estado" wire:loading  class="h-6 w-6 mr-2 z-10" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" display="block"><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(30 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(60 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(90 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(120 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(150 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(180 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(210 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(240 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(270 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(300 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(330 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"/></rect></svg>
+            </div>
             <select class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4" name="ciudades" id="ciudades" wire:model.lazy="ciudad" placeholder="Selecciona tu ciudad">
-              <option value=""></option>
+              <option value="">Selecciona tu ciudad</option>
               @isset($ciudades)
                 @foreach ($ciudades as $cuidad_sel)
                   <option value=" {{ $cuidad_sel}} "> {{ $cuidad_sel }} </option>
@@ -480,7 +526,7 @@
       <!-- Educacion Show -->
       <div class="profile--educacion--show bg-white rounded-lg shadow-lg" x-show="!isAddEducation && !isEditing">
 
-        <div class="top--line flex justify-between items-center mx-4">
+        <div class="top--line flex justify-between items-center ml-4 ">
           <p class=" text-lg font-semibold py-4">Educación</p>
 
           <!-- boton para agregar Escuela - Education -->
@@ -673,11 +719,11 @@
     </div>
 
     <!-- Experiencia -->
-    <div class="pfwrapper " x-data="{ experiencia: true, isEditing: false }" >
+    <div class="pfwrapper " x-data="{ experiencia: true, isEditing: false, btnactive: false }" >
 
       <!-- Show Experiencia -->
-      <div class="profile--experiencia--show bg-white rounded-lg shadow-lg" x-show="experiencia">
-        <div class="top--line flex justify-between items-center mx-4">
+      <div class="profile--experiencia--show bg-white rounded-lg shadow-lg" x-show="experiencia && !isEditing">
+        <div class="top--line flex justify-between items-center ml-4">
           <p class=" text-lg font-semibold py-4">Experiencia</p>
           <button class="btn" href="" x-on:click="experiencia = false">
             <svg class="fill-current w-6 h-6" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm7 14h-5v5h-4v-5H5v-4h5V5h4v5h5v4z"/></svg>
@@ -719,116 +765,128 @@
                 </div>
               </div>
             @endforeach
-
-            <div x-show="isEditing">
-              @if (session()->has('message-experiencia'))
-
-                <div class=" success--alert bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-4 shadow-md" role="alert">
-                  <div class="flex">
-                    <div class="py-1">
-                      <svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg>
-                    </div>
-                    <div>
-                      <p class="font-bold">{{ session("message-experiencia") }}</p>
-                      <p class="text-sm">puedes cerrar la ventana.</p>
-                    </div>
-                  </div>
-                </div>
-
-              @endif
-
-              <!-- Boton Eliminar carrera -->
-              <button  wire:click="experienciaDelete({{ $trabajo_id }})"  class="btn mr-2"  >
-                <svg class="w-4 h-5 fill-current hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <path d="M3 6v18h18V6H3zm5 14c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2H2V2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2H22z"/>
-                </svg>
-              </button>
-
-              <form wire:submit.prevent="experienciaUpdate({{ $trabajo_id }})">
-                <!-- Empresa -->
-                <div class="trabajo--empresa mx-4 mb-4">
-                  <p class="text-sm font-thin mb-1">Empresa</p>
-                  <input
-                    wire:model.debounce.500ms="empresa"
-                    type="text"
-                    name="empresa"
-                    class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
-                    placeholder="La empresa para la que prestaste tus servicios">
-                  </input>
-                  @error('empresa')
-                    <p class="text-red-500 text-sm italic mt-4">
-                      {{ $message }}
-                    </p>
-                  @enderror
-                </div>
-
-                <!-- Puesto o Actividad -->
-                <div class="trabajo--puesto mx-4 mb-4">
-                  <p class="text-sm font-thin mb-1">Puesto o actividad</p>
-                  <input
-                    wire:model.debounce.500ms="puesto"
-                    type="text"
-                    name="puesto"
-                    class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
-                    placeholder="Puesto o atividad principal">
-                  </input>
-                  @error('puesto')
-                    <p class="text-red-500 text-sm italic mt-4">
-                      {{ $message }}
-                    </p>
-                  @enderror
-                </div>
-
-                <!-- Periodo -->
-                <div class=" flex justify-start ">
-                  <div class="trabajo--periodo mx-4  mb-4 w-1/2">
-                    <p class="text-sm font-thin mb-1">Periodo</p>
-                    <input
-                      wire:model.debounce.500ms="periodo"
-                      type="text"
-                      name="periodo"
-                      class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
-                      placeholder="El perdiodo en el que estviste en la empresa">
-                    </input>
-                    @error('periodo')
-                      <p class="text-red-500 text-sm italic mt-4">
-                        {{ $message }}
-                      </p>
-                    @enderror
-                  </div>
-
-                  <!-- Botonera -->
-                  <div class="ml-4 mt-4">
-                    <!-- Boton Guardar -->
-                    <button
-                      type="submit"
-                      class="btn text-sm text-white font-medium bg-green-500 shadow-lg rounded-lg px-4 py-3  mr-4"
-                      x-on:click="isEditing = true"
-                      wire:target="experienciaUpdate"
-                      wire:loading.attr="disabled"
-                      wire:loading.class="bg-green-400"
-                      wire:loading.class.remove="bg-green-500"
-
-                    >
-                      <svg wire:target="experienciaUpdate" wire:loading class="h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" display="block"><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(30 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(60 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(90 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(120 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(150 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(180 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(210 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(240 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(270 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(300 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(330 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"/></rect></svg>
-                      <span>Guardar</span>
-                    </button>
-
-                    <!-- Boton cancelar -->
-                    <a
-                      wire:click="$refresh"
-                      class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
-                      x-on:click="isEditing = false"
-                    >
-                      Cerrar
-                    </a>
-                  </div>
-                </div>
-              </form>
-            </div>
           @endif
         </div>
 
+      </div>
+
+      <!-- Editar trabajo seleccionada -->
+      <div x-show="isEditing" class="profile--experiencia--edit bg-white rounded-lg shadow-lg"">
+        @if (session()->has('message-experiencia'))
+
+          <div class=" success--alert bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-4 shadow-md" role="alert">
+            <div class="flex">
+              <div class="py-1">
+                <svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg>
+              </div>
+              <div>
+                <p class="font-bold">{{ session("message-experiencia") }}</p>
+                <p class="text-sm">puedes cerrar la ventana.</p>
+              </div>
+            </div>
+          </div>
+
+        @endif
+
+        <div class="top--line flex justify-between items-center mx-4">
+          <p class=" text-lg font-semibold py-4">Experiencia</p>
+          <!-- Boton Eliminar trabajo -->
+          <button
+            wire:click.debounce.500ms="experienciaDelete({{ $trabajo_id }})"
+            wire:loading.attr="disabled"
+            class="btn mr-2"
+            x-on:click="isEditing = false"
+          >
+            <svg class="w-4 h-5 fill-current hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M3 6v18h18V6H3zm5 14c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1V10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2H2V2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2H22z"/>
+            </svg>
+          </button>
+          <svg wire:target="experienciaDelete" wire:loading class="h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" display="block"><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(30 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(60 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(90 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(120 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(150 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(180 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(210 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(240 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(270 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(300 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(330 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"/></rect></svg>
+        </div>
+
+
+        <form wire:submit.prevent="experienciaUpdate({{ $trabajo_id }})">
+          <!-- Empresa -->
+          <div class="trabajo--empresa mx-4 mb-4">
+            <p class="text-sm font-thin mb-1">Empresa</p>
+            <input
+              wire:model.debounce.500ms="empresa"
+              type="text"
+              name="empresa"
+              class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
+              placeholder="La empresa para la que prestaste tus servicios">
+            </input>
+
+            @error('empresa')
+              <p class="text-red-500 text-sm italic mt-4">
+                {{ $message }}
+              </p>
+            @enderror
+          </div>
+
+          <!-- Puesto o Actividad -->
+          <div class="trabajo--puesto mx-4 mb-4">
+            <p class="text-sm font-thin mb-1">Puesto o actividad</p>
+            <input
+              wire:model.debounce.500ms="puesto"
+              type="text"
+              name="puesto"
+              class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
+              placeholder="Puesto o atividad principal">
+            </input>
+            @error('puesto')
+              <p class="text-red-500 text-sm italic mt-4">
+                {{ $message }}
+              </p>
+            @enderror
+          </div>
+
+          <!-- Periodo -->
+          <div class=" flex justify-start ">
+            <div class="trabajo--periodo mx-4  mb-4 w-1/2">
+              <p class="text-sm font-thin mb-1">Periodo</p>
+              <input
+                wire:model.debounce.500ms="periodo"
+                type="text"
+                name="periodo"
+                class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mr-6 mb-1"
+                placeholder="El perdiodo en el que estviste en la empresa">
+              </input>
+              @error('periodo')
+                <p class="text-red-500 text-sm italic mt-4">
+                  {{ $message }}
+                </p>
+              @enderror
+            </div>
+          </div>
+
+          <!-- Botonera -->
+          <div class="ml-4 mt-4">
+            <!-- Boton Guardar -->
+            <button
+              type="submit"
+              class="btn text-sm text-white font-medium bg-green-500 shadow-lg rounded-lg px-4 py-3  mr-4"
+              x-on:click="isEditing = true"
+              wire:target="experienciaUpdate"
+              wire:loading.attr="disabled"
+              wire:loading.class="bg-green-400"
+              wire:loading.class.remove="bg-green-500"
+
+            >
+              <svg wire:target="experienciaUpdate" wire:loading class="h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" display="block"><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(30 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(60 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(90 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(120 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(150 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(180 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(210 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(240 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(270 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(300 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(330 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"/></rect></svg>
+              <span>Guardar</span>
+            </button>
+
+            <!-- Boton cancelar -->
+            <a
+              wire:click="$refresh"
+              class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
+              x-on:click="isEditing = false"
+            >
+              Cerrar
+            </a>
+          </div>
+        </form>
       </div>
 
       <!-- Agregar Trabajo -->
@@ -839,57 +897,56 @@
 
     </div>
 
-  <!-- Redes Sociales -->
-  <div class="pfwrapper" x-data="{ redes: true }" >
-    <div class="profile--redessociales--show bg-white rounded-lg shadow-lg mb-20" x-show="redes">
-      <p class=" text-lg font-semibold py-4 pl-4">Redes sociales</p>
+    <!-- Redes Sociales -->
+    <div class="pfwrapper" x-data="{ redes: true }" >
+      <div class="profile--redessociales--show bg-white rounded-lg shadow-lg mb-20" x-show="redes">
+        <p class=" text-lg font-semibold py-4 pl-4">Redes sociales</p>
 
-      <div class="facebook flex items-center ml-4 mb-4">
-        <svg class=" fill-current h-7 w-7 text-blue-600 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm3 8h-1.35c-.538 0-.65.221-.65.778V10h2l-.209 2H13v7h-3v-7H8v-2h2V7.692C10 5.923 10.931 5 13.029 5H15v3z"/>
-        </svg>
-        <p class="facebook--link ml-4">
-          {{$facebook}}
-        </p>
-      </div>
-
-      <div class="facebook flex items-center ml-4 mb-4">
-        <svg class=" fill-current h-7 w-7 text-blue-600 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"/>
-        </svg>
-        <p class="twitter--link ml-4">
-          {{$twitter}}
-        </p>
-      </div>
-
-      <div class="facebook flex items-center ml-4 mb-4">
-        <svg class=" fill-current h-7 w-7 text-blue-600 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M17.833 6.595v1.476c0 .237-.193.429-.435.429h-1.465c-.238 0-.434-.192-.434-.429V6.595c0-.237.195-.428.434-.428h1.465c.242 0 .435.191.435.428zM12 14.093c1.121 0 2.028-.908 2.028-2.029s-.907-2.029-2.028-2.029-2.028.908-2.028 2.029.907 2.029 2.028 2.029zM24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12zm-5-1.75h-3.953c.316.533.508 1.149.508 1.813 0 1.968-1.596 3.564-3.563 3.564-1.969 0-3.564-1.596-3.564-3.564 0-.665.191-1.281.509-1.813H5v5.996C5 17.767 6.27 19 7.791 19h8.454C17.766 19 19 17.767 19 16.246V10.25zm-7.009 4.559c1.515 0 2.745-1.232 2.745-2.746 0-.822-.364-1.56-.937-2.063a2.7642 2.7642 0 00-.677-.437 2.7322 2.7322 0 00-1.132-.245c-.405 0-.788.088-1.133.245-.246.112-.474.26-.675.437-.574.503-.938 1.242-.938 2.063.001 1.514 1.234 2.746 2.747 2.746zM19 7.754C19 6.233 17.766 5 16.245 5H9.083v2.917H8.5V5h-.583v2.917h-.584V5.045c-.202.033-.397.083-.583.157v2.715h-.583V5.524C5.465 6.024 5 6.834 5 7.754v1.913h4.359c.681-.748 1.633-1.167 2.632-1.167 1.004 0 1.954.422 2.631 1.167H19V7.754z"/>
-        </svg>
-        <p class="instagram--link ml-4">
-          {{$instagram}}
-        </p>
-      </div>
-
-      <div class="flex justify-end">
-        <button class="btn" x-on:click="redes = false" >
-          <svg
-            class=" w-4 h-5 "
-            height="512"
-            viewBox="0 0 488.471 488.471"
-            width="512"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M288.674 62.363L351.035.002l137.362 137.361-62.361 62.361zM245.547 105.541L0 351.088V488.47h137.382L382.93 242.923z"
-            />
+        <div class="facebook flex items-center ml-4 mb-4">
+          <svg class=" fill-current h-7 w-7 text-blue-600 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm3 8h-1.35c-.538 0-.65.221-.65.778V10h2l-.209 2H13v7h-3v-7H8v-2h2V7.692C10 5.923 10.931 5 13.029 5H15v3z"/>
           </svg>
-        </button>
+          <p class="facebook--link ml-4">
+            {{$facebook}}
+          </p>
+        </div>
+
+        <div class="facebook flex items-center ml-4 mb-4">
+          <svg class=" fill-current h-7 w-7 text-blue-600 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.066 9.645c.183 4.04-2.83 8.544-8.164 8.544-1.622 0-3.131-.476-4.402-1.291 1.524.18 3.045-.244 4.252-1.189-1.256-.023-2.317-.854-2.684-1.995.451.086.895.061 1.298-.049-1.381-.278-2.335-1.522-2.304-2.853.388.215.83.344 1.301.359-1.279-.855-1.641-2.544-.889-3.835 1.416 1.738 3.533 2.881 5.92 3.001-.419-1.796.944-3.527 2.799-3.527.825 0 1.572.349 2.096.907.654-.128 1.27-.368 1.824-.697-.215.671-.67 1.233-1.263 1.589.581-.07 1.135-.224 1.649-.453-.384.578-.87 1.084-1.433 1.489z"/>
+          </svg>
+          <p class="twitter--link ml-4">
+            {{$twitter}}
+          </p>
+        </div>
+
+        <div class="facebook flex items-center ml-4 mb-4">
+          <svg class=" fill-current h-7 w-7 text-blue-600 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M17.833 6.595v1.476c0 .237-.193.429-.435.429h-1.465c-.238 0-.434-.192-.434-.429V6.595c0-.237.195-.428.434-.428h1.465c.242 0 .435.191.435.428zM12 14.093c1.121 0 2.028-.908 2.028-2.029s-.907-2.029-2.028-2.029-2.028.908-2.028 2.029.907 2.029 2.028 2.029zM24 12c0 6.627-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0s12 5.373 12 12zm-5-1.75h-3.953c.316.533.508 1.149.508 1.813 0 1.968-1.596 3.564-3.563 3.564-1.969 0-3.564-1.596-3.564-3.564 0-.665.191-1.281.509-1.813H5v5.996C5 17.767 6.27 19 7.791 19h8.454C17.766 19 19 17.767 19 16.246V10.25zm-7.009 4.559c1.515 0 2.745-1.232 2.745-2.746 0-.822-.364-1.56-.937-2.063a2.7642 2.7642 0 00-.677-.437 2.7322 2.7322 0 00-1.132-.245c-.405 0-.788.088-1.133.245-.246.112-.474.26-.675.437-.574.503-.938 1.242-.938 2.063.001 1.514 1.234 2.746 2.747 2.746zM19 7.754C19 6.233 17.766 5 16.245 5H9.083v2.917H8.5V5h-.583v2.917h-.584V5.045c-.202.033-.397.083-.583.157v2.715h-.583V5.524C5.465 6.024 5 6.834 5 7.754v1.913h4.359c.681-.748 1.633-1.167 2.632-1.167 1.004 0 1.954.422 2.631 1.167H19V7.754z"/>
+          </svg>
+          <p class="instagram--link ml-4">
+            {{$instagram}}
+          </p>
+        </div>
+
+        <div class="flex justify-end">
+          <button class="btn" x-on:click="redes = false" >
+            <svg
+              class=" w-4 h-5 "
+              height="512"
+              viewBox="0 0 488.471 488.471"
+              width="512"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M288.674 62.363L351.035.002l137.362 137.361-62.361 62.361zM245.547 105.541L0 351.088V488.47h137.382L382.93 242.923z"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
-    </div>
-
-    <div class="profile--redessociales-edit bg-white rounded-lg shadow-lg mb-20" x-show="!redes">
+      <div class="profile--redessociales-edit bg-white rounded-lg shadow-lg mb-20" x-show="!redes">
 
       @if (session()->has('message-redesUpdate'))
 
@@ -981,12 +1038,10 @@
         </div>
       </form>
 
+      </div>
     </div>
+
   </div>
-
-
-
-</div>
 </div>
 
 

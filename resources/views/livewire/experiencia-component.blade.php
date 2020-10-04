@@ -74,7 +74,9 @@
       <button
         type="submit"
         class="btn text-sm text-white font-medium bg-green-500 shadow-lg rounded-lg px-4 py-3  mr-4"
-        x-on:click="experiencia = false"
+        x-on:click="experiencia = false, btnactive = true"
+        x-bind:disabled="btnactive"
+        x-bind:class="{ ' bg-gray-300 cursor-default ' : btnactive, 'bg-green-500': !btnactive }"
         wire:target="createTrabajo"
         wire:loading.attr="disabled"
         wire:loading.class="bg-green-400"
@@ -86,7 +88,7 @@
       <a
         wire:click="$refresh"
         class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
-        x-on:click="experiencia = true"
+        x-on:click="experiencia = true, btnactive = false"
       >
         Cerrar
       </a>
