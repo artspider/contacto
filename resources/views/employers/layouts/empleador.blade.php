@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="ScreenOrientation" content="autoRotate:disabled" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>{{ config('app.name', 'Subcontrata') }}</title>
+    <title>{{ config('app.name', 'Contacto-Amarillo') }}</title>
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
     <link
@@ -83,5 +83,6 @@
   </div>
 {{--   </div> --}}
 @livewireScripts
+@include('sweetalert::alert')
 </body>
 </html>

@@ -87,8 +87,9 @@
                 <div
                     class="card__card--hireme w-full lg:w-1/4 xl:w-2/6 flex justify-center lg:justify-end items-center xl:mr-10 2xl:mr-8"
                 >
-                    <a href="#"
-                        class="btn text-black font-semibold rounded-lg bg-main-yellow p-4 mb-4 lg:mb-0"
+                    <a
+                      wire:click="showContract( {{ $this->expert->id }})"
+                      class="btn text-black font-semibold rounded-lg bg-main-yellow p-4 mb-4 lg:mb-0"
                     >
                         Contratame
                     </a>

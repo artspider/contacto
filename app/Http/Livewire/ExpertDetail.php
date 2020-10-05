@@ -101,4 +101,10 @@ class ExpertDetail extends Component
     $expert->notify(new newMsjToExpert($msj));
     logger('saliendo de SenMsgToExpert');
   }
+
+  public function showContract($id)
+  {
+    logger('en el showContract. El id del Expert es: '. $id);
+    return redirect()->route('contract', ['id' => $id]);
+  }
 }
