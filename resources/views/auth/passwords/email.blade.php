@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mx-auto">
+    <div class="container mx-auto  my-16">
         <div class="flex flex-wrap justify-center">
             <div class="w-full max-w-sm">
 
@@ -13,7 +13,7 @@
 
                 <div class="flex flex-col break-words bg-white border-2 rounded shadow-md">
 
-                    <div class="font-semibold bg-gray-200 text-gray-700 py-3 px-6 mb-0">
+                    <div class="h-10 font-semibold bg-main-yellow text-gray-800 py-3 px-6 mb-0">
                         {{ __('Reset Password') }}
                     </div>
 
@@ -35,7 +35,7 @@
                         </div>
 
                         <div class="flex flex-wrap">
-                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-gray-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            <button type="submit" class="bg-gray-800 hover:bg-gray-600 text-gray-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                                 {{ __('Send Password Reset Link') }}
                             </button>
 
@@ -46,6 +46,9 @@
                             </p>
                         </div>
                     </form>
+                    <div class=" h-10 font-semibold bg-main-yellow text-gray-800 py-3 px-6 mb-0">
+                        <p class="hidden ">login</p>
+                    </div>
                 </div>
             </div>
         </div>

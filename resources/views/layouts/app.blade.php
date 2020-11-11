@@ -60,7 +60,7 @@
 
         @yield('content')
 
-    <footer class="h-32 flex flex-col justify-center relative text-center mt-auto" style="background-image: url('img/bg-footer-sm.png')">
+    <footer class="h-32 flex flex-col justify-center relative text-center mt-auto" style="background-image: url('/img/bg-footer-sm.png')">
         <p class="footer--brand text-sm font-bold">Subcontrata - 2020</p>
         <p class="footer--tm text-xs tracking-tight font-semi-bold">Todos los derechos reservados</p>
         <div class="footer--redes"></div>

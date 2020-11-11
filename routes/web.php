@@ -13,10 +13,16 @@ Route::get('/', function () {
 });
 
 // Auth::routes();
-Route::get('/login', 'Auth\LoginController@showLoginForm')->middleware('guest');
+Route::get('/login', 'Auth\LoginController@showLoginForm')->middleware('guest')->name('login');
+Route::get('/home', 'Auth\LoginController@showLoginForm')->middleware('guest')->name('login');
+
+// Password Reset Routes...
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 // Expert::routes();
-
 Route::group(['middleware' => ['isExpert']] , function() {
   Route::view('/expert', 'experts.index')->name('experts-index');
   Route::view('expert/profile', 'experts.profile')->name('experts-profile');
