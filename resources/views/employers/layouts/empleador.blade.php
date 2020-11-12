@@ -28,16 +28,17 @@
 
   <div class="min-h-screen flex flex-col">
     <header x-data="menu()" class="bg-black h-16 xl:h-20 flex items-center justify-between  w-full 2xl:pl-16 2xl:pr-16 z-50 flex-shrink-0">
-      <div x-on:click="open" class=" cursor-pointer text-main-yellow font-semibold flex items-center">
+      <div x-on:click="open" class=" cursor-pointer text-main-yellow font-semibold flex items-center ml-4">
         <svg class=" fill-current w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.146 191.146">
           <path d="M68.007 0H13.911C6.239 0 0 6.24 0 13.909V68.01c0 7.67 6.24 13.909 13.911 13.909h54.096c7.672 0 13.911-6.24 13.911-13.911v-54.1C81.918 6.24 75.679 0 68.007 0zm0 75.092H13.909c-3.907 0-7.084-3.176-7.084-7.083v-54.1c0-3.907 3.178-7.083 7.084-7.083h54.096c3.907 0 7.084 3.176 7.084 7.083v54.1h.001c0 3.907-3.177 7.083-7.083 7.083zM177.234 0h-54.096c-7.672 0-13.911 6.24-13.911 13.909V68.01c0 7.67 6.24 13.909 13.911 13.909h54.096c7.671 0 13.911-6.24 13.911-13.911v-54.1C191.145 6.24 184.905 0 177.234 0zm7.082 68.009c0 3.907-3.178 7.083-7.084 7.083h-54.096c-3.907 0-7.084-3.176-7.084-7.083v-54.1c0-3.907 3.178-7.083 7.084-7.083h54.096c3.907 0 7.084 3.176 7.084 7.083v54.1zM68.007 109.227H13.911c-7.67 0-13.911 6.24-13.911 13.909v54.101c0 7.67 6.24 13.909 13.911 13.909h54.096c7.672 0 13.911-6.24 13.911-13.911v-54.1c0-7.669-6.239-13.908-13.911-13.908zm0 75.092H13.909c-3.907 0-7.084-3.176-7.084-7.083v-54.1c0-3.907 3.178-7.083 7.084-7.083h54.096c3.907 0 7.084 3.176 7.084 7.083v54.1h.001c0 3.907-3.177 7.083-7.083 7.083zM177.234 109.227h-54.096c-7.672 0-13.911 6.24-13.911 13.909v54.101c0 7.67 6.24 13.909 13.911 13.909h54.096c7.671 0 13.911-6.24 13.911-13.911v-54.1c0-7.669-6.24-13.908-13.911-13.908zm7.082 68.009c0 3.907-3.178 7.083-7.084 7.083h-54.096c-3.907 0-7.084-3.176-7.084-7.083v-54.1c0-3.907 3.178-7.083 7.084-7.083h54.096c3.907 0 7.084 3.176 7.084 7.083v54.1z"/>
         </svg>
         <p class="ml-4">Menú</p>
       </div>
       <div x-show="isOpen()" x-on:click.away="close" class="fixed top-0 left-0 w-1/5 bg-black h-full">
-        <div class=" bg-main-yellow flex items-center px-4 py-2">
-          <img class="expert__avatar w-8 h-8 xl:w-10 xl:h-10 2xl:w-10 2xl:h-10 rounded-full m-auto lg:m-0" src="/img/avatar2.jpg" alt="">
-          <p class="text-sm font-bold ml-2">Arturo Rodriguez</p>
+        <div >
+          <!-- <img class="expert__avatar w-8 h-8 xl:w-10 xl:h-10 2xl:w-10 2xl:h-10 rounded-full m-auto lg:m-0" src="/img/avatar2.jpg" alt="">
+          <p class="text-sm font-bold ml-2">Arturo Rodriguez</p> -->
+          <livewire:menu-header-profile />
         </div>
         <div class="bg-black p-4 border-gray-600 border-solid border-b">
           <a class="flex items-center " href="/employer">
@@ -67,10 +68,8 @@
           </a>          
         </div>
 
-        <div class=" bg-black p-4 border-gray-600 border-solid border-b">
-          
-            <livewire:logout />            
-                    
+        <div class=" bg-black p-4 border-gray-600 border-solid border-b">          
+            <livewire:logout />                    
         </div>
       </div>
 
