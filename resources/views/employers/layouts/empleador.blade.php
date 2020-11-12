@@ -67,11 +67,10 @@
           </a>          
         </div>
 
-        <div class="bg-black p-4 border-gray-600 border-solid border-b">
-          <a class="flex items-center" href="/employer/profile">
-            <livewire:logout />
-            <p class="text-white ml-4">Cerrar sesión</p>
-          </a>          
+        <div class=" bg-black p-4 border-gray-600 border-solid border-b">
+          
+            <livewire:logout />            
+                    
         </div>
       </div>
 
