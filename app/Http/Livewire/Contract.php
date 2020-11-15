@@ -23,6 +23,7 @@ class Contract extends Component
   public $expertId;
   public $employerId;
   public $employerName;
+  public $employerUrlImage;
 
   public function mount($id)
   {
@@ -31,6 +32,7 @@ class Contract extends Component
     $employer = $user->usable;
     $this->employerId = $employer->id;
     $this->employerName = $employer->nombre;
+    $this->employerUrlImage = $employer->url_image;
 
     $this->titulo = "Título del proyecto";
     $this->descripcion = "Escribe una descripción detallada del proyecto";
@@ -79,7 +81,7 @@ class Contract extends Component
 
     $orderMesagge = "Hola, " . $this->expert->nombre . "tenemos una propuesta de trabajo para ti. Busca en tu bandeja de ordenes, esperamos tu respuesta...";
 
-    $msj = collect(["id" => $this->employerId, "name" => $this->employerName, "message" => $orderMesagge]);
+    $msj = collect(["id" => $this->employerId, "name" => $this->employerName, "picture" => $this->employerUrlImage, "message" => $orderMesagge]);
 
     logger($msj);
 
