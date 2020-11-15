@@ -13,10 +13,10 @@
             class="ordenes--notification bg-white border-l-4 border-main-yellow flex rounded-lg shadow-lg py-2"
           >
             <div
-              class="orden__date w-1/4 flex flex-col justify-center items-center ml-4 pr-4 border-r-2 border-gray-400"
+              class="orden__date w-1/4 flex flex-col justify-center items-center ml-2 pr-2 border-r-2 border-gray-200"
             >
-              <p class=" font-semibold ">Orden {{ str_pad( $order->id, 5, '0', STR_PAD_LEFT) }}</p>
-              <div class="date text-black text-xl tracking-tighter mb-2">
+              <p class="xl:text-xs 2xl:text-sm font-semibold ">Orden {{ str_pad( $order->id, 5, '0', STR_PAD_LEFT) }}</p>
+              <div class="date text-black xl:text-xs 2xl:text-xl tracking-tighter mb-2">
                 <p>
                   <p class="text-gray-400">
                     {{ $order->day_name }}
@@ -31,10 +31,10 @@
 
             <div wire:click="showContract( {{ $order->id }})" class="notification flex-row  w-full mx-6 mt-2">
               <p class="text-lg font-bold"> {{ $order->titulo }} </p>
-              <p class="text-sm xl:text-base mb-4 mt-2">
+              <p class="text-sm xl:text-base mb-4 mt-2 text-justify">
                 El cliente <span class="font-semibold italic "> {{ $order->employer->nombre }} </span> te ha contratado para {{ $order->description_short }}.
               </p>
-              <p>Revisa los detalles del contrato haciendo clic aqui y responde lo mas pronto posible</p>
+              <p class="text-justify mb-4">Revisa los detalles del contrato haciendo clic aqui y responde lo mas pronto posible</p>
               <div class="flex justify-end">
                 <p>Status: {{ $order->status_name }}</p>
               </div>

@@ -76,6 +76,7 @@ class order extends Model
         0 => 'PENDIENTE',
         1 => 'EN MARCHA',
         2 => 'TERMINADO',
+        4 => 'CANCELADO',
       ];
 
       return $statusMap[$this->status];
