@@ -30,14 +30,55 @@
 
     <div id="content">
       <div class=" min-h-screen flex flex-col">
-        <header
-          class="bg-black h-16 xl:h-20 flex items-center justify-between fixed w-full 2xl:pl-16 2xl:pr-16 z-50 flex-shrink-0"
-        >
-          <livewire:logout />
+      <header x-data="menu()" class="bg-black h-16 xl:h-20 flex items-center justify-between  w-full 2xl:pl-16 2xl:pr-16 z-50 flex-shrink-0">
+      <div x-on:click="open" class=" cursor-pointer text-main-yellow font-semibold flex items-center ml-4">
+        <svg class=" fill-current w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 191.146 191.146">
+          <path d="M68.007 0H13.911C6.239 0 0 6.24 0 13.909V68.01c0 7.67 6.24 13.909 13.911 13.909h54.096c7.672 0 13.911-6.24 13.911-13.911v-54.1C81.918 6.24 75.679 0 68.007 0zm0 75.092H13.909c-3.907 0-7.084-3.176-7.084-7.083v-54.1c0-3.907 3.178-7.083 7.084-7.083h54.096c3.907 0 7.084 3.176 7.084 7.083v54.1h.001c0 3.907-3.177 7.083-7.083 7.083zM177.234 0h-54.096c-7.672 0-13.911 6.24-13.911 13.909V68.01c0 7.67 6.24 13.909 13.911 13.909h54.096c7.671 0 13.911-6.24 13.911-13.911v-54.1C191.145 6.24 184.905 0 177.234 0zm7.082 68.009c0 3.907-3.178 7.083-7.084 7.083h-54.096c-3.907 0-7.084-3.176-7.084-7.083v-54.1c0-3.907 3.178-7.083 7.084-7.083h54.096c3.907 0 7.084 3.176 7.084 7.083v54.1zM68.007 109.227H13.911c-7.67 0-13.911 6.24-13.911 13.909v54.101c0 7.67 6.24 13.909 13.911 13.909h54.096c7.672 0 13.911-6.24 13.911-13.911v-54.1c0-7.669-6.239-13.908-13.911-13.908zm0 75.092H13.909c-3.907 0-7.084-3.176-7.084-7.083v-54.1c0-3.907 3.178-7.083 7.084-7.083h54.096c3.907 0 7.084 3.176 7.084 7.083v54.1h.001c0 3.907-3.177 7.083-7.083 7.083zM177.234 109.227h-54.096c-7.672 0-13.911 6.24-13.911 13.909v54.101c0 7.67 6.24 13.909 13.911 13.909h54.096c7.671 0 13.911-6.24 13.911-13.911v-54.1c0-7.669-6.24-13.908-13.911-13.908zm7.082 68.009c0 3.907-3.178 7.083-7.084 7.083h-54.096c-3.907 0-7.084-3.176-7.084-7.083v-54.1c0-3.907 3.178-7.083 7.084-7.083h54.096c3.907 0 7.084 3.176 7.084 7.083v54.1z"/>
+        </svg>
+        <p class="ml-4">Menú</p>
+      </div>
+      <div x-show="isOpen()" x-on:click.away="close" class="fixed top-0 left-0 w-1/5 bg-black h-full">
+        <div >
+          <!-- <img class="expert__avatar w-8 h-8 xl:w-10 xl:h-10 2xl:w-10 2xl:h-10 rounded-full m-auto lg:m-0" src="/img/avatar2.jpg" alt="">
+          <p class="text-sm font-bold ml-2">Arturo Rodriguez</p> -->
+          <livewire:menu-header-profile />
+        </div>
+        <div class="bg-black text-white hover:bg-main-yellow hover:text-black p-4 border-gray-600 hover:border-gray-600 border-solid border-b border-t">
+          <a class="flex items-center " href="{{ Route('experts-index') }}">
+            <svg class="h-8 w-8 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <p class=" ml-4">Inicio</p>
+          </a>          
+        </div>
+
+        <div class="bg-black text-white hover:bg-main-yellow hover:text-black p-4 border-gray-600 hover:border-gray-600 border-solid border-b border-t">
+          <a class="flex items-center" href="{{ Route('experts-alerts') }}">
+            <svg class="h-8 w-8 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            
+            <p class=" mx-4">Notificaciones</p>
+            <livewire:expert-indexalert />
+          </a>          
+        </div>
+        <div class="bg-black text-white hover:bg-main-yellow hover:text-black p-4 border-gray-600 hover:border-gray-600 border-solid border-b border-t">
+          <a class="flex items-center" href="{{ Route('experts-profile') }}">
+            <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            <p class=" ml-4">Perfil</p>
+          </a>          
+        </div>
+
+        <div class="bg-black text-white hover:bg-main-yellow hover:text-black p-4 border-gray-600 hover:border-gray-600 border-solid border-b border-t">
+            <livewire:logout />                    
+        </div>
+      </div>
 
           <!-- Logo -->
           <svg
-            class="px-3 h-16 w-16 xl:h-28 xl:w-28 text-main-yellow mr-4"
+            class="px-3 h-16 w-16 xl:h-24 xl:w-24 text-main-yellow mr-4"
             viewBox="0 0 354 246"
             fill="currentColor"
             xmlns="http://www.w3.org/2000/svg"
@@ -48,88 +89,34 @@
           </svg>
 
           <!-- Termina logo -->
-        </header>
 
-        @yield('content')
-        <footer
-          class="bg-black rounded-t-md h-16 flex justify-around items-center mt-10 flex-shrink-0 fixed bottom-0 w-full"
-        >
-          <div class="icono">
-            <a href="{{ Route('experts-index') }}">
-              <svg
-                class="h-8 w-8 text-main-yellow"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                />
-              </svg>
-            </a>
+    </header>
+        
+
+      @yield('content')
+        <footer class="wide h-32 flex flex-col justify-center relative text-center mt-auto" style="background-image: url('/img/bg-footer-sm.png')">
+          <p class="footer--brand text-sm font-bold">Subcontrata - 2020</p>
+          <p class="footer--tm text-xs tracking-tight font-semi-bold">Todos los derechos reservados</p>
+          <div class="footer--redes"></div>
+          <div class="footer--back2top absolute bottom-0 right-0 mr-4 mb-4 text-xs tracking-tight font-semi-bold">
+            <a href="#">Back to top</a>
           </div>
-          <div class="icono flex">
-            <a href="{{ Route('experts-alerts') }}">
-              <svg
-                class="h-8 w-8 text-main-yellow"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                />
-              </svg>
-            </a>
-            <livewire:expert-indexalert />
-          </div>
-          <div class="icono">
-            <a href="{{ Route('experts-profile') }}">
-              <svg
-                class="h-8 w-8 text-main-yellow"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                />
-              </svg>
-            </a>
-          </div>
-          {{--
-          <div class="icono">
-            <svg
-              class="h-8 w-8 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </div>
-          --}}
         </footer>
       </div>
     </div>
+  <script>
+  function menu() {
+    return {
+      show: false,
+    open: function() { 
+      this.show = true 
+    },
+    close: function() { this.show = false },
+    isOpen: function() { return this.show === true },
+
+    }    
+  }
+</script>
     @livewireScripts
     @include('sweetalert::alert')
   </body>

@@ -94,8 +94,8 @@ class ExpertDetail extends Component
     $employer = $user->usable;
     $expert = Expert::find($this->expertId);
 
-    $msj = collect(["id" => $employer->id, "name" => $employer->nombre, "message" => $this->mensaje]);
-
+    $msj = collect(["id" => $employer->id, "name" => $employer->nombre, 'picture' => $employer->url_image, "message" => $this->mensaje]);
+ 
     logger($msj);
 
     $expert->notify(new newMsjToExpert($msj));

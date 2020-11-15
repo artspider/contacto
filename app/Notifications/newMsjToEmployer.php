@@ -41,6 +41,7 @@ class newMsjToEmployer extends Notification
             'expert_id' => $this->m['id'],
             'expert_name' => $this->m['name'],
             'expert_msg' => $this->m['message'],
+            'expert_picture' => $this->m['picture'],
         ];
     }
 

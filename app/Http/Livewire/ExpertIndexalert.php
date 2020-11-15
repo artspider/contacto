@@ -14,7 +14,7 @@ class ExpertIndexalert extends Component
         $this->mensajesPorLeer = Auth::user()->usable->unreadNotifications->count();
         logger('Mensajes no leidos: ' . $this->mensajesPorLeer);
         return <<<'blade'
-            <span class="inline-block h-1/2 text-xs text-red-900 font-bold bg-main-yellow rounded-full px-2 py-1">
+            <span class="inline-block h-1/2 text-xs text-red-900 font-bold bg-main-yellow hover:bg-black rounded-full px-2 py-1">
                 {{ $mensajesPorLeer }}
             </span>
         blade;

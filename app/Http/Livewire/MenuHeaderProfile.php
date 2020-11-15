@@ -23,7 +23,7 @@ class MenuHeaderProfile extends Component
             $this->foto_perfil = "fotos/no-profile-pic.jpg";
         }
         return <<<'blade'
-            <div class=" bg-main-yellow flex items-center px-4 py-2">
+            <div class=" bg-main-yellow  flex items-center px-4 py-2">
                 <img class="expert__avatar w-8 h-8 xl:w-10 xl:h-10 2xl:w-10 2xl:h-10 rounded-full m-auto lg:m-0" src="{{asset('storage/' . $foto_perfil) }}" alt="">
                 <p class="text-sm font-bold ml-2">{{ $nombre }}</p>
             </div>

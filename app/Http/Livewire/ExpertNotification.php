@@ -49,7 +49,7 @@ class ExpertNotification extends Component
             'mensaje' => 'required|min:5',
         ]);
 
-        $msj = collect(["id" => $this->expert->id, "name" => $this->expert->nombre, "message" => $this->mensaje]);
+        $msj = collect(["id" => $this->expert->id, "name" => $this->expert->nombre, "picture" => $this->expert->url_image , "message" => $this->mensaje]);
 
         logger($msj);
 

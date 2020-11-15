@@ -1,27 +1,44 @@
 <div>
-    <div class="saludos mt-20 mb-4 mx-4">
-        <p class=" titulo font-bold mb-1"> {{ auth()->user()->name }}, </p>
-        <p class=" subtitulo font-semibold text-gray-800 ">Estos son tus mensajes</p>
+    <div class="saludos  border-b-2 border-solid border-gray-300">
+        <!-- <p class=" titulo font-bold mb-1"> {{ auth()->user()->name }}, </p> -->
+        <div class="flex items-center">
+            <svg class=" w-8 h-8 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M18.546 3H5.477L0 11.986V21h24v-9.014L18.546 3zM6.6 5h10.82l3.642 6h-4.476l-3 3h-3.172l-3-3H2.943L6.6 5zM22 19H2v-6h4.586l3 3h4.828l3-3H22v6z"/>
+            </svg>
+            <p class=" subtitulo ml-4 font-semibold text-gray-800 ">Estos son tus mensajes</p>
+        </div>
+        <p class="text-gray-500 text-lg ">Estas son las propuestas de los empleadores</p>
     </div>
 
-      <div x-data="{ smodal: false }" class=" alerts dbody block  xl:w-4/5 xl:mx-auto ">
+    <div x-data="{ smodal: false }" class=" alerts dbody block  xl:w-4/5 xl:mx-auto ">
 
         @foreach ($notifications as $notification)
-            <div class=" alerts--notification min bg-orange-100 border-l-4 border-orange-500 flex rounded-lg shadow-lg py-2">
-                <div class="employer__date w-1/4 flex-shrink-0 flex flex-col justify-center items-center ml-4 pr-4 border-r-2 border-gray-400">
-                    <svg class=" fill-current w-10 -h-10  " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 1C5.662 1 0 5.226 0 11.007c0 2.05.739 4.063 2.047 5.625.055 1.83-1.023 4.456-1.993 6.368 2.602-.47 6.301-1.508 7.978-2.536C17.268 22.711 24 17.059 24 11.007 24 5.195 18.299 1 12 1zm1 15h-2v-6h2v6zm-1-7.75c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25z"/></svg>
-                    <div class="date text-center text-black text-xl tracking-tighter mb-2"> {{ $notification->created_at->diffForHumans() }} </div>
-                </div>
-                <div class="notification w-full mx-4 flex flex-col">
-                    <p class="text-lg font-bold">{{ $notification->data['employer_name'] }}</p>
-                    <p class="text-sm mb-2">{{ $notification->data['employer_msg'] }}</p>
-                    <div class="flex justify-end items-end flex-1">
-                        <a wire:click="selectSender({{ $notification->data['employer_id'] }})" x-on:click="smodal=true" class="tooltip top btn mr-4 ">
-                            <span class="tiptext text-xs text-red-500 font-semibold px-2">Responder</span>
-                            <svg class=" fill-current h-6 w-6 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 384"><path d="M149.333 117.333V32L0 181.333l149.333 149.333V243.2C256 243.2 330.667 277.333 384 352c-21.333-106.667-85.333-213.333-234.667-234.667z"/></svg>
-                        </a>
+        <div class=" alerts--notification min  border-l-4 border-main-yellow flex rounded-lg shadow-lg py-2">
+                
+                <div class="notification w-full mx-4 flex flex-col justify-between">
+                    
+                    
+                    <div class=" flex items-center mb-4 ">
+                        <img class="employer__avatar w-8 h-8 xl:w-10 xl:h-10 2xl:w-14 2xl:h-14 rounded-full m-auto lg:m-0" src="{{asset('storage/' . $notification->data['employer_picture']) }}" alt="">
+                        <p class="text-lg font-bold ml-4">{{ $notification->data['employer_name'] }}, escribió:</p>
+                    </div>               
+                    <p class="text-base mb-2 ">{{ $notification->data['employer_msg'] }}</p>                    
+
+                    <div class="employer__date flex mt-4 text-gray-400">
+                        <svg class="mr-2 h-6 w-6 fill-current  " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10S2 17.514 2 12 6.486 2 12 2zm0-2C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.848 12.459c.202.038.202.333.001.372-1.907.361-6.045 1.111-6.547 1.111-.719 0-1.301-.582-1.301-1.301 0-.512.77-5.447 1.125-7.445.034-.192.312-.181.343.014l.985 6.238 5.394 1.011z"/>
+                        </svg>
+                        <div class="date text-center text-lg tracking-tighter mb-2"> {{ $notification->created_at->diffForHumans() }} </div>
                     </div>
+
+                    <button 
+                        wire:click="selectSender({{ $notification->data['employer_id'] }})"
+                        x-on:click="smodal=true" 
+                        class="btn--secondary font-bold rounded-md mb-2 py-4">
+                        Responder
+                    </button>
                 </div>
+                
             </div>
 
         @endforeach
@@ -38,5 +55,5 @@
             </div>
         </div>
 
-      </div>
+    </div>
 </div>

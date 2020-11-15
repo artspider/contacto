@@ -47,6 +47,7 @@ class newMsjToExpert extends Notification
             'employer_id' => $this->m['id'],
             'employer_name' => $this->m['name'],
             'employer_msg' => $this->m['message'],
+            'employer_picture' => $this->m['picture'],
         ];
     }
 }

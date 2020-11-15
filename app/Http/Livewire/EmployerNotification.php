@@ -38,6 +38,7 @@ class EmployerNotification extends Component
         $this->expert = Expert::find($expert_id);
         logger('Este es el Expert' . $this->expert);
         $this->expert_name = $this->expert->nombre;
+        
     }
 
     public function respondMessage()
@@ -48,7 +49,7 @@ class EmployerNotification extends Component
             'mensaje' => 'required|min:5|max:64',
         ]);
 
-        $msj = collect(["id" => $this->employer->id, "name" => $this->employer->nombre, "message" => $this->mensaje]);
+        $msj = collect(["id" => $this->employer->id, "name" => $this->employer->nombre, "picture" => $this->employer->url_image , "message" => $this->mensaje]);
 
         logger($msj);
 

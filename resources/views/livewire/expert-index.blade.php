@@ -10,7 +10,7 @@
 
         @foreach ($orders as $order)
           <div
-            class="ordenes--notification bg-red-100 border-l-4 border-red-500 flex rounded-lg shadow-lg py-2"
+            class="ordenes--notification bg-white border-l-4 border-main-yellow flex rounded-lg shadow-lg py-2"
           >
             <div
               class="orden__date w-1/4 flex flex-col justify-center items-center ml-4 pr-4 border-r-2 border-gray-400"
@@ -29,7 +29,7 @@
               </div>
             </div>
 
-            <div wire:click="showContract( {{ $order->id }})" class="notification w-full mx-6">
+            <div wire:click="showContract( {{ $order->id }})" class="notification flex-row  w-full mx-6 mt-2">
               <p class="text-lg font-bold"> {{ $order->titulo }} </p>
               <p class="text-sm xl:text-base mb-4 mt-2">
                 El cliente <span class="font-semibold italic "> {{ $order->employer->nombre }} </span> te ha contratado para {{ $order->description_short }}.
@@ -38,6 +38,7 @@
               <div class="flex justify-end">
                 <p>Status: {{ $order->status_name }}</p>
               </div>
+              <button class="btn--secondary font-bold rounded-md mt-4 py-4 w-full">REVISAR</button>
             </div>
           </div>
 

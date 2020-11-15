@@ -40,35 +40,35 @@
           <p class="text-sm font-bold ml-2">Arturo Rodriguez</p> -->
           <livewire:menu-header-profile />
         </div>
-        <div class="bg-black p-4 border-gray-600 border-solid border-b">
+        <div class="bg-black text-white hover:bg-main-yellow hover:text-black p-4 border-gray-600 hover:border-gray-600 border-solid border-b border-t">
           <a class="flex items-center " href="/employer">
-            <svg class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="h-8 w-8 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
             </svg>
-            <p class="text-white ml-4">Inicio</p>
-          </a>
-          
-        </div>
-        <div class="bg-black  p-4 border-gray-600 border-solid border-b">
-          <a class="flex items-center" href="{{ Route('employers-alerts') }}">
-            <svg class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
-            </svg>
-            
-            <p class="text-white mx-4">Notificaciones</p>
-            <livewire:expert-indexalert />
-          </a>          
-        </div>
-        <div class="bg-black p-4 border-gray-600 border-solid border-b">
-          <a class="flex items-center" href="/employer/profile">
-            <svg class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-            </svg>
-            <p class="text-white ml-4">Perfil</p>
+            <p class=" ml-4">Inicio</p>
           </a>          
         </div>
 
-        <div class=" bg-black p-4 border-gray-600 border-solid border-b">          
+        <div class="bg-black text-white hover:bg-main-yellow hover:text-black p-4 border-gray-600 hover:border-gray-600 border-solid border-b border-t">
+          <a class="flex items-center" href="{{ Route('employers-alerts') }}">
+            <svg class="h-8 w-8 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            
+            <p class=" mx-4">Notificaciones</p>
+            <livewire:expert-indexalert />
+          </a>          
+        </div>
+        <div class="bg-black text-white hover:bg-main-yellow hover:text-black p-4 border-gray-600 hover:border-gray-600 border-solid border-b border-t">
+          <a class="flex items-center" href="/employer/profile">
+            <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            <p class=" ml-4">Perfil</p>
+          </a>          
+        </div>
+
+        <div class="bg-black text-white hover:bg-main-yellow hover:text-black p-4 border-gray-600 hover:border-gray-600 border-solid border-b border-t">
             <livewire:logout />                    
         </div>
       </div>
@@ -91,7 +91,7 @@
 
     @yield('content')
 
-    <footer id="footer" class="bg-black fixed bottom-0 w-full rounded-t-md h-16 flex justify-around items-center mt-10 flex-shrink-0 ">
+    <!-- <footer id="footer" class=" small bg-black fixed bottom-0 w-full rounded-t-md h-16 flex justify-around items-center mt-10 flex-shrink-0 ">
 
         <div class="icono">
         <a href="/employer">
@@ -122,7 +122,18 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
       </div> --}}
+    </footer> -->
+
+    <footer class="wide h-32 flex flex-col justify-center relative text-center mt-auto" style="background-image: url('/img/bg-footer-sm.png')">
+        <p class="footer--brand text-sm font-bold">Subcontrata - 2020</p>
+        <p class="footer--tm text-xs tracking-tight font-semi-bold">Todos los derechos reservados</p>
+        <div class="footer--redes"></div>
+        <div class="footer--back2top absolute bottom-0 right-0 mr-4 mb-4 text-xs tracking-tight font-semi-bold">
+            <a href="#">Back to top</a>
+        </div>
     </footer>
+
+
   </div>
 {{--   </div> --}}
 <script>

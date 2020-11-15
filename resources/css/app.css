@@ -163,10 +163,11 @@
   }
 
   @media screen and (min-width: 1600px) {
-    --margen-saludo-top: 10rem;
-    --margen-saludo-bottom: 4rem;
+    --margen-saludo-top: 2rem;
+    --margen-saludo-left: 4.7rem;
+    --margen-saludo-bottom: 2rem;
 
-    --margen-dbody-bottom: 10rem;
+    --margen-dbody-bottom: 5rem;
     --margen-profile__body-bottom: 10rem;
 
     --width-profile__body: 55%;
@@ -203,7 +204,7 @@ html {
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 45%;
-    height: 12rem;
+    height: 18rem;
   }
 }
 

@@ -72,7 +72,7 @@ class ContractExpert extends Component
     {
       $orderMesagge = "Hola " . $this->employer->nombre . ", te informamos que " . $this->expert->nombre . " ha aceptado el contrato. Ponte en contacto con el para definir los detalles del proyecto";
 
-      $msj = collect(["id" => $this->expert->id, "name" => $this->expert->nombre, "message" => $orderMesagge]);
+      $msj = collect(["id" => $this->expert->id, "name" => $this->expert->nombre, "picture" => $this->expert->url_image, "message" => $orderMesagge]);
 
       logger($msj);
 
