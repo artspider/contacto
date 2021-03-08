@@ -35,6 +35,7 @@
   <div class="profile__body block xl:w-3/5 2xl:w-1/2  lg:mx-auto">
 
     <!-- Personales About -->
+    <!-- Alpine JS component -->
     <div class="pfwrapper " x-data="{ about: true }" >
       <!-- Datos personales-->
       @if (session()->has('success_message'))
@@ -431,7 +432,8 @@
     </div>
 
     <!-- Habilidades  Tags -->
-    <div class="pfwrapper " x-data="{ habilidades: true }" @click.away="habilidades = true">
+    <div class="pfwrapper" x-data="tagsAdmin()" @click.away="habilidades = true">
+      <!-- Mostrar habilidades -->
       <div class="profile--habilidades--show bg-white rounded-lg shadow-lg" x-show="habilidades">
         <p class=" text-lg font-semibold my-4 ml-4">Habilidades</p>
 
@@ -465,58 +467,99 @@
         </div>
       </div>
 
-
+      <!-- Editar habilidades -->
       <div class="profile--habilidades--edit bg-white rounded-lg shadow-lg" x-show="!habilidades">
         <form wire:submit.prevent='addTags'>
-        <p class=" text-lg font-semibold my-4 ml-4">Habilidades</p>
+          <p class=" text-lg font-semibold my-4 ">Habilidades (edición)</p>
 
-        <p class=" font-thin text-sm ml-4 mb-2" >Habilidad</p>
+          
 
-        <input
-          wire:keydown.enter="addTags"
-          wire:model.debounce.500ms="tags"
-          type="text"
-          name="tags"
-          class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 ml-4 mr-6 mb-1"
-          placeholder="ej: Redes, Bases de datos, Contabilidad, etc.">
-        </input>
-        <p class=" font-thin text-sm text-gray-400 ml-4 mb-2" >Agrega con coma o presiona 'enter'</p>
+          {{-- <input
+            wire:keydown.enter="addTags"
+            wire:model.debounce.500ms="tags"
+            type="text"
+            name="tags"
+            class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 ml-4 mr-6 mb-1"
+            placeholder="ej: Redes, Bases de datos, Contabilidad, etc.">
+          </input>
+          <p class=" font-thin text-sm text-gray-400 ml-4 mb-2" >Agrega con coma o presiona 'enter'</p> --}}
 
-        <div class="habilidades--group ml-4 mb-4">
-          @empty($habilidades)
-            <p>No has añadido ninguna habilidad</p>
-          @endempty
-          @if(!empty($habilidades))
-            @foreach ($habilidades as $habilidad)
-              <span class=" habilidades--single inline-block rounded-full bg-gray-600 text-sm text-white px-8 py-1 mb-4">
-                {{ $habilidad->name }}
-              </span>
-            @endforeach
-          @endif
-        </div>
+          {{-- @empty($habilidades)
+              <div class="habilidades--group mt-2 mb-4">
+                <p>No has añadido ninguna habilidad</p>
+              </div>
+            @endempty --}}
 
-        <div class="ml-4">
-          <button
-            type="submit"
-            class="btn text-sm text-white font-medium bg-green-500 shadow-lg rounded-lg px-4 py-3  mr-4"
-            x-on:click="habilidades = false"
-            wire:target="addTags"
-            wire:loading.attr="disabled"
-            wire:loading.class="bg-green-400"
-            wire:loading.class.remove="bg-green-500"
+            @isset($habilidades)
+              <div class="habilidades--group mt-2 mb-4">
+                <p class="text-sm text-gray-600">Estas son las habilidades tienes en tu portafolio (clic para eliminarlas)  </p>
+                @foreach ($habilidades as $habilidad)
+                  <span wire:ignore wire:key="{{ $habilidad['id'] }}" id="tagrem{{ $habilidad['id'] }}" @click="togleTagRemoveClass(event)" wire:click="removeTag({{ $habilidad['id'] }})" class="cursor-pointer habilidades--single inline-block rounded-full bg-gray-600 text-sm text-white px-8 py-1 mb-4">
+                    {{ $habilidad['id'] }} -  {{ $habilidad['name'] }}
+                  </span>
+                @endforeach
+              </div>
+            @endisset 
 
-          >
-            <svg wire:target="addTags" wire:loading class="h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" display="block"><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(30 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(60 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(90 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(120 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(150 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(180 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(210 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(240 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(270 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(300 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(330 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"/></rect></svg>
-            <span>Guardar</span>
-          </button>
-          <a
-            class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
-            x-on:click="habilidades = true"
-          >
-            Cerrar
-          </a>
-        </div>
-      </form>
+          <div class="seleccion-profesion">
+            <p class=" font-thin text-sm mb-1" >Especialización o categoria principal</p>
+            <select wire:model="CategoriaId" class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mb-1" name="clasificacion" id="clasificacion" placeholder="Clasificación">
+                <option value=" "> Selecciona una categoria  </option>
+                @foreach ($categorias as $item)
+                  <option value=" {{ $item['id'] }}  "> {{ $item['nombre'] }}  </option>
+                @endforeach
+            </select>
+  
+             @isset($subcategorias)
+             <p class=" font-thin text-sm ml-4 mt-2 mb-1" >subcategoría</p>
+                <select wire:model="subcategoriaId" class="focus:outline-none focus:shadow-outline border border-gray-300 rounded-lg py-1 px-4 mb-1" name="clasificacion_nivel2" id="clasificacion_nivel2" placeholder="Clasificación">
+                <option value=" "> Selecciona una subcategoria  </option>
+                @foreach ($subcategorias as $item)
+                  <option value=" {{ $item['id'] }}  "> {{ $item['name'] }}  </option>
+                @endforeach
+              </select>
+            @endisset
+
+            
+
+              @isset($subcategoriaTags)
+              <div class="mt-6">
+                <p class="text-sm text-gray-600">Estas son las habilidades que puedes agregar  </p>
+                @foreach ($tagsDisponibles as $key => $tag)
+                  <span wire:ignore id="tag{{ $key }}" @click="togleTagClass(event)" wire:click="addTag({{ $key }})"   class="cursor-pointer habilidades--single inline-block ro rounded-full text-sm text-black px-8 py-1 mb-4 border-gray-600 border-solid border-2">
+                    {{ $tag }}
+                  </span>
+                @endforeach
+              </div>        
+              @endisset
+                       
+
+                        
+          </div>
+
+          
+
+          <div class="ml-4">
+            <button
+              type="submit"
+              class="btn text-sm text-white font-medium bg-green-500 shadow-lg rounded-lg px-4 py-3  mr-4"
+              x-on:click="habilidades = false"
+              wire:target="addTags"
+              wire:loading.attr="disabled"
+              wire:loading.class="bg-green-400"
+              wire:loading.class.remove="bg-green-500"
+            >
+              <svg wire:target="addTags" wire:loading class="h-6 w-6 mr-2" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" display="block"><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.9166666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(30 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.8333333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(60 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.75s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(90 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.6666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(120 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5833333333333334s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(150 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.5s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(180 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.4166666666666667s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(210 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.3333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(240 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.25s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(270 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.16666666666666666s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(300 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="-0.08333333333333333s" repeatCount="indefinite"/></rect><rect x="47" y="24" rx="3" ry="6" width="6" height="12" fill="#dbd3d5" transform="rotate(330 50 50)"><animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"/></rect></svg>
+              <span>Guardar</span>
+            </button>
+            <a
+              class="btn text-sm text-white font-medium bg-red-500 shadow-lg rounded-lg px-4 py-3"
+              x-on:click="habilidades = true"
+            >
+              Cerrar
+            </a>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -1042,6 +1085,7 @@
     </div>
 
   </div>
+ 
 </div>
 
 

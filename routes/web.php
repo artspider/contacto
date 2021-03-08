@@ -27,6 +27,9 @@ Route::group(['middleware' => ['isExpert']] , function() {
   Route::view('/expert', 'experts.index')->name('experts-index');
   Route::view('expert/profile', 'experts.profile')->name('experts-profile');
   Route::view('expert/messages', 'experts.alerts')->name('experts-alerts');
+  Route::livewire('expert/project/', 'expert-project')
+  ->name('experts-project')
+  ->layout('experts.layouts.internal');
   Route::livewire('expert/contract/{id}', 'contract-expert')
   ->name('contract-expert')
   ->layout('experts.layouts.internal');
@@ -47,6 +50,10 @@ Route::group([ 'middleware' => ['isEmployer']], function() {
 
   Route::livewire('employer/projects/', 'employer-project')
   ->name('employer-projects')
+  ->layout('employers.layouts.empleador');
+
+  Route::livewire('employer/createproject/', 'employer-create-project')
+  ->name('employer-create-project')
   ->layout('employers.layouts.empleador');
 });
 

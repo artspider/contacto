@@ -17,7 +17,7 @@
     />
 
     @livewireStyles
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.1/dist/alpine.min.js" defer></script>
   </head>
   <body class=" bg-light-back ">
     {{--
@@ -60,6 +60,16 @@
             
             <p class=" mx-4">Notificaciones</p>
             <livewire:expert-indexalert />
+          </a>          
+        </div>
+        <div class="bg-black text-white hover:bg-main-yellow hover:text-black p-4 border-gray-600 hover:border-gray-600 border-solid border-b border-t">
+          <a class="flex items-center" href="{{ Route('experts-project') }}">
+            <svg class="h-8 w-8 " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            
+            <p class=" mx-4">Proyectos</p>
+            
           </a>          
         </div>
         <div class="bg-black text-white hover:bg-main-yellow hover:text-black p-4 border-gray-600 hover:border-gray-600 border-solid border-b border-t">
@@ -115,6 +125,26 @@
     isOpen: function() { return this.show === true },
 
     }    
+  }
+
+  function tagsAdmin() {
+    return {
+      tagId: null,
+      habilidades: true,
+      togleTagClass:function(event) {
+        console.log('en el togle tag class');
+        this.tagId = event.target;
+        var tag = document.getElementById(event.target.id);
+        console.log(tag);
+        tag.classList.toggle("tagSelected");
+      },
+      togleTagRemoveClass:function(event) {
+        this.tagId = event.target;
+        var tag = document.getElementById(event.target.id);
+        console.log(tag);
+        tag.classList.toggle("tagRemoveSelected");        
+      }
+    }
   }
 </script>
     @livewireScripts

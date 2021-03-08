@@ -547,3 +547,18 @@ select:focus {
 hr:last-child {
   visibility: hidden;
 }
+
+.project__item:nth-child(even) {
+  background-color: gray;
+  color: white;
+}
+
+.tagSelected {
+  background-color: teal;
+  color: white;
+}
+
+.tagRemoveSelected {
+  background-color: red;
+  color: white;
+}

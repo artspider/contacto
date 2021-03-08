@@ -17,6 +17,11 @@ class tag extends Model
       return $this->belongsToMany('App\expert');
     }
 
+    public function subcategoria()
+    {
+      return $this->belongsToMany('App\subcategoria');
+    }
+
     public function scopeName($query, $name)
     {
       if($name)

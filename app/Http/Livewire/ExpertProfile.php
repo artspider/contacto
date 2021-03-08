@@ -16,6 +16,9 @@ use App\tag;
 use App\expert_tag;
 use App\titulo;
 use App\trabajo;
+use App\categoria;
+use App\subcategoria;
+use App\subcategoria_tag;
 
 class ExpertProfile extends Component
 {
@@ -70,10 +73,21 @@ class ExpertProfile extends Component
   private $coll_estados;
   private $top_terms;
 
+  public $categorias;
+  public $CategoriaId = 1;
+  public $subcategorias;
+  public $subcategoriaId;
+  public $subcategoriaTags;
+  public $tagsDisponibles;
+  public $listOfTagsToAdd;
+  public $listOfTagsToRemove;
+
   protected $listeners = ['refreshCarrera' => 'actualizaCarreras', 'refreshExperiencia' => 'actualizaExperiencia'];
 
   public function load()
   {
+    $this->listOfTagsToAdd = [];
+    $this->listOfTagsToRemove = [];
     $this->coll_estados = collect([
       ['estado' => 'Aguascalientes', 'corto' => 'ags'],
       ['estado' => 'Baja California', 'corto' => 'bcn'],
@@ -178,6 +192,9 @@ class ExpertProfile extends Component
     $this->clasificacion = $this->top_terms->all();
     $this->Cid ='2';
 
+    $this->categorias = Categoria::all();
+    $this->tags = Tag::orderBy('name')->get();
+
     $this->showProfile = 0;
     logger('En el mount del expert');
     $user = Auth::user();
@@ -190,6 +207,7 @@ class ExpertProfile extends Component
     $this->expert_id = $expert->id;
 
     $habilidades = $expert->tags;
+    
     logger('tags');
     logger($habilidades);
 
@@ -366,17 +384,27 @@ class ExpertProfile extends Component
     $user = Auth::user();
     $expert = $user->usable;
 
-    $all_tags = explode(",", $this->tags);
+    //$all_tags = explode(",", $this->tags);
 
 
-      logger('tag con contenido');
-
-      foreach($all_tags as $one_tag)
+    logger('tag con contenido');
+    if(count($this->listOfTagsToRemove) > 0)
+    {
+      foreach($this->listOfTagsToRemove as $one_tag)
       {
-        $one_tag = ltrim($one_tag);
+        $expert_tag = $expert->tags()->detach($one_tag);
+      }
+    }
+
+    if(count($this->listOfTagsToAdd) > 0)
+    {
+      foreach($this->listOfTagsToAdd as $one_tag)
+      {
+        logger($one_tag);
+        /* $one_tag = ltrim($one_tag);
         if($one_tag != '')
         {
-          $tag = Tag::where('name',$one_tag)->first();
+          $tag = Tag::find($one_tag);
 
         if(!$tag)
         {
@@ -385,24 +413,61 @@ class ExpertProfile extends Component
             'created_at' => now(),
             'updated_at' => now(),
           ]);
-        }
+        }}*/
 
         $expert_tag = Expert_tag::create([
           'expert_id' => $expert->id,
-          'tag_id' => $tag->id,
+          'tag_id' => $one_tag,
           'created_at' => now(),
           'updated_at' => now(),
-        ]);
-        }
+        ]); 
+        
       }
-
+      
+    }
+    
+    
     session()->flash('message-contactUpdate', 'Se actualizaron tus datos');
 
     $this->habilidades = $expert->tags;
-    logger($all_tags);
+    $this->getAvailableTags();
+    $this->listOfTagsToAdd = [];
+    $this->listOfTagsToRemove = [];
     $this->reset('tags');
     logger('Saliendo de addTags');
     session()->flash('message-addTags', 'Se actualizaron tus datos');
+    
+  }
+
+  public function addTag($tag_id)
+  {
+    logger('tag a agregar: ');
+    logger($tag_id);
+    if (in_array($tag_id, $this->listOfTagsToAdd)) {      
+      $key = array_search($tag_id, $this->listOfTagsToAdd);
+      unset($this->listOfTagsToAdd[$key]);
+    }else{
+      array_push($this->listOfTagsToAdd, $tag_id);
+    }
+    
+    logger('lista de tags a agregar');
+    logger($this->listOfTagsToAdd);
+  }
+
+  public function removeTag($tag_id)
+  {
+    logger('tag a remover: ');
+    logger($tag_id);
+    logger('Lista de tags a remover antes: ');
+    logger($this->listOfTagsToRemove);
+    if (in_array($tag_id, $this->listOfTagsToRemove)) {
+      $key = array_search($tag_id, $this->listOfTagsToRemove);
+      unset($this->listOfTagsToRemove[$key]);
+    }else{
+      array_push($this->listOfTagsToRemove, $tag_id);
+    }
+    logger('lista de tags a remover despues: ');
+    logger($this->listOfTagsToRemove);
   }
 
   public function educacionUpdate($escuela_id)
@@ -586,9 +651,9 @@ class ExpertProfile extends Component
   public function hydrate()
   {
     logger('En el hydrate');
+    logger('Lista de tags a remover: ');
+    logger($this->listOfTagsToRemove);
   }
-
-
 
   public function dehydrate()
   {
@@ -635,7 +700,46 @@ class ExpertProfile extends Component
     $this->ciudades = Http::get('https://api-sepomex.hckdrk.mx/query/get_municipio_por_estado/' . $estado_actual['estado'] )['response']['municipios'];
   }
 
+  public function updatedCategoriaId()
+  {
+    logger('Se selecciono la categoria: ');
+    logger($this->CategoriaId);
+    $this->subcategorias = Categoria::find($this->CategoriaId)->subcategorias;        
+  }
 
+    public function updatedsubcategoriaId()
+    {        
+      $subcategoria = Subcategoria::find($this->subcategoriaId);
+      logger('Subcategoria seleccionada: ');
+      logger($subcategoria);
+
+      $this->subcategoriaTags = $subcategoria->tags;
+      $this->getAvailableTags();
+
+      /*  $subcategoryTagsCollection = collect($this->subcategoriaTags->pluck('name','id')->all());
+      $expertTagsCollection = collect($this->habilidades->pluck('name', 'id')->all());
+
+      logger('Tags de esta subcategoria: ');      
+      logger($subcategoryTagsCollection->sortBy('name')->all());
+      logger('tags de este experto: ');
+      logger($expertTagsCollection);
+
+      $this->tagsDisponibles = $subcategoryTagsCollection->diffAssoc($expertTagsCollection)->all(); */
+      
+      logger('La diferencia de colecciones: ');
+      logger($this->tagsDisponibles);
+      $this->listOfTagsToAdd = [];
+      
+    }
+
+  public function getAvailableTags() {
+    if($this->subcategoriaTags != null) {
+      $subcategoryTagsCollection = collect($this->subcategoriaTags->pluck('name','id')->all());
+      $expertTagsCollection = collect($this->habilidades->pluck('name', 'id')->all());
+
+      $this->tagsDisponibles = $subcategoryTagsCollection->diffAssoc($expertTagsCollection)->all();    
+    }
+  }
 
   public function resets_()
   {

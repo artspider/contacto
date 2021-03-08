@@ -22,7 +22,7 @@ class expert extends Model
 
     public function tags()
     {
-        return $this->belongsToMany('App\tag', 'expert_tag')->withTimestamps();
+        return $this->belongsToMany('App\tag', 'expert_tag')->withTimestamps()->orderBy('name');
     }
 
     public function membersihps()
